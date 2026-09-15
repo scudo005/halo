@@ -465,7 +465,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_000153e0": {
+    "actor_looking_has_reached_flee_pos": {
       "statuses": [
         "*"
       ],
@@ -481,7 +481,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_00016ff0": {
+    "actor_looking_prop_interest_scripted_update": {
       "statuses": [
         "*"
       ],
@@ -489,7 +489,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_00017090": {
+    "actor_looking_compute_prop_interest": {
       "statuses": [
         "*"
       ],
@@ -2673,7 +2673,7 @@
         "no-delinked-ref: oracle_extract_failed could not be extracted for diff (registration/export gap)"
       ]
     },
-    "FUN_001a6e20": {
+    "unit_log_lost_speech": {
       "statuses": [
         "*"
       ],
@@ -2697,7 +2697,7 @@
         "no-delinked-ref: oracle_extract_failed could not be extracted for diff (registration/export gap)"
       ]
     },
-    "FUN_001ab6e0": {
+    "unit_get_base_seat_name": {
       "statuses": [
         "*"
       ],

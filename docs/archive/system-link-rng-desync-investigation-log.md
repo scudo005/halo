@@ -33,7 +33,7 @@ captures.
   meaningful sequence difference is around tick 5276 in
   `model_animation_choose_random`: the host makes three draws while the client
   makes two, alongside client-only `0x00 -> 0x18` animation transitions. The
-  `FUN_001b1400` audit explains how a successful state call can skip a second
+  `unit_select_movement_on_state` audit explains how a successful state call can skip a second
   chooser draw, but does not identify the earlier cause.
 - `ds49`: at grenade release, acceleration is bit-identical, but the client’s
   projectile position already differs before the first sweep by about
@@ -104,7 +104,7 @@ The second-pass accuracy review classified the remaining candidates as follows:
 - `FUN_000f9c40` 89.2% / 65.5% preserves the `collision_result+0x50` and
   `FUN_000f8720`/`FUN_000f90d0` argument order and bounce increment; the
   residual is frame/register/x87 shape.
-- `FUN_001b1400` 80.9% / 58.6% preserves the exact state `0x18` gate and
+- `unit_select_movement_on_state` 80.9% / 58.6% preserves the exact state `0x18` gate and
   draw-suppression path; the residual is switch/control/register shape.
 - `FUN_000f8720` 69.3% / 58.1% preserves calls, flags, buffers, and cross
   direction; the residual is x87 scheduling/interleaving/register allocation.
@@ -181,7 +181,7 @@ in `units.c`, 23 in `model_animations.c`) without missing functions, lowered
 neighbor scores, or increased warnings. The knowledge-base change is limited
 to the chooser's return type; parameter and register annotations are unchanged.
 
-Other inspected functions: `FUN_001a6350` 89.8596%, `FUN_001ab870` 96.7742%,
+Other inspected functions: `biped_update_dispatcher` 89.8596%, `FUN_001ab870` 96.7742%,
 `unit_set_animation` 95.5% with ABI modeling, and `FUN_001a86b0` 100%.
 No speculative source edits were made to these functions. In particular,
 the transition helper's perfect VC71 result does not cover its deployed clang
@@ -265,8 +265,8 @@ Temporary patcher overlays, without changing `kb.json`, gave these results:
 
 | Original implementations selected on client | XBE SHA-256 prefix | First mismatch |
 |---|---|---|
-| `unit_update_animation`, `unit_animation_set_state`, `FUN_001ab870`, `unit_set_animation`, `model_animation_choose_random`, `FUN_001a6350` | `71e43043639337ed` | tick 3 |
-| `unit_update_animation`, `unit_animation_set_state`, `FUN_001a6350` | `2c823d7f7ea0cc91` | tick 3 |
+| `unit_update_animation`, `unit_animation_set_state`, `FUN_001ab870`, `unit_set_animation`, `model_animation_choose_random`, `biped_update_dispatcher` | `71e43043639337ed` | tick 3 |
+| `unit_update_animation`, `unit_animation_set_state`, `biped_update_dispatcher` | `2c823d7f7ea0cc91` | tick 3 |
 | `unit_animation_set_state` only | `ade116bad2eaaf83` | tick 1840, following grenades |
 
 Original entry bytes and implementation deactivation redirects were verified
@@ -391,7 +391,7 @@ Audited semantically against the pristine XBE (Capstone on
   `FUN_000f7e60`, `FUN_000f90d0`. Moot anyway: desync reproduces with no
   combat.
 - `unit_animation_set_state` (0x1ad260; historical VC71 score corrected above): weapon-idle draw guard
-  (`was_none || FUN_001a88b0(new) != FUN_001a88b0(old)`) matches the XBE;
+  (`was_none || unit_map_animstate_to_idx(new) != unit_map_animstate_to_idx(old)`) matches the XBE;
   a 6 -> 0 transition must draw twice on both sides.
 - `unit_update_animation` (0x1b0d90): clean vs XBE after byte-accuracy edits
   (dword `global_seat` load, signed `+0x256` switch, `anim_status_wide`).
@@ -526,9 +526,9 @@ frame timing input one tick off from the original. Candidates, in order:
 
 1. `unit_update_animation` (0x1b0d90) or the callee chain under it
    (`unit_animation_set_state`, `FUN_001ab870`).
-2. The `state_pair` writers in the biped update `FUN_001a6350` (0x1a6350,
+2. The `state_pair` writers in the biped update `biped_update_dispatcher` (0x1a6350,
    89.9%): `FUN_001a4c50` (turning), `FUN_001a5300` (moving),
-   `FUN_001a6280` (dying, 86.4%), `FUN_001a2900`, `FUN_001a2a60`.
+   `biped_death_handler` (dying, 86.4%), `FUN_001a2900`, `FUN_001a2a60`.
 3. The dead flag at `unit+0xb6` bit 2/4 and other `unit_update_animation`
    callers (`0x1b300a`, `0x1b9735`).
 
@@ -586,7 +586,7 @@ both seeds; correlate its tick with the trace records.
   decoder in `tools/xbox/rng_trace_dump.py`. All under `#ifdef HALO_RNG_TRACE`
   with `#line` restores.
 - Byte-accuracy edits in `units.c` (`unit_animation_state_allows_impulse`,
-  `unit_update_running_blind`, `unit_update_animation`, `FUN_001b1400`) and
+  `unit_update_running_blind`, `unit_update_animation`, `unit_select_movement_on_state`) and
   `damage.c` (`object_cause_damage`).
 - `kb.json`: 0x120670 decl `build_damage_animation_index`; diagnostic
   `ported=false` on 0x1b0d90.
@@ -600,8 +600,8 @@ both seeds; correlate its tick with the trace records.
 - `FUN_00148eb0` param_3 declared int, is float.
 - `object_cause_damage` lacks the original's debug store to `0x46f070`.
 - Sub-90% VC71 on the path: `unit_animation_set_state` 87.3 after the audit above,
-  `FUN_000f7e60` 72.2, `FUN_000f9c40` 89.1, `FUN_001a6350` 89.9,
-  `FUN_001a6280` 86.4.
+  `FUN_000f7e60` 72.2, `FUN_000f9c40` 89.1, `biped_update_dispatcher` 89.9,
+  `biped_death_handler` 86.4.
 
 ## Paired capture 2026-09-06 (shoot-only): divergence localized
 
@@ -775,7 +775,7 @@ filled by five callees (`units.c:1119-1138`):
     FUN_001a5300   ported: null   <- runs ORIGINAL code, cannot diverge
     FUN_001a2900   ported: true       writes 0x28 / 0x14
     FUN_001a2a60   ported: true       writes 0x15 / 0x16
-    FUN_001a6280   ported: true       writes 0x18 / 0x19
+    biped_death_handler   ported: true       writes 0x18 / 0x19
 
 No ported code anywhere in `src/` writes 3 into that byte (`rg '\*state(_out)? = 3'`
 is empty; the only state writes in bipeds.c/units.c are the six values above).
@@ -871,7 +871,7 @@ now the PRIME suspect, not a closed lane.
 ### Where it is not
 
 Checked and clean (not flagged by tools/audit/check_x87_narrowing.py):
-`normalize3d`, `magnitude3d`, the dot/cross helpers, and `FUN_001b0630` (the
+`normalize3d`, `magnitude3d`, the dot/cross helpers, and `unit_update_aim_constraints` (the
 ported aiming-vector update called from inside `FUN_001a4c50` itself). Our
 ported normalization of `+0x1d4` (`src/halo/units/units.c:1058-1065`) is a
 faithful in-place normalize with the z component zeroed and a world-forward
@@ -888,7 +888,7 @@ candidates that feed biped facing, worst first:
     actor_destination_update src/halo/ai/actor_moving.c  ours 0,  xbe 4   (-4)
     FUN_0002b020            src/halo/ai/actor_moving.c   ours 0,  xbe 4   (-4)
     FUN_001a2160            src/halo/units/bipeds.c      ours 1,  xbe 3   (-2)
-    FUN_001a1a10            src/halo/units/bipeds.c      ours 1,  xbe 3   (-2)
+    biped_collision_direction            src/halo/units/bipeds.c      ours 1,  xbe 3   (-2)
     actor_move_update       src/halo/ai/actor_moving.c   ours 3,  xbe 4   (-1)
 
 `FUN_001a2f40` is notable because the unported dispatcher `FUN_001a5300` calls
@@ -1118,7 +1118,7 @@ document) shows more runtime gates than previously published:
 
 ### The immediate caller is ported and writes one of the gates
 
-`FUN_001a6350` (`src/halo/units/units.c`) is the per-tick biped dispatcher and
+`biped_update_dispatcher` (`src/halo/units/units.c`) is the per-tick biped dispatcher and
 the direct caller of `FUN_001a4c50`. It is ported, and in the same block it
 
 - normalizes the desired-facing vector at `+0x1d4` (`units.c:1053-1063`) -- one
@@ -1126,7 +1126,7 @@ the direct caller of `FUN_001a4c50`. It is ported, and in the same block it
 - writes `+0x42a` from the animation state at `+0x253` (`units.c:1068-1083`) --
   a surviving runtime gate.
 
-The x87-narrowing detector does **not** flag `FUN_001a6350`, nor `normalize3d`.
+The x87-narrowing detector does **not** flag `biped_update_dispatcher`, nor `normalize3d`.
 Of the fork's upstream chain only two functions are flagged:
 
     FUN_0002bd80  src/halo/ai/actor_moving.c   ours  4, xbe 15  (-11)
@@ -1144,7 +1144,7 @@ findings were this artifact. With `unported_thunks.c.obj` skipped the run is
 
 ### The `+0x42a` gates are eliminated too -- by measurement plus a table check
 
-`+0x42a` is written *only* by the ported `FUN_001a6350` switch, as a pure
+`+0x42a` is written *only* by the ported `biped_update_dispatcher` switch, as a pure
 function of the animation state at `+0x253`. Two independent facts close it.
 
 **The switch is correct.** The XBE compiles it as a jump table:
@@ -1531,7 +1531,7 @@ Scripts: artifacts/scratch/{cos_cmp,gate_cmp,find_1d4}.py.
 Client-only capture, build `7b0dd1fcd` + `patch_fork_probes.py`, campaign c40,
 single console, no host, no desync required.  Probes 28/29/30 record
 `unit+0x1d4`, `unit+0x24` and the full `unit+0x1b4` flag word immediately before
-the `FUN_001a4c50` call in `FUN_001a6350`.  Capture:
+the `FUN_001a4c50` call in `biped_update_dispatcher`.  Capture:
 `artifacts/rng_trace/solo_facing.json` (43643 records, 2794 samples per probe).
 
     unit                 n    eq  uniq_desired  uniq_current
@@ -1758,7 +1758,7 @@ It is produced by our lifted code.
 A cosine of exactly 1.0 is the self-dot signature, so on our build `unit+0x1d4`
 equals `unit+0x24`.  The target is the writer of `unit+0x1d4` on the client
 path.  Three candidates were named earlier: `unit_set_control`'s producer,
-`FUN_001b3690`'s static arm, and `players.c`'s input-disabled arm.
+`unit_update`'s static arm, and `players.c`'s input-disabled arm.
 
 Captures: `artifacts/rng_trace/ctrl_c.json`, `artifacts/rng_trace/ctrl_h.json`.
 
@@ -1812,7 +1812,7 @@ client role.  The defect is specific to the MP client path.
 
 ### `unit_update`'s two arms are a faithful lift, so they are not the defect
 
-Disassembly of 0x1b3690, against `units.c` `FUN_001b3690`:
+Disassembly of 0x1b3690, against `units.c` `unit_update`:
 
     1b3741  mov  eax, [ebx+0x1b4]
     1b3747  test eax, 0x2000000      -> running-blind arm  (matches our C)

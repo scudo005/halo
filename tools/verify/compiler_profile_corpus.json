@@ -4,8 +4,8 @@
   "cases": [
     "src/halo/math/vector_math.c:FUN_00012090",
     "src/halo/math/real_math.c:FUN_0001acb0",
-    "src/halo/ai/actor_looking.c:FUN_00014460",
-    "src/halo/ai/actor_combat.c:FUN_00021010"
+    "src/halo/ai/actor_looking.c:validate_actor_handle",
+    "src/halo/ai/actor_combat.c:actor_combat_begin_firing_fixed"
   ],
   "profiles": [
     "/O2",

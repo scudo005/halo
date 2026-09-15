@@ -19,10 +19,10 @@ look at next.
 |------|-------------|------|----------|--------------------|
 | 0x1a0680 | `char FUN_001a0680(int unit_handle)` — **cdecl** | **83.2** (61.5 reported) | A | closest cdecl to 88%; 61.5 is whole-TU NOP-inflation, real=83.2 via per-fn ref |
 | 0x1a1b90 | `int biped_approximate_surface_index(int, float*)` — **cdecl** | 78.6 | A | below permuter floor — investigate lift (control-flow/FPU) before permuting |
-| 0x1a1e70 | `void FUN_001a1e70(int unit_handle)` — **cdecl** | 85.9 | A | permuter ran 188 non-vacuous iters → +0.15%; capped by `@<edi>` keystone `FUN_001a1a10` |
-| 0x1a0b30 | `char FUN_001a0b30(int@<edi>)` | 81.4 | B | reg-arg cap; equiv 100% cov but product (object_delete) unwitnessed → NEEDS_RUNTIME |
-| 0x1a0e00 | `void FUN_001a0e00(float threshold, int@<eax>)` | 82.3 | B | **strongest equiv** (50/50 HIGH, 3 exact heap writes, 0 div); CX=1 branch unhit → NEEDS_RUNTIME |
-| 0x1a1a10 | `int FUN_001a1a10(float, float*, void*, float*@<eax>, int@<edi>)` | 80.0 | B | reg-arg cap (this is the 1e70 keystone) |
+| 0x1a1e70 | `void biped_check_stuck_falling(int unit_handle)` — **cdecl** | 85.9 | A | permuter ran 188 non-vacuous iters → +0.15%; capped by `@<edi>` keystone `biped_collision_direction` |
+| 0x1a0b30 | `char biped_check_bad_pos(int@<edi>)` | 81.4 | B | reg-arg cap; equiv 100% cov but product (object_delete) unwitnessed → NEEDS_RUNTIME |
+| 0x1a0e00 | `void biped_advance_anim(float threshold, int@<eax>)` | 82.3 | B | **strongest equiv** (50/50 HIGH, 3 exact heap writes, 0 div); CX=1 branch unhit → NEEDS_RUNTIME |
+| 0x1a1a10 | `int biped_collision_direction(float, float*, void*, float*@<eax>, int@<edi>)` | 80.0 | B | reg-arg cap (this is the 1e70 keystone) |
 | 0x1a2160 | `void FUN_001a2160(int@<eax>)` | 73.4 | B | reg-arg cap |
 | 0x1a2290 | `char FUN_001a2290(int@<edi>)` | 84.4 | B | reg-arg cap; obj+0x424 disjoint write proven BENIGN; actor-veto path unexercised → NEEDS_RUNTIME |
 | 0x1a25e0 | `void FUN_001a25e0(int@<ecx>)` | 79.3 | B | reg-arg cap |
@@ -91,7 +91,7 @@ look at next.
 2. **0x1a0680 via VC71** — closest cdecl (83.2% real). Re-export an exact-range
    delinked ref, `compare_obj.py`, then a small structural/permuter pass to clear
    88% → activate on byte-match.
-3. **0x1a1e70** — in permuter band (85.9) but capped by keystone `FUN_001a1a10`;
+3. **0x1a1e70** — in permuter band (85.9) but capped by keystone `biped_collision_direction`;
    either resolve the keystone or accept the cap (don't re-churn — proven).
 4. Reuse the dual-oracle harness from step 1 for the rest of Category B
    (0b30/2290/2160/25e0/2a60/2b10/1a10).

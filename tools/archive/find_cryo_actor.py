@@ -5,7 +5,7 @@ Layout from datum_get(0x119320): element = data + index*element_size.
   actor_data ptr  = *0x6325a4
   header: element_size @+0x22 (u16), count @+0x2e (u16), data @+0x34 (u32)
   element[0] (u16) = salt (nonzero => valid slot)
-Actor fields (from FUN_00018b90 / FUN_0002a3f0 / guard init):
+Actor fields (from FUN_00018b90 / actor_can_move / guard init):
   +0x58  actor-type tag index (u32)
   +0x6c  current action (u16)
   +0x9c  scripted command-list/prop index (u16)   (cryo_explosion_1 == 30)

@@ -11,7 +11,7 @@ vc71_verify scores our (correct) lift against it as a large mismatch.
 This has produced several false "failed lift" verdicts:
   * FUN_00021270 (burst_parameters) -- unlisted FUN_00021310 -> 66.7%, true 84.9%
   * FUN_00174510 (transparent geom) -- unlisted FUN_00174690 -> 53.4%, true 100.0%
-  * FUN_001a88b0                    -- 22.0%, true 100.0%
+  * unit_map_animstate_to_idx                    -- 22.0%, true 100.0%
   * FUN_00103d30                    -- 48.8%, true  93.3%
 
 vc71_verify already falls back to a per-function chunk when it detects the

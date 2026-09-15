@@ -14,7 +14,7 @@ Assert `tag_groups.c:3089` "#idx not valid in [0, surface_count)" — `0xA0001` 
 **Analyst (Ghidra) findings, all disasm-confirmed:**
 - `unit+0x430/+0x434/+0x448` are **raw BSP surface indices** (sentinel -1); `0xA0001` is illegitimate.
 - The ORIGINAL reader `biped_find_pathfinding_surface_index` (0x1a1bc0) does **zero validation** (only `== -1` check; disasm 0x1a1c51/0x1a1c9f). So our clamp was **not byte-faithful**.
-- Both writers `FUN_001a25e0` (0x1a25e0) and `FUN_001a1a10` (0x1a1a10) are `ported=false` (run ORIGINAL); `FUN_001a25e0`'s lift is byte-faithful anyway (raw index only).
+- Both writers `FUN_001a25e0` (0x1a25e0) and `biped_collision_direction` (0x1a1a10) are `ported=false` (run ORIGINAL); `FUN_001a25e0`'s lift is byte-faithful anyway (raw index only).
 - Creation init `biped_new` (0x1a4990, original) sets 0x430/0x434 = -1 correctly.
 - **Real root cause = commit `26bb162a`** (ancestor of HEAD): `FUN_001a2f40` (ported) was copying `.flags` (entry+0x28, datum-handle-shaped) into physics+0xa4 instead of `.surface_handle` (entry+0x24); `FUN_001a5300` (original) copies physics+0xa4 → biped+0x430. Fix restored `.surface_handle`; current source `bipeds.c:3593/3599` matches.
 

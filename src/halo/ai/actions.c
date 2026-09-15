@@ -1417,7 +1417,7 @@ char actor_action_test_grenade(int actor_handle)
 }
 
 /* actor_action_try_to_seek_cover (0x1d350) — Attempt to make the actor seek
- * cover. Gets actor+0x270 as param_2 for FUN_00015040, then calls
+ * cover. Gets actor+0x270 as param_2 for actor_looking_flee_init, then calls
  * actor_action_change with action 4 if successful. */
 char actor_action_try_to_seek_cover(int actor_handle, char param_2,
                                     char param_3)
@@ -1428,7 +1428,7 @@ char actor_action_try_to_seek_cover(int actor_handle, char param_2,
 
   actor = (char *)datum_get(actor_data, actor_handle);
   cVar1 =
-    FUN_00015040(actor_handle, 0, ((actor_t *)actor)->target_target_prop_index,
+    actor_looking_flee_init(actor_handle, 0, ((actor_t *)actor)->target_target_prop_index,
                  0, param_2, param_3, local_88);
   if (cVar1 != '\0') {
     actor_action_change(actor_handle, 4, (int)local_88);
@@ -1437,15 +1437,15 @@ char actor_action_try_to_seek_cover(int actor_handle, char param_2,
   return 0;
 }
 
-/* FUN_0001d3c0 (0x1d3c0) — Attempt to make the actor seek cover with explicit
- * parameters. Calls FUN_00015040 with param_2/param_3/param_4 and no actor
+/* actor_action_try_to_seek_cover_explicit (0x1d3c0) — Attempt to make the actor seek cover with explicit
+ * parameters. Calls actor_looking_flee_init with param_2/param_3/param_4 and no actor
  * lookup, then actor_action_change with action 4 if successful. */
-char FUN_0001d3c0(int actor_handle, short param_2, int param_3, char param_4)
+char actor_action_try_to_seek_cover_explicit(int actor_handle, short param_2, int param_3, char param_4)
 {
   char cVar1;
   short local_88[66];
 
-  cVar1 = FUN_00015040(actor_handle, param_2, param_3, param_4, 0, 0, local_88);
+  cVar1 = actor_looking_flee_init(actor_handle, param_2, param_3, param_4, 0, 0, local_88);
   if (cVar1 != '\0') {
     actor_action_change(actor_handle, 4, (int)local_88);
     return 1;
@@ -1745,7 +1745,7 @@ float point_to_line_distance3d(float *p1, float *p2, float *p3)
  *     and actor_action_change(6).
  *   case 10: set panic state fields, try actor_action_handle_lost_contact,
  *     fallback to FUN_00015880 + actor_action_change(6).
- *   case 11: try FUN_00015040(0xd, ...), then FUN_00015880 fallback.
+ *   case 11: try actor_looking_flee_init(0xd, ...), then FUN_00015880 fallback.
  * Falls through to a final idle check: if action==0, try FUN_00012000(0, -1)
  * and actor_action_change(2).
  *
@@ -1852,7 +1852,7 @@ char actor_action_set_default_state(int actor_handle, short state)
 
   case 11:
     if (((actor_t *)actor)->state_action != _actor_action_flee) {
-      if (FUN_00015040(actor_handle, 0xd, -1, 1, 0, 0, (short *)local_88)) {
+      if (actor_looking_flee_init(actor_handle, 0xd, -1, 1, 0, 0, (short *)local_88)) {
         actor_action_change(actor_handle, 4, (int)local_88);
         result = 1;
         return result;
@@ -2025,11 +2025,11 @@ char actor_action_handle_surprise(int actor_handle, short type)
                weapon_state, -1, -1, 0);
 
   if (*(float *)(actv_tag + 0x90) > 0.0f) {
-    FUN_00021010(actor_handle, (int)(*(float *)(actv_tag + 0x90) * 30.0f));
+    actor_combat_begin_firing_fixed(actor_handle, (int)(*(float *)(actv_tag + 0x90) * 30.0f));
   }
 
   if (*(float *)(actv_tag + 0x8c) > 0.0f) {
-    FUN_00021040(actor_handle, (int)(*(float *)(actv_tag + 0x8c) * 30.0f));
+    actor_combat_raise_burst(actor_handle, (int)(*(float *)(actv_tag + 0x8c) * 30.0f));
   }
 
   FUN_00036da0(actor_handle);
@@ -2049,13 +2049,13 @@ char actor_action_handle_surprise(int actor_handle, short type)
  * evaluates the transition. In guard action (0x6c==4) with positive shield
  * value (actor+0xa8), clamps the shield to the panic level. Otherwise, if
  * enough time has passed since actor+0x398, checks whether to play a sound
- * event or attempt seek cover via FUN_0001d3c0. Clears panic level on exit.
+ * event or attempt seek cover via actor_action_try_to_seek_cover_explicit. Clears panic level on exit.
  *
  * Confirmed: datum_get(actor_data, actor_handle) at 0x1dd50.
  * Confirmed: game_time_get() at 0x1ddd6.
  * Confirmed: display_assert + system_exit pattern at 0x1de08-0x1de25.
  * Confirmed: ai_communication_event sound event call at 0x1de43.
- * Confirmed: FUN_0001d3c0 call at 0x1de74. */
+ * Confirmed: actor_action_try_to_seek_cover_explicit call at 0x1de74. */
 char actor_action_handle_panic_transition(int actor_handle, short param_2,
                                           char param_3, short param_4)
 {
@@ -2097,7 +2097,7 @@ char actor_action_handle_panic_transition(int actor_handle, short param_2,
       actor->stimuli_panic_type = 0;
       return result;
     }
-    result = FUN_0001d3c0(actor_handle, actor->stimuli_panic_type,
+    result = actor_action_try_to_seek_cover_explicit(actor_handle, actor->stimuli_panic_type,
                           actor->stimuli_panic_prop_index, bVar3);
   }
 done:
@@ -2358,7 +2358,7 @@ commit:
  * the action counter (actor+0x6e) greater than 1, throttle on a 0x1e-tick
  * cooldown (actor+0x370). On a fresh cooldown, gate on
  * actor_action_allow_cover_seeking then try actor_action_try_to_seek_cover;
- * failing that (and only when param2 is set) try FUN_0001d3c0 with the actor's
+ * failing that (and only when param2 is set) try actor_action_try_to_seek_cover_explicit with the actor's
  * cover target (actor+0x270). Returns 1 if a cover-seek action was started, 0
  * otherwise.
  *
@@ -2369,7 +2369,7 @@ commit:
  * actor_get_action_priority_flag(actor_handle);
  * actor_action_allow_cover_seeking(actor_handle, 0);
  * actor_action_try_to_seek_cover(actor_handle, 1, 0);
- * FUN_0001d3c0(actor_handle, 4, actor+0x270, param3). FPU: FLD actor+0x1bc;
+ * actor_action_try_to_seek_cover_explicit(actor_handle, 4, actor+0x270, param3). FPU: FLD actor+0x1bc;
  * FCOMP tag+0x2dc; TEST AH,0x41; JP => (actor+0x1bc <= tag+0x2dc). */
 char actor_action_handle_active_cover_seeking(int actor_handle, char param2,
                                               int param3)
@@ -2418,7 +2418,7 @@ char actor_action_handle_active_cover_seeking(int actor_handle, char param2,
                 return 1;
               }
               if (param2 != '\0') {
-                cVar1 = FUN_0001d3c0(
+                cVar1 = actor_action_try_to_seek_cover_explicit(
                   actor_handle, 4, ((actor_t *)actor)->target_target_prop_index,
                   param3);
                 if (cVar1 != '\0') {
@@ -2448,16 +2448,16 @@ char actor_action_handle_active_cover_seeking(int actor_handle, char param2,
  *    retry window (actor+0x37c), the 'actv' range (actv+0x170 when melee is
  *    preferred, else actv+0x160), a minimum distance 0.8f + max(0,
  *    tag+0x37c) when actor+0x1cb is set, and a randomized delay window past
- *    actor+0x380; on success builds action data via FUN_00013ef0(2) and
+ *    actor+0x380; on success builds action data via actor_looking_charge_init(2) and
  *    switches to action 10.
  * 3. Vehicle charge attempt: when actor+0x15e == 4 and not already charging,
  *    honors a cooldown (vehi+0x390 seconds past actor+0x388) and requires
  *    distance > variant+0x160 with prop+0x38 clear; builds action data via
- *    FUN_00013ef0(4).
+ *    actor_looking_charge_init(4).
  * Otherwise decides between charging (want/force flags from actor+0x375,
  * 'actr' flag 0x1000000, action-10 sub-state 2/3/4/5 flags, and for state 4
  * the vehicle ram distances vehi+0x394 / FUN_00013070 >= 0.5f) and falling
- * back to fight (FUN_00014620 + actor_action_change(3)). Ends with a
+ * back to fight (actor_looking_init_fight + actor_action_change(3)). Ends with a
  * state-consistency assert ladder (actions.c lines 0x87b-0x892).
  * FPU compares verified against disassembly: berserk timer uses
  * tag+0x328 > 0.0f; the delay window fires when
@@ -2552,7 +2552,7 @@ char actor_action_handle_combat_selection(int actor_handle)
         /* result discarded in the original */
         actor_has_ranged_weapon(actor_handle);
         ((actor_t *)actor)->field_37c = now;
-        if (FUN_00013ef0(actor_handle, 2, action_buf) != '\0') {
+        if (actor_looking_charge_init(actor_handle, 2, action_buf) != '\0') {
           actor_action_change(actor_handle, 10, (int)action_buf);
           result = 1;
         }
@@ -2578,7 +2578,7 @@ char actor_action_handle_combat_selection(int actor_handle)
         if (((actor_t *)actor)->field_15e == 4 &&
             distance > *(float *)(variant + 0x160) &&
             *(short *)(prop + 0x38) == 0 &&
-            FUN_00013ef0(actor_handle, 4, action_buf) != '\0') {
+            actor_looking_charge_init(actor_handle, 4, action_buf) != '\0') {
           actor_action_change(actor_handle, 10, (int)action_buf);
           result = 1;
           return result;
@@ -2660,7 +2660,7 @@ check_charge_flags:
     if (((actor_t *)actor)->state_action == _actor_action_charge)
       goto charge_started;
   }
-  if (FUN_00013ef0(actor_handle, 0, action_buf) == '\0')
+  if (actor_looking_charge_init(actor_handle, 0, action_buf) == '\0')
     goto abandon_charge;
   actor_action_change(actor_handle, 10, (int)action_buf);
   result = 1;
@@ -2674,7 +2674,7 @@ charge_started:
     return result;
 try_fight:
   if (((actor_t *)actor)->state_action != _actor_action_fight) {
-    if (FUN_00014620(actor_handle, action_buf) == '\0') {
+    if (actor_looking_init_fight(actor_handle, action_buf) == '\0') {
       display_assert("success", "c:\\halo\\SOURCE\\ai\\actions.c", 0x87b, 1);
       system_exit(-1);
     }
@@ -3048,8 +3048,8 @@ assert_handled:
 /* actor_action_handle_done_fleeing (0x1f6e0)
  * Handles the transition when an actor finishes fleeing (action type 4).
  * If the actor's current action is type 4 and the flag at actor+0xab is set,
- * calls FUN_00016210 to build a new action buffer from actor+0x9c, then
- * changes to action type 6. Asserts on FUN_00016210 failure. Returns 1 if
+ * calls actor_looking_guard_init_postcombat to build a new action buffer from actor+0x9c, then
+ * changes to action type 6. Asserts on actor_looking_guard_init_postcombat failure. Returns 1 if
  * the transition was performed, 0 otherwise. */
 char actor_action_handle_done_fleeing(int actor_handle)
 {
@@ -3064,7 +3064,7 @@ char actor_action_handle_done_fleeing(int actor_handle)
   if (((actor_t *)actor)->field_0ab == '\0') {
     return 0;
   }
-  cVar1 = FUN_00016210(actor_handle, (int)(actor + 0x9c), action_buf);
+  cVar1 = actor_looking_guard_init_postcombat(actor_handle, (int)(actor + 0x9c), action_buf);
   if (cVar1 == '\0') {
     display_assert("success", "c:\\halo\\SOURCE\\ai\\actions.c", 0xa79, 1);
     system_exit(-1);
@@ -3821,7 +3821,7 @@ char actor_action_handle_combat_transition(int actor_handle)
   actor = (char *)datum_get(actor_data, actor_handle);
   if (((actor_t *)actor)->field_06a < 3 && ((actor_t *)actor)->field_312 != 0) {
     ((actor_t *)actor)->field_06a = 3;
-    cVar1 = FUN_00016050(actor_handle, action_buf);
+    cVar1 = actor_looking_guard_init(actor_handle, action_buf);
     if (cVar1 != '\0') {
       actor_action_change(actor_handle, 6, (int)action_buf);
     } else {
@@ -3897,7 +3897,7 @@ char actor_action_handle_grenade_throwing(int actor_handle)
  *    has expired. Refreshes the cooldown, then gates on
  *    actor_action_allow_cover_seeking(actor,1); attempts
  *    actor_action_try_to_seek_cover, else (when the 'actr' flag 0x400000 is
- *    set) FUN_0001d3c0 toward the grenade prop.
+ *    set) actor_action_try_to_seek_cover_explicit toward the grenade prop.
  * 2. Selects an evasion radius from the 'actr' tag: tag+0x314 when actor+0x374
  *    is set and actor+0x378 is clear, otherwise tag+0x310. When actor+0x1ca is
  *    set and tag+0x318 exceeds *(float*)0x2533c0, the radius is clamped down to
@@ -3950,7 +3950,7 @@ char actor_action_handle_evasion(int actor_handle)
           return 1;
         }
         if ((*(unsigned int *)actr_tag & 0x400000) &&
-            FUN_0001d3c0(actor_handle, 5, ((actor_t *)actor)->field_3ac, 0)) {
+            actor_action_try_to_seek_cover_explicit(actor_handle, 5, ((actor_t *)actor)->field_3ac, 0)) {
           return 1;
         }
       }
@@ -4037,7 +4037,7 @@ char actor_action_handle_evasion(int actor_handle)
 }
 
 /* FUN_00021080 (0x21080) — Returns non-zero if the actor's fire_state
- * enum (actor+0x5f2) equals 4. Paired with FUN_00021040 (actor_combat.c),
+ * enum (actor+0x5f2) equals 4. Paired with actor_combat_raise_burst (actor_combat.c),
  * which sets fire_state to 4. */
 char FUN_00021080(int actor_handle)
 {

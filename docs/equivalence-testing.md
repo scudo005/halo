@@ -953,7 +953,7 @@ but not fixed:
 
 - `FUN_0008c030` — oracle passes `0x0` where the candidate passes scratch
   pointers (`0x10000800`, `0x10000c00`); runs under `--real-callees`.
-- `FUN_000142a0` — candidate reads `0xcccccccc`, the concolic phase's data-page
+- `actor_looking_conversation_init` — candidate reads `0xcccccccc`, the concolic phase's data-page
   fill, through a data ref the oracle reaches via an un-injected slot. Same
   address-space asymmetry, but on *injected* values rather than passed pointers.
 - `debug_keys_initialize` — no result within 600 s.

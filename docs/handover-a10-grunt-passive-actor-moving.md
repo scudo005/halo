@@ -450,14 +450,14 @@ behavior `actor+0xc0 == 3`**. `0xc0` is set to 3 at `actor_looking.c:2254` **onl
 `result != -1`** (else `0xc0=1`, stay), where:
 
 ```
-result = FUN_000272d0(actor, FUN_00025c10(actor, ...), ...)   // actor_looking.c:2243-2246
+result = actor_looking_assign_firing_position(actor, FUN_00025c10(actor, ...), ...)   // actor_looking.c:2243-2246
 ```
 - `FUN_00025c10` (FP evaluator) — generates/scores candidates; CALLS `actor_path_input_new` and runs A*.
-- `FUN_000272d0` (FP selector) — for the chosen candidate, ACCEPTS iff `actor_move_to_firing_position(...)`
+- `actor_looking_assign_firing_position` (FP selector) — for the chosen candidate, ACCEPTS iff `actor_move_to_firing_position(...)`
   returns **non-zero** (`actor_looking.c:7402`); else sets `actor+0x3b8 = -1` (reject → `result=-1`).
 - `actor_move_to_firing_position` setup-branch returns `actor_path_refresh(actor, 1, override)`.
 
-`FUN_00025c10`/`FUN_000272d0`/the scorer `FUN_00024cf0` are in **actor_looking** (never reverted
+`FUN_00025c10`/`actor_looking_assign_firing_position`/the scorer `actor_looking_eval_firing_positions` are in **actor_looking** (never reverted
 in any bisect run). They reproduce the defect via their **actor_moving callees**
 (`actor_path_input_new`, `actor_move_to_firing_position`→`actor_path_refresh`) — which is exactly
 why reverting actor_moving (Run H) fixes it while actor_looking stays patched.
@@ -465,7 +465,7 @@ why reverting actor_moving (Run H) fixes it while actor_looking stays patched.
 **Leading hypothesis (call-chain-supported, NOT yet probe-confirmed):** on broken,
 firing-position selection returns `-1` → behavior `0xc0` never becomes 3 → grunt stays in mode 1.
 **Whether this is "no candidates generated" (FUN_00025c10) vs "all candidates rejected"
-(FUN_000272d0) has NOT been measured — see §8.**
+(actor_looking_assign_firing_position) has NOT been measured — see §8.**
 
 ### Broken steady state is the EARLY-RETURN path, not a pathfinder failure
 On broken the probe shows `0x46c=1, 0x4a8=0, 0x484=1, 0x504=0`. This matches

@@ -131,11 +131,11 @@ This handoff exists partly because the grunt issue could not even be *observed* 
 
 **Agent memory notes:**
 - `reference_a10_grunt_aim_faithful_no_defect` — the verdict + forensics recipe (primary).
-- `project_poa_ai_passive_engage_forensics` — earlier "shoots but won't advance" forensics (root-caused a *different*, since-fixed scorer bug `FUN_00024cf0`, commit `2e4bb4ed`).
+- `project_poa_ai_passive_engage_forensics` — earlier "shoots but won't advance" forensics (root-caused a *different*, since-fixed scorer bug `actor_looking_eval_firing_positions`, commit `2e4bb4ed`).
 - `project_poa_actor_looking_529_nan_guard_fixed` — the crash that masked this.
 - `reference_xemu_gdbstub_halts_cpu_landmine` — the :1234 halt landmine + recovery.
 - `reference_a10_grunt_aim_faithful_no_defect` cross-links the live-read structure map.
 
-**Commits:** `d8ad32eb` (:529 finite-huge fix), `2e4bb4ed` (FUN_00024cf0 swapped LOS branches), `2ccb9a1f`, `7b5b3195`.
+**Commits:** `d8ad32eb` (:529 finite-huge fix), `2e4bb4ed` (actor_looking_eval_firing_positions swapped LOS branches), `2ccb9a1f`, `7b5b3195`.
 
 **Source:** `src/halo/ai/actor_looking.c` (`look_spec_28660_safe` ~line 8405; primary→active look-spec copy ~8911-8912; consumed ~8936). `src/halo/math/vector_math.c:178` (`valid_real_normal3d`).

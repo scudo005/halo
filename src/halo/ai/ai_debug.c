@@ -1170,7 +1170,7 @@ int FUN_00049c70(void)
  *   0x4a005  MOV [EBP-0x34],EDX  record+0x04 <- sound definition index
  * Confirmed: datum_get is (actor_data, handle) -- PUSH EAX (the handle read
  *   from 0x5ac9f8) then PUSH [0x6325a4], ADD ESP,8 at 0x49f89.
- * Confirmed: FUN_001a68d0's pushes at 0x49fd6 are EAX(=&[EBP-0x8]),
+ * Confirmed: unit_speech_slot_alloc's pushes at 0x49fd6 are EAX(=&[EBP-0x8]),
  *   ECX(=&[EBP-0x4]), 0, 1, 1, EBX, EDX, so left-to-right the arguments are
  *   (unit handle, vocalization index, 1, 1, NULL, &type, &sound index) and
  *   ADD ESP,0x1c confirms 7 stack dwords.
@@ -1185,7 +1185,7 @@ int FUN_00049c70(void)
  * Inferred: 0x5aca89 is a "debug speech requested" byte flag; it is set to 1
  *   unconditionally once the debug actor handle resolves, before the unit
  *   handle is even validated.
- * Uncertain: the two `1` arguments to FUN_001a68d0 are byte-width literals
+ * Uncertain: the two `1` arguments to unit_speech_slot_alloc are byte-width literals
  *   (PUSH 1 twice) whose meaning is not recoverable from this call site. */
 void ai_debug_vocalize(const char *vocalization_name,
                        const char *vocalization_type_name)
@@ -1206,7 +1206,7 @@ void ai_debug_vocalize(const char *vocalization_name,
       if (vocalization_index > 0 && vocalization_type != -1) {
         sound_definition_index = -1;
         communication_count =
-          FUN_001a68d0(*(int32_t *)((char *)actor + 0x18), vocalization_index,
+          unit_speech_slot_alloc(*(int32_t *)((char *)actor + 0x18), vocalization_index,
                        1, 1, NULL, &vocalization_type, &sound_definition_index);
         if (communication_count != 0) {
           csmemset(communication, 0, 0x30);
@@ -1244,7 +1244,7 @@ void ai_debug_vocalize(const char *vocalization_name,
  * Confirmed: [EBP-0x8] is a dword sound-definition index preset to -1 by
  *   MOV dword ptr [EBP-0x8],0xffffffff before the lookup, and [EBP-0x4] is a
  *   word vocalization type seeded from the 16-bit global at 0x6324ea.  Both
- *   are out-parameters of FUN_001a68d0 and are read back afterwards.
+ *   are out-parameters of unit_speech_slot_alloc and are read back afterwards.
  * Confirmed global widths (all accesses are of the stated size; widening any
  *   of them changes the emitted load/store and the 0xd1 wraparound):
  *   0x6324e0  byte   speak-block active flag
@@ -1261,7 +1261,7 @@ void ai_debug_vocalize(const char *vocalization_name,
  *   object_try_and_get_and_verify_type (0x13d640) @ 0x4a054, ADD ESP,8
  *     1  | PUSH EAX (= [0x6324e4])          | *(int32_t *)0x6324e4      | yes
  *     2  | PUSH 3 (pushed first)            | 3                         | yes
- *   FUN_001a68d0 (0x1a68d0) @ 0x4a0d7, ADD ESP,0x1c (7 dwords)
+ *   unit_speech_slot_alloc (0x1a68d0) @ 0x4a0d7, ADD ESP,0x1c (7 dwords)
  *     1  | PUSH EDX (= [0x6324e4])          | *(int32_t *)0x6324e4      | yes
  *     2  | PUSH 3                           | 3                         | yes
  *     3  | PUSH 0                           | 0                         | yes
@@ -1285,16 +1285,16 @@ void ai_debug_vocalize(const char *vocalization_name,
  *   crt_strchr (0x1d95d0) @ 0x4a150
  *     1  | PUSH EAX (strstr result)         | p                         | yes
  *     2  | PUSH 0x5c (pushed first)         | '\\'                      | yes
- *   FUN_001a67b0 (0x1a67b0) @ 0x4a174 and @ 0x4a1b7, ADD ESP,8
+ *   get_animation_state_str (0x1a67b0) @ 0x4a174 and @ 0x4a1b7, ADD ESP,8
  *     1  | PUSH EAX (= word [0x6324ea])     | *(int16_t *)0x6324ea      | yes
  *     2  | PUSH 0 (pushed first)            | 0                         | yes
  *   console_printf (0xff4d0) @ 0x4a184
  *     1  | PUSH 0 (pushed last)             | 0                         | yes
  *     2  | PUSH 0x259f2c                    | "%s: %s"                  | yes
- *     3  | PUSH EAX (FUN_001a67b0 result)   | FUN_001a67b0(index, 0)    | yes
+ *     3  | PUSH EAX (get_animation_state_str result)   | get_animation_state_str(index, 0)    | yes
  *     4  | PUSH ESI (pushed first)          | name                      | yes
  *   csstrcmp (0x8dcb0) @ 0x4a1c0
- *     1  | PUSH EAX (FUN_001a67b0 result)   | FUN_001a67b0(index, 0)    | yes
+ *     1  | PUSH EAX (get_animation_state_str result)   | get_animation_state_str(index, 0)    | yes
  *     2  | PUSH 0x25ad00 (pushed first)     | "unused"                  | yes
  *   The ADD ESP,0x1c at 0x4a12b is a single coalesced cleanup covering
  *   csmemset's three pushes, ai_communication_packet_new's one and
@@ -1326,7 +1326,7 @@ void ai_debug_vocalize(const char *vocalization_name,
  *   would drop two instructions.  The advance loop at 0x4a1a7 is a do/while
  *   whose bottom test re-reads the 16-bit global.
  *
- * Inferred: FUN_001a68d0's second argument 3 is a priority/importance selector
+ * Inferred: unit_speech_slot_alloc's second argument 3 is a priority/importance selector
  *   (ai_debug_vocalize passes the looked-up vocalization index there instead),
  *   and a returned count below 2 means "nothing to say", which is why the
  *   printed tag name degenerates to "<none>".
@@ -1377,7 +1377,7 @@ void FUN_0004a030(void)
     vocalization_type = *(int16_t *)0x6324ea;
     sound_definition_index = -1;
     communication_count =
-      FUN_001a68d0(*(int32_t *)0x6324e4, 3, 0, 0, NULL, &vocalization_type,
+      unit_speech_slot_alloc(*(int32_t *)0x6324e4, 3, 0, 0, NULL, &vocalization_type,
                    &sound_definition_index);
     if (communication_count >= 2) {
       csmemset(communication, 0, 0x30);
@@ -1405,14 +1405,14 @@ void FUN_0004a030(void)
     } else {
       name = "<none>";
     }
-    console_printf(0, "%s: %s", FUN_001a67b0(*(int16_t *)0x6324ea, 0), name);
+    console_printf(0, "%s: %s", get_animation_state_str(*(int16_t *)0x6324ea, 0), name);
     if (*(uint8_t *)0x6324e1 == 0) {
       *(int16_t *)0x6324ea = -1;
     } else {
       *(int16_t *)0x6324e8 = 0xf;
       do {
         *(int16_t *)0x6324ea = (int16_t)(*(int16_t *)0x6324ea + 1);
-        if (csstrcmp(FUN_001a67b0(*(int16_t *)0x6324ea, 0), "unused") != 0) {
+        if (csstrcmp(get_animation_state_str(*(int16_t *)0x6324ea, 0), "unused") != 0) {
           break;
         }
         if (*(uint8_t *)0x6324e2 == 0) {
@@ -2778,9 +2778,9 @@ float *ai_debug_drawstack(void)
  *           convention for object-pointer fields with no recovered struct
  *           (see the object+0x2d4 "owner handle" cast earlier in this file).
  *   0x4b6a1 weapon != NULL && *(int*)(weapon+0x2d4) == object_handle (i.e.
- *           the weapon's owner is this unit) selects the FUN_0001aae0 path;
+ *           the weapon's owner is this unit) selects the get_bounding_sphere path;
  *           otherwise biped_get_camera_height_and_offset.
- *   0x4b6b8 FUN_0001aae0(weapon_handle, center, &camera_height); the
+ *   0x4b6b8 get_bounding_sphere(weapon_handle, center, &camera_height); the
  *           height_offset out-param is not touched by this callee and is set
  *           to 0.0f explicitly right after (0x4b6c0), matching decompile.
  *   0x4b6d6 biped_get_camera_height_and_offset(object_handle, (vector3_t*)
@@ -2825,7 +2825,7 @@ void ai_debug_highlight_unit(int object_handle, void *color, char draw_flag)
   weapon_handle = *(int32_t *)((char *)unit + 0xcc);
   weapon = object_try_and_get_and_verify_type(weapon_handle, 3);
   if (weapon != NULL && *(int32_t *)((char *)weapon + 0x2d4) == object_handle) {
-    FUN_0001aae0(weapon_handle, center, &camera_height);
+    get_bounding_sphere(weapon_handle, center, &camera_height);
     height_offset = 0.0f;
   } else {
     biped_get_camera_height_and_offset(object_handle, (vector3_t *)center,

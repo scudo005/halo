@@ -358,7 +358,7 @@ def _first_function_insns_from_text(stdout: str, aliases) -> list[str] | None:
     # the function's final RET, which llvm-objdump decodes as garbage insns
     # (addb %al,(%eax) etc.).  The per-function chunk path previously skipped
     # this, counting ~20 phantom "instructions" per jump-table function and
-    # tanking the score (e.g. FUN_001a88b0 read 31 insns vs a real 10).
+    # tanking the score (e.g. unit_map_animstate_to_idx read 31 insns vs a real 10).
     # As in the whole-object path, label names distinguish post-RET arms that
     # branch back into the body from inline table data.
     insns = _trim_trailing_table_data(insns, defined)

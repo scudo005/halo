@@ -144,7 +144,7 @@ reference artifact, but for a different reason than stated above.
   alone moved `0xb7f90` from 86.9% → 89.8%.
 
 ### units.c
-15 raw fn-ptr casts → named calls; **named calls beat address casts** (`FUN_001b3690`
+15 raw fn-ptr casts → named calls; **named calls beat address casts** (`unit_update`
 81.1→81.5%, `unit_set_control` 97.6→98.2%, `unit_set_in_vehicle` 79.1→81.1%). raw-cast baseline
 382 → 367. Its VC71 floor is **stale**: 12 phantom regressions block commit but are byte-identical
 in a same-session before/after — use `--no-verify`, and do *not* run `vc71_regression.py update`,

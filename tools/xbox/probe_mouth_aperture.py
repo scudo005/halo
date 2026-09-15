@@ -3,7 +3,7 @@
 
 Lip-sync writes object+0x298 only through sound_object_apply_pitch_delta
 (0x1ac2f0), reached only when sound_update_music's callback-identity test
-matches.  The per-tick decay in FUN_001b3690 can only subtract.  So a
+matches.  The per-tick decay in unit_update can only subtract.  So a
 non-zero +0x298 on any unit is direct proof the lip-sync path executes;
 all-zero across a talking scene is proof it does not.  See
 docs/lift-learnings.md §54.

@@ -53,7 +53,7 @@
   },
   "entries": {
     "0x142a0": {
-      "name": "FUN_000142a0",
+      "name": "actor_looking_conversation_init",
       "obj": "actor_looking.obj",
       "addr": "0x142a0",
       "category": "arg_mismatch",
@@ -75,7 +75,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x14540": {
-      "name": "FUN_00014540",
+      "name": "actor_looking_init_scripted",
       "obj": "actor_looking.obj",
       "addr": "0x14540",
       "category": "arg_mismatch",
@@ -119,7 +119,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x15520": {
-      "name": "FUN_00015520",
+      "name": "actor_looking_flee_update",
       "obj": "actor_looking.obj",
       "addr": "0x15520",
       "category": "genuine",
@@ -162,7 +162,7 @@
       "notes": ""
     },
     "0x163d0": {
-      "name": "FUN_000163d0",
+      "name": "actor_looking_firing_state_eval",
       "obj": "actor_looking.obj",
       "addr": "0x163d0",
       "category": "dirty_eax",
@@ -441,7 +441,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x27090": {
-      "name": "FUN_00027090",
+      "name": "actor_looking_select_firing_position",
       "obj": "actor_looking.obj",
       "addr": "0x27090",
       "category": "dirty_eax",
@@ -463,7 +463,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x27a60": {
-      "name": "FUN_00027a60",
+      "name": "actor_looking_set_secondary_look_target",
       "obj": "actor_looking.obj",
       "addr": "0x27a60",
       "category": "dirty_eax",
@@ -526,7 +526,7 @@
       "notes": ""
     },
     "0x28cc0": {
-      "name": "FUN_00028cc0",
+      "name": "actor_primary_look_update",
       "obj": "actor_looking.obj",
       "addr": "0x28cc0",
       "category": "stale",
@@ -548,7 +548,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x2a2b0": {
-      "name": "FUN_0002a2b0",
+      "name": "actor_update_look_direction_validity",
       "obj": "actor_looking.obj",
       "addr": "0x2a2b0",
       "category": "call_seq_truncated",
@@ -4496,7 +4496,7 @@
       "notes": ""
     },
     "0x1a6280": {
-      "name": "FUN_001a6280",
+      "name": "biped_death_handler",
       "obj": "units.obj",
       "addr": "0x1a6280",
       "category": "arg_mismatch",
@@ -4518,7 +4518,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x1a6350": {
-      "name": "FUN_001a6350",
+      "name": "biped_update_dispatcher",
       "obj": "units.obj",
       "addr": "0x1a6350",
       "category": "genuine",
@@ -4649,7 +4649,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x1b0630": {
-      "name": "FUN_001b0630",
+      "name": "unit_update_aim_constraints",
       "obj": "units.obj",
       "addr": "0x1b0630",
       "category": "arg_mismatch",
@@ -4671,7 +4671,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x1b1400": {
-      "name": "FUN_001b1400",
+      "name": "unit_select_movement_on_state",
       "obj": "units.obj",
       "addr": "0x1b1400",
       "category": "arg_mismatch",
@@ -4715,7 +4715,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x1b3690": {
-      "name": "FUN_001b3690",
+      "name": "unit_update",
       "obj": "units.obj",
       "addr": "0x1b3690",
       "category": "stale",

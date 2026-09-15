@@ -53,7 +53,7 @@ void FUN_001b5500(int param_1)
   }
 }
 
-/* FUN_001b5580 (0x1b5580) */
+/* vehicle_causes_collision_damage (0x1b5580) */
 void vehicle_causes_collision_damage(int param_1, void *param_2)
 {
   unit_place(param_1, (char *)param_2 + 0x48);

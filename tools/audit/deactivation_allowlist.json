@@ -43,28 +43,28 @@
   },
   {
     "addr": "0x13dd0",
-    "name": "FUN_00013dd0",
+    "name": "actor_looking_collision_path_exists",
     "object": "actor_looking.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"
   },
   {
     "addr": "0x13ef0",
-    "name": "FUN_00013ef0",
+    "name": "actor_looking_charge_init",
     "object": "actor_looking.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"
   },
   {
     "addr": "0x14e90",
-    "name": "FUN_00014e90",
+    "name": "actor_looking_eval_flee_to_fire",
     "object": "actor_looking.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"
   },
   {
     "addr": "0x153e0",
-    "name": "FUN_000153e0",
+    "name": "actor_looking_has_reached_flee_pos",
     "object": "actor_looking.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"
@@ -78,7 +78,7 @@
   },
   {
     "addr": "0x27a60",
-    "name": "FUN_00027a60",
+    "name": "actor_looking_set_secondary_look_target",
     "object": "actor_looking.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"
@@ -862,14 +862,14 @@
   },
   {
     "addr": "0x1a0b30",
-    "name": "FUN_001a0b30",
+    "name": "biped_check_bad_pos",
     "object": "bipeds.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"
   },
   {
     "addr": "0x1a1a10",
-    "name": "FUN_001a1a10",
+    "name": "biped_collision_direction",
     "object": "bipeds.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"
@@ -883,7 +883,7 @@
   },
   {
     "addr": "0x1a1e70",
-    "name": "FUN_001a1e70",
+    "name": "biped_check_stuck_falling",
     "object": "bipeds.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"

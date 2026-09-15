@@ -1343,7 +1343,7 @@ void FUN_00057190(int param_1, int16_t param_2)
  * FUN_00057230 — advance command list for all actors in an encounter.
  * Logs "[thread]: ai_command_list_advance [encounter]", then iterates
  * encounter actors via ai_index_actor_iterator_new/ai_index_actor_iterator_next
- * and calls FUN_00017090(actor_handle) for each. Actor handle is at
+ * and calls actor_looking_compute_prop_interest(actor_handle) for each. Actor handle is at
  * local_1c+0x10. 0x57230 / encounters.obj
  */
 void FUN_00057230(int param_1)
@@ -1362,7 +1362,7 @@ void FUN_00057230(int param_1)
   ai_index_actor_iterator_new(param_1, local_1c);
   iVar2 = ai_index_actor_iterator_next(local_1c);
   while (iVar2 != 0) {
-    FUN_00017090(*(int *)(local_1c + 0x10));
+    actor_looking_compute_prop_interest(*(int *)(local_1c + 0x10));
     iVar2 = ai_index_actor_iterator_next(local_1c);
   }
 }
@@ -1371,7 +1371,7 @@ void FUN_00057230(int param_1)
  * FUN_000572c0 — advance command list for the actor attached to a unit.
  * Logs "[thread]: ai_command_list_advance_by_unit <some unit>". If
  * param_1 != -1 and the object has an actor at field_0x1a4 (or 0x1a8),
- * calls FUN_00017090 on that actor handle.
+ * calls actor_looking_compute_prop_interest on that actor handle.
  * 0x572c0 / encounters.obj
  */
 void FUN_000572c0(int param_1)
@@ -1386,11 +1386,11 @@ void FUN_000572c0(int param_1)
     iVar2 = (int)object_try_and_get_and_verify_type(param_1, 3);
     if (iVar2 != 0) {
       if (*(int *)((char *)iVar2 + 0x1a4) != -1) {
-        FUN_00017090(*(int *)((char *)iVar2 + 0x1a4));
+        actor_looking_compute_prop_interest(*(int *)((char *)iVar2 + 0x1a4));
         return;
       }
       if (*(int *)((char *)iVar2 + 0x1a8) != -1)
-        FUN_00017090(*(int *)((char *)iVar2 + 0x1a8));
+        actor_looking_compute_prop_interest(*(int *)((char *)iVar2 + 0x1a8));
     }
   }
 }
@@ -2054,7 +2054,7 @@ void FUN_00058110(int param_1)
 /*
  * FUN_000581b0 — direct an actor to look at an object (ai_look_at_object).
  * Gets actor from unit (field_0x1a4), builds a look_buf {6, object_handle},
- * calls FUN_00027a60(actor, 0xd, 1, look_buf). Logs if trace on.
+ * calls actor_looking_set_secondary_look_target(actor, 0xd, 1, look_buf). Logs if trace on.
  * 0x581b0 / encounters.obj
  */
 void FUN_000581b0(int param_1, int param_2)
@@ -2071,14 +2071,14 @@ void FUN_000581b0(int param_1, int param_2)
     if (*(int *)((char *)iVar2 + 0x1a4) != -1) {
       *(short *)look_buf = 6;
       look_buf[1] = param_2;
-      FUN_00027a60(*(int *)((char *)iVar2 + 0x1a4), 0xd, 1, (short *)look_buf);
+      actor_looking_set_secondary_look_target(*(int *)((char *)iVar2 + 0x1a4), 0xd, 1, (short *)look_buf);
     }
   }
 }
 
 /*
  * FUN_00058220 — stop an actor from looking (ai_stop_looking).
- * Gets actor from unit (field_0x1a4), calls FUN_00027870(actor).
+ * Gets actor from unit (field_0x1a4), calls actor_stop_scripted_look(actor).
  * 0x58220 / encounters.obj
  */
 void FUN_00058220(int param_1)
@@ -2092,7 +2092,7 @@ void FUN_00058220(int param_1)
   if (param_1 != -1) {
     iVar2 = (int)object_get_and_verify_type(param_1, 3);
     if (*(int *)((char *)iVar2 + 0x1a4) != -1)
-      FUN_00027870(*(int *)((char *)iVar2 + 0x1a4));
+      actor_stop_scripted_look(*(int *)((char *)iVar2 + 0x1a4));
   }
 }
 

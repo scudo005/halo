@@ -592,7 +592,7 @@ char FUN_00043090(int param_1, int param_2, int param_3)
  * ABI (disasm 0x430d0-0x43266): three register arguments plus seven cdecl
  * stack slots. ECX -> ESI = vocalization_type, EAX -> EBX =
  * sound_definition_index_reference, EDX -> EDI = priority (the assert string
- * at 0xc1a names the first two and `weight`; the callee decl of FUN_001a68d0
+ * at 0xc1a names the first two and `weight`; the callee decl of unit_speech_slot_alloc
  * names unit_handle/priority). Stack: [EBP+0x08] unit_handle, [EBP+0x0c]
  * param_5, [EBP+0x10] param_6, [EBP+0x14] param_7, [EBP+0x18] param_8,
  * [EBP+0x1c] weight, [EBP+0x20] failure_reason. Returns short: both exits do
@@ -633,7 +633,7 @@ short ai_communication_consider_speech(int *sound_definition_index_reference,
                  vocalization_type && sound_definition_index_reference &&
                    weight);
 
-  play_type = FUN_001a68d0(unit_handle, priority, param_7, 1, &last_speech_time,
+  play_type = unit_speech_slot_alloc(unit_handle, priority, param_7, 1, &last_speech_time,
                            vocalization_type, sound_definition_index_reference);
   if (play_type == 0) {
     if (failure_reason != 0) {
@@ -816,10 +816,10 @@ int16_t actor_communication_team(int actor_handle)
  *     trailing `CMP ESI,-1;JZ` at 0x43316 is provably dead on this path
  *     (only reachable here with ESI!=-1) but is kept as a literal condition
  *     rather than silently dropped.
- *   - Same look_buf convention as FUN_00014540/FUN_00043360 in this file:
+ *   - Same look_buf convention as actor_looking_init_scripted/FUN_00043360 in this file:
  *     short[8] { int16_t type; int16_t pad; int data[3]; }; only
  *     look_buf[0] and *(int*)&look_buf[2] are ever written.
- *   - FUN_00027a60(EBX, [EBP+8], [EBP+0xc], &look_buf) at 0x43346: args
+ *   - actor_looking_set_secondary_look_target(EBX, [EBP+8], [EBP+0xc], &look_buf) at 0x43346: args
  *     pushed EDX(&look_buf), EAX([EBP+0xc]=priority), ECX([EBP+8]=
  *     look_type), EBX(actor_handle) — cdecl ADD ESP,0x10 (4 args).
  * Uncertain: no evidence for this function's semantic name; kept as
@@ -863,7 +863,7 @@ void FUN_000432b0(int prop_handle, int actor_handle, int object_handle,
     look_buf[0] = 3;
     unit_get_head_position(object_handle, (float *)&look_buf[2]);
   }
-  FUN_00027a60(actor_handle, look_type, priority, look_buf);
+  actor_looking_set_secondary_look_target(actor_handle, look_type, priority, look_buf);
 }
 
 /* FUN_00043360 (0x43360) — issue a secondary "look at object" request
@@ -875,20 +875,20 @@ void FUN_000432b0(int prop_handle, int actor_handle, int object_handle,
  *   function's prologue, so EDI/ESI/BX are @<reg> parameters, not locals.
  * Confirmed: object_try_and_get_and_verify_type(ESI, -1) at 0x43378/0x4337d
  *   (cdecl, 2 args); NULL-result branch at 0x43380/0x43382.
- * Confirmed: look_buf layout matches the FUN_00014540 convention (this
+ * Confirmed: look_buf layout matches the actor_looking_init_scripted convention (this
  *   file's actor_looking.c, 0x14540): short[8] buffer, [0]=type tag,
  *   *(int*)&buf[2]=data[0]. Here only buf[0]=6 (MOV word [EBP-0x10],0x6 at
  *   0x4338e) and *(int*)&buf[2]=ESI (MOV dword [EBP-0xc],ESI at 0x43394) are
  *   written; buf[4..7] (data[1..2]) are left uninitialized, matching the
  *   original's single-store pattern — do not zero-fill them.
- * Confirmed: FUN_00027a60(EDI, [EBP+8], EBX, &look_buf) at 0x43397, args
+ * Confirmed: actor_looking_set_secondary_look_target(EDI, [EBP+8], EBX, &look_buf) at 0x43397, args
  *   pushed EAX(&buf), EBX(priority), ECX([EBP+8]=look_type stack param),
  *   EDI(actor_handle) — cdecl ADD ESP,0x10 (4 args).
  * Uncertain: no evidence for this function's semantic name, nor for the
- *   buf[0]=6 tag's meaning (FUN_00027a60 only special-cases tag==1; tag=6
+ *   buf[0]=6 tag's meaning (actor_looking_set_secondary_look_target only special-cases tag==1; tag=6
  *   is opaque here) or for the stack look_type parameter's caller-supplied
  *   value — kept as FUN_00043360 with params named for their forwarded
- *   role in FUN_00027a60's own signature. */
+ *   role in actor_looking_set_secondary_look_target's own signature. */
 void FUN_00043360(short look_type, int actor_handle, int object_handle,
                   short priority)
 {
@@ -898,7 +898,7 @@ void FUN_00043360(short look_type, int actor_handle, int object_handle,
     if (object_try_and_get_and_verify_type(object_handle, -1) != NULL) {
       look_buf[0] = 6;
       *(int *)&look_buf[2] = object_handle;
-      FUN_00027a60(actor_handle, look_type, priority, look_buf);
+      actor_looking_set_secondary_look_target(actor_handle, look_type, priority, look_buf);
     }
   }
 }
@@ -1349,9 +1349,9 @@ bool ai_conversation_line_begin(int conversation_handle)
  *     the `> 0 && --field == 0` form rather than three separate reads.
  *   - EBP-0x4 is written with a full dword (MOV dword ptr [EBP-0x4],EDX after
  *     XOR EDX,EDX / SETNZ DL), so the vocalization-type local is int-width and
- *     is passed to FUN_001a68d0 through a `short *` cast; EBP-0x8 is likewise
+ *     is passed to unit_speech_slot_alloc through a `short *` cast; EBP-0x8 is likewise
  *     a dword -1.
- *   - FUN_001a68d0's pushes at 0x43e2d..0x43e45 are EAX(=&[EBP-0x8]),
+ *   - unit_speech_slot_alloc's pushes at 0x43e2d..0x43e45 are EAX(=&[EBP-0x8]),
  *     ECX(=&[EBP-0x4]), 0, 0, 1, 1, EDX(=[ESI+0x18]); cdecl, so left-to-right
  *     the arguments are (unit handle, 1, 1, 0, NULL, &type, &sound index) and
  *     ADD ESP,0x1c confirms 7 stack dwords.
@@ -1369,11 +1369,11 @@ bool ai_conversation_line_begin(int conversation_handle)
  *   - MOV EDI,EAX; TEST DI,DI; JLE — the communication count is a signed
  *     16-bit `> 0` test.
  * Inferred: FUN_0003b120 (returns char, +0x6cc is a byte) is the actor
- *   "is fighting" predicate; the vocalization type passed to FUN_001a68d0 is
+ *   "is fighting" predicate; the vocalization type passed to unit_speech_slot_alloc is
  *   just that flag widened, and vocalization index 1 is a literal at this
  *   call site.
  * Uncertain: the meaning of the `1`/`0` byte-width literals in arguments 3
- *   and 4 of FUN_001a68d0 is not recoverable from this call site. */
+ *   and 4 of unit_speech_slot_alloc is not recoverable from this call site. */
 void actor_communication_update(int actor_handle)
 {
   char communication[0x30];
@@ -1393,7 +1393,7 @@ void actor_communication_update(int actor_handle)
       vocalization_type = (fighting != '\0');
       sound_definition_index = -1;
       communication_count =
-        FUN_001a68d0(actor->field_018, 1, 1, 0, NULL,
+        unit_speech_slot_alloc(actor->field_018, 1, 1, 0, NULL,
                      (short *)&vocalization_type, &sound_definition_index);
       if (communication_count > 0) {
         csmemset(communication, 0, 0x30);
@@ -1460,7 +1460,7 @@ void actor_communication_update(int actor_handle)
  *     + six varargs.
  * Uncertain: param_2 and param_3 keep mechanical names.  param_2 indexes the
  *   three high-water slots and picks "talk" vs "chatter"; param_3 is only
- *   ever handed to FUN_001a67b0 for the debug line.  Neither meaning is
+ *   ever handed to get_animation_state_str for the debug line.  Neither meaning is
  *   proven by a string or assert at this call site. */
 void ai_communication_update_speech_timers(int unit_handle, int16_t param_2,
                                            int16_t param_3,
@@ -1536,7 +1536,7 @@ void ai_communication_update_speech_timers(int unit_handle, int16_t param_2,
         }
         error(2, "%s %s %d/%s: %s %d",
               *(char **)(0x2c8d68 + (int)team_index * 8), FUN_001a6ca0(param_2),
-              (int)dialogue_type_index, FUN_001a67b0(param_3, 1), speech_kind,
+              (int)dialogue_type_index, get_animation_state_str(param_3, 1), speech_kind,
               ticks - base_ticks);
       }
     }

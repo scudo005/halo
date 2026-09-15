@@ -234,14 +234,14 @@ void FUN_00036b50(int param_1, int param_2)
 
 /* 0x36bd0 — Post an object-look stimulus (type 5, priority 1) to an actor.
  * Builds a look_buf with word 0x1 and passes param_2 (object handle) adjacent
- * so FUN_00027a60 can read it as part of the buffer. */
+ * so actor_looking_set_secondary_look_target can read it as part of the buffer. */
 void FUN_00036bd0(int actor_handle, int param_2)
 {
   short look_buf[4]; /* [0]=1, [2..3]=param_2 as int overlay */
 
   look_buf[0] = 1;
   *(int *)(&look_buf[2]) = param_2;
-  FUN_00027a60(actor_handle, 5, 1, look_buf);
+  actor_looking_set_secondary_look_target(actor_handle, 5, 1, look_buf);
 }
 
 /* FUN_00036c00 (0x36c00) — flee/scatter look reaction.
@@ -249,7 +249,7 @@ void FUN_00036bd0(int actor_handle, int param_2)
  * Resolves the actor record via datum_get(actor_data, actor_handle).
  * If actor+0x6a (short state) != 1, posts a position-look directive to the
  * actor by building a 16-byte look buffer { type=3, pad, float pos[3] } from
- * the caller's position vector and dispatching it through FUN_00027a60
+ * the caller's position vector and dispatching it through actor_looking_set_secondary_look_target
  * (actor_handle, 1, 1, look_buf).
  *
  * The object_handle and count parameters are present in the calling
@@ -258,10 +258,10 @@ void FUN_00036bd0(int actor_handle, int param_2)
  *
  * Confirmed: 4 cdecl args (caller passes actor_handle, object_handle,
  *   position, count); ADD ESP,0x8 after datum_get; ADD ESP,0x10 after
- *   FUN_00027a60.
+ *   actor_looking_set_secondary_look_target.
  * Confirmed: state field check is CMP word ptr [EAX+0x6a],0x1 / JZ skip.
  * Confirmed: look_buf layout — word 0x3 at +0x00, position[0..2] at +0x04.
- * Confirmed: FUN_00027a60(actor_handle, 1, 1, look_buf) — look_type=1,
+ * Confirmed: actor_looking_set_secondary_look_target(actor_handle, 1, 1, look_buf) — look_type=1,
  *   priority=1. */
 void FUN_00036c00(int actor_handle, int object_handle, float *position,
                   short count)
@@ -278,7 +278,7 @@ void FUN_00036c00(int actor_handle, int object_handle, float *position,
     *(float *)&look_buf[2] = position[0];
     *(float *)&look_buf[4] = position[1];
     *(float *)&look_buf[6] = position[2];
-    FUN_00027a60(actor_handle, 1, 1, look_buf);
+    actor_looking_set_secondary_look_target(actor_handle, 1, 1, look_buf);
   }
 }
 
@@ -286,7 +286,7 @@ void FUN_00036c00(int actor_handle, int object_handle, float *position,
  * != 0), post priority-6 stimulus to prop+0xe0. Otherwise call FUN_00036b50,
  * then check linked player/actor handles for perception and team-friendliness.
  * Always finishes with a look-at-prop stimulus (type 7, priority 1) via
- * FUN_00027a60. */
+ * actor_looking_set_secondary_look_target. */
 void FUN_00036c50(int actor_handle, int prop_handle)
 {
   char *prop;
@@ -335,7 +335,7 @@ void FUN_00036c50(int actor_handle, int prop_handle)
 exit_look:
   look_buf[0] = 1;
   *(int *)&look_buf[2] = prop_handle;
-  FUN_00027a60(actor_handle, 7, 1, look_buf);
+  actor_looking_set_secondary_look_target(actor_handle, 7, 1, look_buf);
 }
 
 /* 0x36da0 — Set actor stimulus-received flag at offset +0x2f0 to 1. */
@@ -479,7 +479,7 @@ void FUN_00036f20(int actor_handle, int prop_handle, int param_3, char param_4)
     goto exit_fun;
   look_buf[0] = 1;
   *(int *)&look_buf[2] = prop_handle;
-  FUN_00027a60(actor_handle, 4, 1, look_buf);
+  actor_looking_set_secondary_look_target(actor_handle, 4, 1, look_buf);
   if (*(char *)(prop + 0x60) == '\0')
     goto exit_fun;
 
@@ -579,7 +579,7 @@ exit_fun:
  *   calls FUN_00036960(actor, 5, prop_handle, position_b)
  *   calls FUN_00036890(actor, NULL, 5, position_b,
  * -1,0,0x5a,prop_handle,0x96,0) Then builds a type-1 (prop) or type-4
- * (direction) look buf and calls FUN_00027a60(actor, 0xb, 1, buf). Source:
+ * (direction) look buf and calls actor_looking_set_secondary_look_target(actor, 0xb, 1, buf). Source:
  * c:\halo\SOURCE\ai\actor_stimulus.c line ~0x154. */
 void FUN_00037240(int actor_handle, int prop_handle, int unused_param_3,
                   float *position)
@@ -642,7 +642,7 @@ void FUN_00037240(int actor_handle, int prop_handle, int unused_param_3,
     *(unsigned int *)((char *)local_buf + 12) = *(unsigned int *)&local_dir[2];
   }
 
-  FUN_00027a60(actor_handle, 0xb, 1, local_buf);
+  actor_looking_set_secondary_look_target(actor_handle, 0xb, 1, local_buf);
 }
 
 /* FUN_000373b0 (0x373b0) — charge effect dispatch (audible AI broadcast).
@@ -675,7 +675,7 @@ void FUN_00037240(int actor_handle, int prop_handle, int unused_param_3,
  *
  * Finally, write a 16-byte look_buf { word 3, float pos[3] } from the raw
  * broadcast position and dispatch it as a look directive via
- * FUN_00027a60(actor_handle, 3, 1, look_buf) — look_type=3, priority=1.
+ * actor_looking_set_secondary_look_target(actor_handle, 3, 1, look_buf) — look_type=3, priority=1.
  *
  * Confirmed: ADD ESP,0x10 cleans datum_get(2) + tag_get(2). Tag id 'actr'.
  * Confirmed: 4-arg cdecl signature at caller (actors_handle_spatial_effect
@@ -733,7 +733,7 @@ void FUN_000373b0(int actor_handle, int object_handle, float *position,
   *(float *)&look_buf[2] = position[0];
   *(float *)&look_buf[4] = position[1];
   *(float *)&look_buf[6] = position[2];
-  FUN_00027a60(actor_handle, 3, 1, look_buf);
+  actor_looking_set_secondary_look_target(actor_handle, 3, 1, look_buf);
 }
 
 /* FUN_000374f0 (0x374f0) — cover/take-cover look reaction.
@@ -753,13 +753,13 @@ void FUN_000373b0(int actor_handle, int object_handle, float *position,
  * friendliness via game_allegiance_get_team_is_friendly(actor+0x3e,
  * obj+0x68); when friendly, posts FUN_000369c0(actor_handle, 2, 900).
  * Finally posts a position-look at priority-1, look_type=6 with the
- * original input position via FUN_00027a60.
+ * original input position via actor_looking_set_secondary_look_target.
  *
  * Confirmed: 4 cdecl args matching dispatch in actors_handle_spatial_effect;
  * ESP cleanup ADD ESP,0x14 after datum_get+tag_get; ADD ESP,0x10 after
  * FUN_00036960; ADD ESP,0x18 after FUN_00036890; ADD ESP,0x10 after
  * game_allegiance_get_team_is_friendly; ADD ESP,0xc after FUN_000369c0; ADD
- * ESP,0x10 after FUN_00027a60. Confirmed: FUN_00036890 reg ABI — @ecx=vec1,
+ * ESP,0x10 after actor_looking_set_secondary_look_target. Confirmed: FUN_00036890 reg ABI — @ecx=vec1,
  * @eax=actor,
  * @edx=priority,
  *   @ebx=vec2; verified against sibling FUN_000373b0 call site at 0x374b4.
@@ -805,7 +805,7 @@ void FUN_000374f0(int actor_handle, int object_handle, float *position,
   *(float *)&look_buf[2] = position[0];
   *(float *)&look_buf[4] = position[1];
   *(float *)&look_buf[6] = position[2];
-  FUN_00027a60(actor_handle, 6, 1, look_buf);
+  actor_looking_set_secondary_look_target(actor_handle, 6, 1, look_buf);
 }
 
 /* FUN_00037630 (0x37630) — actor surprise-encounter update.
@@ -1600,7 +1600,7 @@ char FUN_00038370(int actor_handle)
 
   /* Early exit: actor is busy or in flood-specific suppressed state */
   if (unit_is_busy(((actor_t *)actor)->field_018) ||
-      FUN_0002a3d0(actor_handle) || ((actor_t *)actor)->field_06a < 3) {
+      set_actor_is_in_veichle(actor_handle) || ((actor_t *)actor)->field_06a < 3) {
   exit_1:
     ((actor_t *)actor)->field_362 = 0;
     return 1;
@@ -6323,7 +6323,7 @@ void actor_swarm_unit_died(int actor_handle, int unit_handle)
  *       if valid encounter and action type in [2,3] → return 1;
  *       if action type in [4,5] and actor_get_action_priority_flag returned 3 →
  * return 1.
- *   - FUN_0002a3d0(actor_handle) checks byte at actor+0x4a8 (non-zero =
+ *   - set_actor_is_in_veichle(actor_handle) checks byte at actor+0x4a8 (non-zero =
  * vehicle?): if mode==3 and actor+0x6c==6 and biped+0x62==1 → return 1. if
  * mode==5 and encounter+0x12e!=0 → return 1.
  *   - Increment word[actor+0x14] (idle ticks); if > 0x3b (59): deactivate and
@@ -6343,7 +6343,7 @@ void actor_swarm_unit_died(int actor_handle, int unit_handle)
  * Confirmed: actor_set_dormant(actor_handle, flag) cdecl 2 args — ADD ESP,0x8.
  * Confirmed: actor_get_action_priority_flag(actor_handle) cdecl 1 arg → short action
  * type in AX. Return stored in DI; compared as 16-bit (CMP DI,0x2 / CMP
- * DI,0x3). Confirmed: FUN_0002a3d0(actor_handle) cdecl 1 arg → byte at
+ * DI,0x3). Confirmed: set_actor_is_in_veichle(actor_handle) cdecl 1 arg → byte at
  * actor+0x4a8. Confirmed: mode==3 path: CMP word[ESI+0x6c],6; CMP
  * word[EBX+0x62],1 (biped rec). EBX = DAT_005ab270 datum_get result (biped
  * record), set at 0x3daf7. Confirmed: mode==5 path: datum_get(DAT_005ab23c,
@@ -6361,7 +6361,7 @@ void actor_swarm_unit_died(int actor_handle, int unit_handle)
  * handle (int). Inferred: encounter+0x12e = scripted flag (char);
  * encounter+0x60 = active (char); encounter+0x127 = some exclusion flag (char);
  * encounter+0x24 = type/state short. Inferred: actor+0x4a8 = in-vehicle or
- * mounted flag (byte, read by FUN_0002a3d0). Inferred: actor+0x46c = activation
+ * mounted flag (byte, read by set_actor_is_in_veichle). Inferred: actor+0x46c = activation
  * mode (short); 3=biped-ride, 5=encounter-board. Inferred: actor+0x470 =
  * secondary encounter handle (int) used with mode==5. */
 /* 0x3d3d0 — Set or restore actor dormancy state and fields +0x6a/+0x6c.
@@ -6868,7 +6868,7 @@ char FUN_0003d9f0(int actor_handle)
   }
 
   /* Check in-vehicle / mounted flag */
-  in_vehicle = FUN_0002a3d0(actor_handle);
+  in_vehicle = set_actor_is_in_veichle(actor_handle);
   if (in_vehicle != 0) {
     if (((actor_t *)actor)->field_46c == 3) {
       /* Biped-ride mode: check biped action state */
@@ -7991,9 +7991,9 @@ void FUN_0003ec80(int actor_handle /* @<esi> */)
   FUN_0003bbf0(actor_handle);
   actor_action_control(actor_handle);
   actor_communication_update(actor_handle);
-  FUN_00014540(actor_handle);
+  actor_looking_init_scripted(actor_handle);
   actor_destination_update(actor_handle);
-  FUN_0002a2b0(actor_handle);
+  actor_update_look_direction_validity(actor_handle);
   actor_move_update(actor_handle);
   actor_look_update(actor_handle);
   actor_combat_update(actor_handle);

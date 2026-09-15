@@ -4237,7 +4237,7 @@ void FUN_0013a740(int param_1, int param_2, float *param_3)
 }
 
 /* 0x13aa10: gather the light markers that illuminate an object.  Computes the
- * object's bounding sphere (center local_2c, radius local_8) via FUN_0001aae0,
+ * object's bounding sphere (center local_2c, radius local_8) via get_bounding_sphere,
  * then iterates the object's cluster set (object_get_first_cluster /
  * object_get_next_cluster over iter_state local_10).  For each cluster it calls
  * FUN_00139c20 to select the strongest point lights into the caller's marker
@@ -4257,7 +4257,7 @@ void FUN_0013aa10(int param_1, int param_2)
   short i;
   int light;
 
-  FUN_0001aae0(param_1, center, &radius);
+  get_bounding_sphere(param_1, center, &radius);
   count = (short *)(param_2 + 0x40);
   *count = 0;
 

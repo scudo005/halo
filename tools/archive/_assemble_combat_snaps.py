@@ -83,9 +83,9 @@ def carry_rdata(r):
 # scalars are scene-invariant function inputs, not capture-dependent).
 TARGETS = {
     "FUN_001a0680": {"unit_handle": HANDLE},
-    "FUN_001a0b30": {"unit_handle": HANDLE},
-    "FUN_001a0e00": {"unit_handle": HANDLE, "eax": HANDLE, "threshold": 0x3DCCCCCD},
-    "FUN_001a1a10": {"unit_handle": HANDLE, "edi": HANDLE, "scale": 0x40000000,
+    "biped_check_bad_pos": {"unit_handle": HANDLE},
+    "biped_advance_anim": {"unit_handle": HANDLE, "eax": HANDLE, "threshold": 0x3DCCCCCD},
+    "biped_collision_direction": {"unit_handle": HANDLE, "edi": HANDLE, "scale": 0x40000000,
                      "direction": 0x28CAA8, "eax": 0x28CAA8},
     "FUN_001a2290": {"unit_handle": HANDLE, "edi": HANDLE},
     "FUN_001a2b10": {"unit_handle": HANDLE, "edi": HANDLE},

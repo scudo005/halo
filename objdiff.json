@@ -3872,41 +3872,41 @@
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00013dd0",
+   "name": "halo/actor_looking_actor_looking_collision_path_exists",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00013dd0.obj",
+   "base_path": "delinked/actor_looking_actor_looking_collision_path_exists.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00013ef0",
+   "name": "halo/actor_looking_actor_looking_charge_init",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00013ef0.obj",
+   "base_path": "delinked/actor_looking_actor_looking_charge_init.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00014480",
+   "name": "halo/actor_looking_actor_looking_prop_look_init",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00014480.obj",
+   "base_path": "delinked/actor_looking_actor_looking_prop_look_init.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00014540",
+   "name": "halo/actor_looking_actor_looking_init_scripted",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00014540.obj",
+   "base_path": "delinked/actor_looking_actor_looking_init_scripted.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00014620",
+   "name": "halo/actor_looking_actor_looking_init_fight",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00014620.obj",
+   "base_path": "delinked/actor_looking_actor_looking_init_fight.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
@@ -3920,25 +3920,25 @@
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00014e90",
+   "name": "halo/actor_looking_actor_looking_eval_flee_to_fire",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00014e90.obj",
+   "base_path": "delinked/actor_looking_actor_looking_eval_flee_to_fire.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00015040",
+   "name": "halo/actor_looking_actor_looking_flee_init",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00015040.obj",
+   "base_path": "delinked/actor_looking_actor_looking_flee_init.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00015520",
+   "name": "halo/actor_looking_actor_looking_flee_update",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00015520.obj",
+   "base_path": "delinked/actor_looking_actor_looking_flee_update.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
@@ -3952,9 +3952,9 @@
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00015cf0",
+   "name": "halo/actor_looking_actor_looking_guard_update",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00015cf0.obj",
+   "base_path": "delinked/actor_looking_actor_looking_guard_update.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
@@ -3968,17 +3968,17 @@
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00016050",
+   "name": "halo/actor_looking_actor_looking_guard_init",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00016050.obj",
+   "base_path": "delinked/actor_looking_actor_looking_guard_init.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00016210",
+   "name": "halo/actor_looking_actor_looking_guard_init_postcombat",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00016210.obj",
+   "base_path": "delinked/actor_looking_actor_looking_guard_init_postcombat.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
@@ -4088,9 +4088,9 @@
    }
   },
   {
-   "name": "halo/actor_looking_FUN_0001a670",
+   "name": "halo/actor_looking_actor_looking_uncover_init",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_0001a670.obj",
+   "base_path": "delinked/actor_looking_actor_looking_uncover_init.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
@@ -4128,17 +4128,17 @@
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00024cf0",
+   "name": "halo/actor_looking_actor_looking_eval_firing_positions",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00024cf0.obj",
+   "base_path": "delinked/actor_looking_actor_looking_eval_firing_positions.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
   },
   {
-   "name": "halo/actor_looking_FUN_000272d0",
+   "name": "halo/actor_looking_actor_looking_assign_firing_position",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_000272d0.obj",
+   "base_path": "delinked/actor_looking_actor_looking_assign_firing_position.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
@@ -4152,9 +4152,9 @@
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00027090",
+   "name": "halo/actor_looking_actor_looking_select_firing_position",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00027090.obj",
+   "base_path": "delinked/actor_looking_actor_looking_select_firing_position.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
@@ -4168,9 +4168,9 @@
    }
   },
   {
-   "name": "halo/actor_looking_FUN_000278e0",
+   "name": "halo/actor_looking_actor_looking_compute_prop_threat_score",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_000278e0.obj",
+   "base_path": "delinked/actor_looking_actor_looking_compute_prop_threat_score.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
@@ -4184,9 +4184,9 @@
    }
   },
   {
-   "name": "halo/actor_looking_FUN_00027a60",
+   "name": "halo/actor_looking_actor_looking_set_secondary_look_target",
    "target_path": "build/vc71/actor_looking.obj",
-   "base_path": "delinked/actor_looking_FUN_00027a60.obj",
+   "base_path": "delinked/actor_looking_actor_looking_set_secondary_look_target.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
@@ -4200,9 +4200,9 @@
    }
   },
   {
-   "name": "halo/actor_looking_FUN_0002a2b0",
+   "name": "halo/actor_looking_actor_update_look_direction_validity",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actor_looking.c.obj",
-   "base_path": "delinked/actor_looking_FUN_0002a2b0.obj",
+   "base_path": "delinked/actor_looking_actor_update_look_direction_validity.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_looking.c"
    }
@@ -6912,17 +6912,17 @@
    }
   },
   {
-   "name": "halo/units/biped_FUN_001a0b30",
+   "name": "halo/units/biped_biped_check_bad_pos",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/units/bipeds.c.obj",
-   "base_path": "delinked/biped_FUN_001a0b30.obj",
+   "base_path": "delinked/biped_biped_check_bad_pos.obj",
    "metadata": {
     "source_path": "src/halo/units/bipeds.c"
    }
   },
   {
-   "name": "halo/units/biped_FUN_001a1a10",
+   "name": "halo/units/biped_biped_collision_direction",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/units/bipeds.c.obj",
-   "base_path": "delinked/biped_FUN_001a1a10.obj",
+   "base_path": "delinked/biped_biped_collision_direction.obj",
    "metadata": {
     "source_path": "src/halo/units/bipeds.c"
    }
@@ -6936,9 +6936,9 @@
    }
   },
   {
-   "name": "halo/units/biped_FUN_001a1e70",
+   "name": "halo/units/biped_biped_check_stuck_falling",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/units/bipeds.c.obj",
-   "base_path": "delinked/biped_FUN_001a1e70.obj",
+   "base_path": "delinked/biped_biped_check_stuck_falling.obj",
    "metadata": {
     "source_path": "src/halo/units/bipeds.c"
    }
@@ -6992,9 +6992,9 @@
    }
   },
   {
-   "name": "halo/units_FUN_001a67b0",
+   "name": "halo/units_get_animation_state_str",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/units/units.c.obj",
-   "base_path": "delinked/units_FUN_001a67b0.obj",
+   "base_path": "delinked/units_get_animation_state_str.obj",
    "metadata": {
     "source_path": "src/halo/units/units.c"
    }

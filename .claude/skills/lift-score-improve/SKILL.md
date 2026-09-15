@@ -317,7 +317,7 @@ lever:
    float dir1 = direction[1];
    float dir2 = direction[2];
    ```
-   **Expected gain: +11.5pp (FUN_001a1a10, 80% → 91.5%).**
+   **Expected gain: +11.5pp (biped_collision_direction, 80% → 91.5%).**
 
 2. **This function CALLS `@<reg>`-arg callees.** Each such call site costs
    ~1 `pushl`-vs-`movl` mnemonic mismatch under the default verify lane

@@ -30,11 +30,11 @@ can collect it. Without the flag, corpses look like they “linger.”
 Binary-backed chain (all VAs into cachebeta 2276):
 
 1. **Kill** — `object_deplete_body` (`0x137530`, VC71 100%) ORs `object+0xb6` bit 4
-   (dead). Combat deaths do **not** go through `FUN_001b1400`; that helper is
+   (dead). Combat deaths do **not** go through `unit_select_movement_on_state`; that helper is
    only used from `unit_place` for already-dead placement.
-2. **Each biped tick** — `FUN_001a6350` (`0x1a6350`, ~88%) sees dead + no parent
-   (`object+0xcc == -1`) and calls `FUN_001a6280` (`0x1a6280`, ~86%).
-3. **`FUN_001a6280`** writes desired anim state `*state_out = 0x19` (landing-dead),
+2. **Each biped tick** — `biped_update_dispatcher` (`0x1a6350`, ~88%) sees dead + no parent
+   (`object+0xcc == -1`) and calls `biped_death_handler` (`0x1a6280`, ~86%).
+3. **`biped_death_handler`** writes desired anim state `*state_out = 0x19` (landing-dead),
    unless already limp or dying-airborne (`0x18`).
 4. **`FUN_001b0d90`** (`0x1b0d90`) applies that desired state via `FUN_001a86b0`
    (100%) then `FUN_001ad260`.
@@ -80,7 +80,7 @@ Jump table at `0x1ad714`, 44 states. State `0x19` → `0x1ad488`:
 `mov eax, 1; jmp overlay_lookup` at `0x1ad455`. Overlay 0 is `"airborne-dead"`.
 
 XBE has **24 CALLs**. Candidate SHAPE was 16 vs 24. Those 8 extras are same-TU
-inlining (`FUN_001a88b0` ×2) and debug `MISSING:` warnings gated on
+inlining (`unit_map_animstate_to_idx` ×2) and debug `MISSING:` warnings gated on
 `*(uint8_t*)0x5054fb`, **not** a dropped `landing-dead` apply. The third
 `tag_block_get_element(mode_block+0xb0, unit+0x252, 0x3c)` is discarded in the
 XBE too (`mov al,[esi+0x253]` immediately after).
@@ -119,14 +119,14 @@ Not on the limp call.
 | `FUN_001a8790` | `0x1a8790` | 100% | Finished-anim “can apply” |
 | `FUN_001ab870` | `0x1ab870` | 96.8% | Returns 2 when anim finished |
 | `biped_start_limp_body_physics` | `0x1a0970` | 95.0% | Sets limp; requires at-rest |
-| `FUN_001a6280` | `0x1a6280` | 86.4% | Writes desired `0x19` |
-| `FUN_001a6350` | `0x1a6350` | 88.0% | Dead dispatch → `FUN_001a6280` |
+| `biped_death_handler` | `0x1a6280` | 86.4% | Writes desired `0x19` |
+| `biped_update_dispatcher` | `0x1a6350` | 88.0% | Dead dispatch → `biped_death_handler` |
 | `unit_died` | `0x1b3060` | 73.2% | Drops, garbage flag; **does not** set `+0xb6` bit 4 |
-| `FUN_001b1400` | `0x1b1400` | 74.4% | Death *placement* impulse only (4 dropped calls, FCOM). Not MP combat kill |
+| `unit_select_movement_on_state` | `0x1b1400` | 74.4% | Death *placement* impulse only (4 dropped calls, FCOM). Not MP combat kill |
 | `FUN_001a4440` / `FUN_001a5300` | `0x1a4440` / `0x1a5300` | unported | Likely at-rest physics; still original bytes |
 
-`FUN_001a6350` only requests `0x19` when the biped is **free**. If
-`object+0xcc` is still a parent after death, `FUN_001a6280` never runs.
+`biped_update_dispatcher` only requests `0x19` when the biped is **free**. If
+`object+0xcc` is still a parent after death, `biped_death_handler` never runs.
 
 Current weapon is **not** dropped on death (matches XBE). Extra weapons and
 grenades are. MP items are not garbage-flagged on rest (matches our C).
@@ -157,7 +157,7 @@ of the bit that blocks at-rest.
 
 ### The chain to at-rest
 
-`FUN_001a6350` calls, in order: `FUN_001a5300` (physics) -> `FUN_001a6280`
+`biped_update_dispatcher` calls, in order: `FUN_001a5300` (physics) -> `biped_death_handler`
 (death state) -> `FUN_001b0d90` (apply / limp start). `FUN_001a5300` builds a
 biped-physics struct at `ebp-0xe4` and passes it in `ESI` to `FUN_001a2f40`
 (`0x1a5dfb`: `lea esi,[ebp-0xe4]; call 0x1a2f40`). On return, `FUN_001a5300`
@@ -253,11 +253,11 @@ and need no work:
 - `biped_start_limp_body_physics` (`0x1a0970`) -- gate order and both ORs match.
 - `FUN_001b0d90` limp case (`0x1b0fef`-`0x1b1061`) -- `tag+0x17c` bit 1,
   `unit+0x4` bit `0x20`, `unit+0x64`, `biped+0x424` bit 0 / `tag+0x2f4` bit 10.
-- `FUN_001a6280` (`0x1a6280`) -- limp-noodle sub-step, dying-airborne
+- `biped_death_handler` (`0x1a6280`) -- limp-noodle sub-step, dying-airborne
   (`+0x459 >= 3` signed), normal dying `0x19`.
-- `FUN_001a6350` (`0x1a6350`) -- parent dispatch, normalize gate, `+0x42a`
+- `biped_update_dispatcher` (`0x1a6350`) -- parent dispatch, normalize gate, `+0x42a`
   anim-mode switch, velocity clamp, `+0x459`/`+0x45a` counters, dead ->
-  `FUN_001a6280`.
+  `biped_death_handler`.
 - `FUN_001ab870` (`0x1ab870`) -- thin wrapper over unported
   `animation_update_internal` (`0x121c30`); returns `(short)EAX`.
 - `FUN_001ad260` state `0x19` -> overlay index 1, and the `-1` overlay path
@@ -299,7 +299,7 @@ Parked, do **not** start here:
 - Inverting `object_visible_to_any_player` FCOM (GC linger *after* limp, not
   the missing flag).
 - Chasing `FUN_001ad260` from 76.8% as if case `0x19` were missing.
-- Treating `FUN_001b1400` as the MP kill path.
+- Treating `unit_select_movement_on_state` as the MP kill path.
 
 ---
 
@@ -323,7 +323,7 @@ Act on the **first** patched mismatch, rebuild, dump again.
 
 - `FUN_001ad260` — `src/halo/units/units.c` (~7712), XBE `0x1ad260`–`0x1ad713`
 - `FUN_001b0d90` limp — `units.c` (~10988), XBE `0x1b0fef`–`0x1b1061`
-- `FUN_001a6280` / `FUN_001a6350` — `units.c` (~838 / ~893)
+- `biped_death_handler` / `biped_update_dispatcher` — `units.c` (~838 / ~893)
 - `biped_start_limp_body_physics` — `src/halo/units/bipeds.c` (~545)
 - `object_deplete_body` dead bit — `src/halo/objects/damage.c` (~802)
 - Overlay name table — `0x322450` (index 1 = landing-dead)

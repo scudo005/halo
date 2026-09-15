@@ -3,12 +3,12 @@
   "source_summary_mtime": "2026-07-28T05:29:22.062242",
   "rows": [
     {
-      "name": "FUN_000142a0",
+      "name": "actor_looking_conversation_init",
       "status": "fail",
       "reason": "divergence"
     },
     {
-      "name": "FUN_00014540",
+      "name": "actor_looking_init_scripted",
       "status": "fail",
       "reason": "divergence"
     },
@@ -18,12 +18,12 @@
       "reason": "divergence"
     },
     {
-      "name": "FUN_000153e0",
+      "name": "actor_looking_has_reached_flee_pos",
       "status": "error",
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_00015520",
+      "name": "actor_looking_flee_update",
       "status": "fail",
       "reason": "divergence"
     },
@@ -43,12 +43,12 @@
       "reason": "divergence"
     },
     {
-      "name": "FUN_00016ff0",
+      "name": "actor_looking_prop_interest_scripted_update",
       "status": "error",
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_00017090",
+      "name": "actor_looking_compute_prop_interest",
       "status": "error",
       "reason": "emulation_error"
     },
@@ -108,12 +108,12 @@
       "reason": "divergence"
     },
     {
-      "name": "FUN_00027090",
+      "name": "actor_looking_select_firing_position",
       "status": "fail",
       "reason": "divergence"
     },
     {
-      "name": "FUN_00027a60",
+      "name": "actor_looking_set_secondary_look_target",
       "status": "fail",
       "reason": "divergence"
     },
@@ -128,7 +128,7 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_0002a2b0",
+      "name": "actor_update_look_direction_validity",
       "status": "fail",
       "reason": "divergence"
     },
@@ -1603,7 +1603,7 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_001a6350",
+      "name": "biped_update_dispatcher",
       "status": "error",
       "reason": "emulation_error"
     },
@@ -1618,7 +1618,7 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_001a7ad0",
+      "name": "unit_apply_damage_child",
       "status": "error",
       "reason": "emulation_error"
     },
@@ -1643,12 +1643,12 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_001b0630",
+      "name": "unit_update_aim_constraints",
       "status": "fail",
       "reason": "divergence"
     },
     {
-      "name": "FUN_001b1400",
+      "name": "unit_select_movement_on_state",
       "status": "fail",
       "reason": "divergence"
     },
@@ -1658,7 +1658,7 @@
       "reason": "divergence"
     },
     {
-      "name": "FUN_001b3690",
+      "name": "unit_update",
       "status": "fail",
       "reason": "divergence"
     },

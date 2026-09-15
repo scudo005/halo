@@ -460,7 +460,7 @@ def _find_obj_paths(kb_entry: dict) -> tuple[Optional[Path], Optional[Path]]:
         addr_int = int(addr, 16) if addr.startswith("0x") else int(addr, 16)
         addr_str_lo = f"FUN_{addr_int:08x}"
         addr_str_hi = f"FUN_{addr_int:08X}"
-        # Also match short form (e.g. FUN_0013ef0 vs FUN_00013ef0) by checking
+        # Also match short form (e.g. FUN_0013ef0 vs actor_looking_charge_init) by checking
         # that the base_path contains the non-zero-padded hex address.
         addr_hex_bare = f"{addr_int:x}"
         for unit in units:
@@ -2241,7 +2241,7 @@ def run_diff(func_name: str, num_seeds: int = 100, base_seed: int = 0,
         #
         # include_defined: the single-function lifted extraction maps only the
         # target body, so a call to a DEFINED intra-object sibling (e.g.
-        # 2290->FUN_001a0f10, 0680->FUN_001a03c0) would be left as an unpatched
+        # 2290->biped_spawn_contact, 0680->FUN_001a03c0) would be left as an unpatched
         # rel32 pointing outside the loaded range -> wild fetch crash
         # (eip=0x1ffffc).  The oracle resolves such siblings via its whole-.text
         # mapping (oracle_text); to stay SYMMETRIC the candidate must redirect

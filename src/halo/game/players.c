@@ -6997,7 +6997,7 @@ void FUN_000bf340(int16_t function_index, int thread_datum, char init)
  * identical 3-parameter cdecl shape and the identical evaluate / NULL-check
  * / worker / hs_return skeleton, with the "worker return discarded, script
  * gets a CONSTANT 0" tail.  The record here is THREE fields and the worker
- * is FUN_001a7ad0 (apply damage to every child object).
+ * is unit_apply_damage_child (apply damage to every child object).
  *
  * cdecl frame, 0xbf3d0-0xbf411: PUSH EBP; MOV EBP,ESP; PUSH ESI.  No local
  * dword, no _chkstk, no SEH, no local buffers.  RET carries no immediate.
@@ -7024,14 +7024,14 @@ void FUN_000bf340(int16_t function_index, int thread_datum, char init)
  *     +0x04 float  first damage scalar  (FLD  float ptr [EAX+0x4] @0xbf3f8)
  *     +0x08 float  second damage scalar (FLD  float ptr [EAX+0x8] @0xbf3ec)
  *   The two floats go out via the MSVC float-argument push (SUB ESP,0x8 /
- *   FSTP [ESP+0x4] / FSTP [ESP]) rather than PUSH, which is why FUN_001a7ad0
+ *   FSTP [ESP+0x4] / FSTP [ESP]) rather than PUSH, which is why unit_apply_damage_child
  *   must be declared (int, float, float); see its note in units.c.  The
  *   +0x8 load runs first because the stack slots are filled top-down.
  *
  *   CALL 0xcbf80 @0xbf407 pushes the immediate 0x0 then ESI ->
  *   hs_return(thread_datum, 0); the script return value is the CONSTANT 0,
  *   there is no result slot.  ONE combined ADD ESP,0x14 @0xbf40c folds
- *   FUN_001a7ad0's 3 dwords with hs_return's 2 -- any ARG_COUNT warning on
+ *   unit_apply_damage_child's 3 dwords with hs_return's 2 -- any ARG_COUNT warning on
  *   0xcbf80 ("cleanup=5 vs decl=2") is that merged cleanup, hs_return really
  *   takes 2 args, do NOT "fix" its decl.
  *
@@ -7042,7 +7042,7 @@ void FUN_000bf340(int16_t function_index, int thread_datum, char init)
  *
  * Callees (all cdecl, in kb.json, no @<reg> args anywhere):
  *   0xcc560  = hs_macro_function_evaluate(int16_t, int, char) -> record ptr
- *   0x1a7ad0 = FUN_001a7ad0(int parent_handle, float, float) -- void
+ *   0x1a7ad0 = unit_apply_damage_child(int parent_handle, float, float) -- void
  *   0xcbf80  = hs_return(int thread_handle, int value) */
 void FUN_000bf3d0(int16_t function_index, int thread_datum, char init)
 {
@@ -7051,7 +7051,7 @@ void FUN_000bf3d0(int16_t function_index, int thread_datum, char init)
   record =
     (void *)hs_macro_function_evaluate(function_index, thread_datum, init);
   if (record != NULL) {
-    FUN_001a7ad0(*(int *)record, *(float *)((char *)record + 4),
+    unit_apply_damage_child(*(int *)record, *(float *)((char *)record + 4),
                  *(float *)((char *)record + 8));
     hs_return(thread_datum, 0);
   }
@@ -7725,7 +7725,7 @@ void FUN_000bf680(int16_t function_index, int thread_datum, char init)
  *
  * Callees (all cdecl, all in kb.json, all ported, no @<reg> args anywhere):
  *   0xcc560  = hs_macro_function_evaluate(int16_t, int, char) -> record ptr
- *   0x1a7cc0 = FUN_001a7cc0(int datum_handle) -> float  (unnamed in kb.json,
+ *   0x1a7cc0 = unit_get_body_vitality(int datum_handle) -> float  (unnamed in kb.json,
  *              implemented in src/halo/units/units.c; the parameter name is
  *              kb's, the semantics are Uncertain)
  *   0xcbf80  = hs_return(int thread_handle, int value) */
@@ -7737,7 +7737,7 @@ void FUN_000bf6c0(int16_t function_index, int thread_datum, char init)
   record =
     (int *)hs_macro_function_evaluate(function_index, thread_datum, init);
   if (record != NULL) {
-    value = FUN_001a7cc0(record[0]);
+    value = unit_get_body_vitality(record[0]);
     hs_return(thread_datum, *(int *)&value);
   }
 }
@@ -7794,7 +7794,7 @@ void FUN_000bf6c0(int16_t function_index, int thread_datum, char init)
  *
  * Callees (all cdecl, all in kb.json, no @<reg> args anywhere):
  *   0xcc560  = hs_macro_function_evaluate(int16_t, int, char) -> record ptr
- *   0x1a7d00 = FUN_001a7d00(int datum_handle) -> float  (unnamed in kb.json;
+ *   0x1a7d00 = unit_get_shield_vitality(int datum_handle) -> float  (unnamed in kb.json;
  *              the parameter name is kb's, the semantics are Uncertain)
  *   0xcbf80  = hs_return(int thread_handle, int value) */
 void FUN_000bf700(int16_t function_index, int thread_datum, char init)
@@ -7805,7 +7805,7 @@ void FUN_000bf700(int16_t function_index, int thread_datum, char init)
   record =
     (int *)hs_macro_function_evaluate(function_index, thread_datum, init);
   if (record != NULL) {
-    value = FUN_001a7d00(record[0]);
+    value = unit_get_shield_vitality(record[0]);
     hs_return(thread_datum, *(int *)&value);
   }
 }
@@ -7877,7 +7877,7 @@ void FUN_000bf700(int16_t function_index, int thread_datum, char init)
  *
  * Callees (all cdecl, all in kb.json, no @<reg> args anywhere):
  *   0xcc560  = hs_macro_function_evaluate(int16_t, int, char) -> record ptr
- *   0x1a7d40 = FUN_001a7d40(int datum_handle) -> int  (unnamed in kb.json;
+ *   0x1a7d40 = unit_get_num_grenades(int datum_handle) -> int  (unnamed in kb.json;
  *              the parameter name is kb's, the semantics are Uncertain)
  *   0xcbf80  = hs_return(int thread_handle, int value) */
 void FUN_000bf740(int16_t function_index, int thread_datum, char init)
@@ -7892,7 +7892,7 @@ void FUN_000bf740(int16_t function_index, int thread_datum, char init)
   record =
     (int *)hs_macro_function_evaluate(function_index, thread_datum, init);
   if (record != NULL) {
-    value.w = (unsigned short)FUN_001a7d40(record[0]);
+    value.w = (unsigned short)unit_get_num_grenades(record[0]);
     hs_return(thread_datum, value.i);
   }
 }

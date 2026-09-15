@@ -57,14 +57,14 @@ def carry_rdata(r):
 
 TARGETS = {
     "FUN_001a0680": {"unit_handle": HANDLE},
-    "FUN_001a0b30": {"unit_handle": HANDLE},
+    "biped_check_bad_pos": {"unit_handle": HANDLE},
     # threshold is the 1st (float) arg, unit_handle in EAX. Real bipd phase
     # boundaries are 1.5/5.0/8.0 ticks -> 0.05/0.167/0.267 s. Pick 0.1f
     # (0x3dcccccd): fVar1<=threshold<fVar2 exercises the first (if) branch.
-    "FUN_001a0e00": {"unit_handle": HANDLE, "eax": HANDLE, "threshold": 0x3DCCCCCD},
+    "biped_advance_anim": {"unit_handle": HANDLE, "eax": HANDLE, "threshold": 0x3DCCCCCD},
     # scale=2.0f, direction = forward-vec ptr value 0x28caa8 (from 0x31fc50),
     # out_point/out_vec are caller stack buffers (seeded by harness).
-    "FUN_001a1a10": {"unit_handle": HANDLE, "edi": HANDLE, "scale": 0x40000000,
+    "biped_collision_direction": {"unit_handle": HANDLE, "edi": HANDLE, "scale": 0x40000000,
                       "direction": 0x28CAA8, "eax": 0x28CAA8},
     "FUN_001a2290": {"unit_handle": HANDLE, "edi": HANDLE},
 }

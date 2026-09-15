@@ -38,7 +38,7 @@ int actor_combat_check_mode(int actor_handle /* @<eax> */, short mode)
  * duration in ticks (actor+0x5f4). cdecl: actor_handle in arg1 (EDI at the
  * call site), ticks is the truncated float result the caller pushes (arg2).
  * The field at +0x5f4 is a short, so the duration is narrowed. */
-void FUN_00021010(int actor_handle, int ticks)
+void actor_combat_begin_firing_fixed(int actor_handle, int ticks)
 {
   char *actor = (char *)datum_get(*(void **)0x6325a4, actor_handle);
 
@@ -52,7 +52,7 @@ void FUN_00021010(int actor_handle, int ticks)
  * when the request is smaller, leaves the field unchanged (a no-op
  * self-assignment in the original codegen); otherwise it stores the new
  * value (narrowed to short). */
-void FUN_00021040(int actor_handle, int ticks)
+void actor_combat_raise_burst(int actor_handle, int ticks)
 {
   char *actor = (char *)datum_get(*(void **)0x6325a4, actor_handle);
 
@@ -133,7 +133,7 @@ void actor_combat_get_burst_parameters(int actor_handle /* @<eax> */,
 /* 0x21350 — Round a float to the nearest integer using the FPU's current
  * rounding mode (FLD; FISTP). cdecl helper, single float argument, returns
  * the rounded value in EAX. */
-int FUN_00021350(float value)
+int actor_combat_round_fp(float value)
 {
   return x87_round_to_int(value);
 }
@@ -535,7 +535,7 @@ int actor_combat_check_fire_target(int actor_handle /* @<edi> */, short mode)
   }
 }
 
-/* FUN_00022390 (0x22390) — Update actor combat aiming state each tick.
+/* actor_combat_update_aiming (0x22390) — Update actor combat aiming state each tick.
  * Checks/clears fire-ok flag, determines moving and in-combat status,
  * computes fire timer from burst parameters, rate-of-fire modifier from
  * weapon damage, applies prop suppression, then calculates the aim
@@ -548,7 +548,7 @@ int actor_combat_check_fire_target(int actor_handle /* @<edi> */, short mode)
  * small MSVC<->clang idiom diffs (branch encodings, register allocation)
  * accumulated over the function's length, not one defect. Verified 2026-06-23
  * [[project_sub80_vc71_audit_2026-06-23]]. */
-void FUN_00022390(int actor_handle)
+void actor_combat_update_aiming(int actor_handle)
 {
   char *actor;
   char *actv;

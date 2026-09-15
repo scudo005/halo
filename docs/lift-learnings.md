@@ -524,7 +524,7 @@ waiting for the first time an entry is legitimately absent from the output.
 
 A permuter run that prints `No improvements found` is **only** trustworthy if it
 actually compiled and scored candidates. On `actor_looking.c` functions
-(`FUN_00027a60`, `FUN_000153e0`, `actor_look_secondary`) every run was vacuous —
+(`actor_looking_set_secondary_look_target`, `actor_looking_has_reached_flee_pos`, `actor_look_secondary`) every run was vacuous —
 zero candidates ever compiled — so the recorded "structural ceiling /
 exhausted" verdicts were artifacts. The committed VC71 %s came from
 source-level fixes, not the permuter.
@@ -850,7 +850,7 @@ read the disasm to confirm which address is actually loaded.
 
 ## 18. Deactivation Stub Re-Pushes Register-Arg Slots (Stack Offset Shift)
 
-**Automation:** FULL — `patch.py::generate_deactivation_redirect` now builds `stack_only_indices` and only re-pushes those; 6 exact-byte self-test cases in `deact_cases` including the FUN_00014e90 regression shape.  The `--test-thunks` gate runs at build time.
+**Automation:** FULL — `patch.py::generate_deactivation_redirect` now builds `stack_only_indices` and only re-pushes those; 6 exact-byte self-test cases in `deact_cases` including the actor_looking_eval_flee_to_fire regression shape.  The `--test-thunks` gate runs at build time.
 
 **What happens:** When a `ported=false` function has `@<reg>` annotations,
 `patch.py` generates a deactivation stub at the compiled impl entry that
@@ -876,8 +876,8 @@ a datum handle (e.g. `0xe364001f`) in a register that should hold a resolved
 pointer. The fault address is in original code (0x10000–0x1Dxxxx), not in
 our compiled code — misleading, because the *stub* is the actual culprit.
 
-**Example (FUN_00014e90, flee firing-position evaluator):** Declared
-`char FUN_00014e90(int actor_handle @<eax>, char *state_data)`. Original reads
+**Example (actor_looking_eval_flee_to_fire, flee firing-position evaluator):** Declared
+`char actor_looking_eval_flee_to_fire(int actor_handle @<eax>, char *state_data)`. Original reads
 `state_data` from `[EBP+8]` at 0x14ed7 (`MOV ESI,[EBP+8]`), then accesses
 `[ESI+0x1c]` at 0x14eda. The broken stub placed `actor_handle` (a datum handle
 `0xe3640003`) at `[EBP+8]` → `ESI = 0xe3640003` → `MOV EAX,[0xe364001f]` →
@@ -919,7 +919,7 @@ mismatched instructions make it impossible to tell which came from the
 `@<reg>` prologue and which from a suboptimal C idiom.
 
 **Proven session example:** FUN_001a2160 went from 73.4% → 82.8% through
-source rewrites, and FUN_001a1a10 went from 80.0% → 91.5% from a single
+source rewrites, and biped_collision_direction went from 80.0% → 91.5% from a single
 variable addition. Both were previously declared structural ceilings.
 
 **Technique 1 — `cos()/sin()` intrinsification (replace x87 helpers):**
@@ -948,7 +948,7 @@ When a `@<reg>` parameter (e.g., `direction@<eax>`) is used late in the
 function, MSVC may spill it after the prologue and reload it later. Saving
 it to a local early (`float dir0 = direction[0]`) forces the register load
 to happen while the pointer is still live in the register, matching the
-original's register flow. Recovered +11.5pp on FUN_001a1a10 (80% → 91.5%).
+original's register flow. Recovered +11.5pp on biped_collision_direction (80% → 91.5%).
 The permuter finds these automatically but they're easy to spot manually:
 any `@<reg>` parameter whose first USE is far from the function entry.
 
@@ -2618,7 +2618,7 @@ of our implementation** — which lives in the appended section, not at
 | `(int)&FUN_001c7a10` | `== 0x1c7a10` | **never matches** |
 
 The third row is what shipped. `sound_pitch_push_sample` was never reached,
-`unit+0x298` stayed at whatever the per-tick decay in `FUN_001b3690` left it
+`unit+0x298` stayed at whatever the per-tick decay in `unit_update` left it
 (zero), and the seat/overlay animation driven by that field never ran.
 
 **History — this regressed twice on the same line.** Commit `72865055c`

@@ -1,6 +1,6 @@
 Worktree Session Summary: mellow-exploring-pizza
 
-Main Implementation: FUN_00022390 — Actor Combat Aiming State Update
+Main Implementation: actor_combat_update_aiming — Actor Combat Aiming State Update
 
 The big deliverable. A 1963-byte, 613-instruction function that updates AI aiming every tick. Previously only the first ~80 bytes were implemented (fire-ok flag check). We completed the full implementation (~300 lines of C):
 

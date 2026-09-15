@@ -246,7 +246,7 @@ Treat it as a candidate diagnosis requiring call-site verification.
 Two distinct mechanisms may hide under the rule and have different prognoses:
 
 - **Late first use of an own register param** — recoverable. Forcing an early
-  register-load hint took FUN_001a1a10 from 80% to 91.5%.
+  register-load hint took biped_collision_direction from 80% to 91.5%.
 - **Calling `@<reg>`-arg callees** — potentially a verifier-lane ceiling. The VC71
   verify lane cannot pass arguments in `eax`/`esi`/`edi`/`ebx`, so each such
   call site costs about one `pushl`-vs-`movl` mismatch. On a function with ~20

@@ -110,7 +110,7 @@
       "status": "ported",
       "inferred": [
         "28-case switch dispatcher (~1280 instructions); VC71 best score reached 63.5% with raw function-pointer casts for 0x1ac180/0x1a68d0/0x1a6ef0/0xcb9a0/0x936b0/0x95640 and full case coverage.",
-        "Key callees for future lift: FUN_001ac180 is (char)(int actor, int anim_tag, void *entry, int do_flag); FUN_001a68d0 is (short)(int actor, int mode, int a3, int a4, int a5, short *seat_out, int *obj_out); FUN_001a6ef0 is (void)(int actor, short count, void *comm_buf).",
+        "Key callees for future lift: FUN_001ac180 is (char)(int actor, int anim_tag, void *entry, int do_flag); unit_speech_slot_alloc is (short)(int actor, int mode, int a3, int a4, int a5, short *seat_out, int *obj_out); FUN_001a6ef0 is (void)(int actor, short count, void *comm_buf).",
         "Final lift uses named kb.json callees for all six previously-raw-cast targets (0x1ac180, 0x1a68d0, 0x1a6ef0, 0xcb9a0, 0x936b0, 0x95640), reaching 89.7% VC71 (1253/1269) after two permuter-validated scheduling hoists (elem[2] copy before the cmd_param store burst in cases 1/2, and bipd NULL test computed before the FUN_00012140 call in case 0x1b)."
       ],
       "uncertain": [
@@ -7386,7 +7386,7 @@
       "inferred": [
         "kb.json decl was void(void); disassembly proves 3 cdecl stack args (ECX=[EBP+8] int16 function_index, ESI=[EBP+0xc] thread_datum, EAX=[EBP+0x10] char init) with ADD ESP,0xc after CALL 0xcc560, so the decl was corrected to (int16_t, int, char) matching every twin in this HS-dispatcher family.",
         "The 0xcc560 hs_macro_function_evaluate return is declared int in kb.json but is dereferenced as a pointer to a {int handle; float; float} record here (FLD dword [EAX+4] and FLD dword [EAX+8] prove the two trailing fields are floats, not dwords); the return type of 0xcc560 was left alone and the pointer cast applied at the use site, as all sibling dispatchers do.",
-        "Args 2 and 3 of the worker call at 0xbf3ff are floats, not ints: the original emits FLD dword [EAX+4]/[EAX+8] with SUB ESP,8 and two FSTP dword stores (the MSVC push-then-fstp float-argument idiom), so kb.json's decl for FUN_001a7ad0 (0x1a7ad0) was corrected from (int,int,int) to (int,float,float); dump_caller_regsetup.py confirms 0xbf3ff is that callee's only call site in the XBE, and its neighbours 0x1a7a90 and 0x1a7b50 already carry the same (int handle, float, float) damage-pair shape.",
+        "Args 2 and 3 of the worker call at 0xbf3ff are floats, not ints: the original emits FLD dword [EAX+4]/[EAX+8] with SUB ESP,8 and two FSTP dword stores (the MSVC push-then-fstp float-argument idiom), so kb.json's decl for unit_apply_damage_child (0x1a7ad0) was corrected from (int,int,int) to (int,float,float); dump_caller_regsetup.py confirms 0xbf3ff is that callee's only call site in the XBE, and its neighbours 0x1a7a90 and 0x1a7b50 already carry the same (int handle, float, float) damage-pair shape.",
         "Record fields +0x4 and +0x8 are FLOATS (FLD dword ptr, push-then-fstp at CALL 0x1a7ad0), not the ints Ghidra reports; they are transferred as raw dwords because kb.json declares 0x1a7ad0 as (int,int,int) and its ported units.c body forwards those two slots to FUN_001365d0 as float*, so the pushed bytes are bit-identical with no numeric conversion."
       ],
       "uncertain": [
@@ -17185,7 +17185,7 @@
         "Post-landing step: increments landing-frame counter object+0x428; clears landing index object+0x460 to NONE once the counter reaches the frame count object+0x429; fires two collision-user events (param_2=5, indices 0,1) when no cinematic runs and landing just began (counter==2) or is a one-frame landing; writes landing-sound id 0x16/0x15 to *state."
       ],
       "uncertain": [
-        "Left ported=false at 86.5% VC71 (structural reg-arg keystone ceiling): residual is the EDI live-in load, the EBX=-1 register reuse for the object+0x460 store/compare, and the BX index plus EAX routing for the FUN_001a0f10 and FUN_001a2800 calls -- all thunk-mediated register-argument materialization that cannot be expressed in C without inline asm. Body logic is correct."
+        "Left ported=false at 86.5% VC71 (structural reg-arg keystone ceiling): residual is the EDI live-in load, the EBX=-1 register reuse for the object+0x460 store/compare, and the BX index plus EAX routing for the biped_spawn_contact and FUN_001a2800 calls -- all thunk-mediated register-argument materialization that cannot be expressed in C without inline asm. Body logic is correct."
       ]
     },
     "0x1a2b10": {
@@ -17195,7 +17195,7 @@
         "Post-slipping step: fires two collision-user events (param_2=2, indices 0,1) when the slip counter object+0x45a exceeds 3 and linear velocity magnitude squared at object+0x18..0x20 exceeds the moving threshold 0x25620c (1/900). The caller also pushes an unused state pointer not consumed here."
       ],
       "uncertain": [
-        "Left ported=false at 84.0% VC71 (structural reg-arg keystone ceiling, not a body bug): the original takes unit_handle live-in in EDI with no EBP frame and routes the FUN_001a0f10 index through BX, while a standalone C compile builds a frame and pushes the index on the stack; the thunk performs the EDI/BX routing at runtime so the body is behaviorally correct."
+        "Left ported=false at 84.0% VC71 (structural reg-arg keystone ceiling, not a body bug): the original takes unit_handle live-in in EDI with no EBP frame and routes the biped_spawn_contact index through BX, while a standalone C compile builds a frame and pushes the index on the stack; the thunk performs the EDI/BX routing at runtime so the body is behaviorally correct."
       ]
     },
     "0x1a2b90": {

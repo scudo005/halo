@@ -1769,7 +1769,7 @@ void player_control_get_facing(int16_t local_player_index, float delta_time)
       if (flags & 0x10)
         new_weapon = units_debug_get_next_unit(pc->unit_index);
       else
-        new_weapon = FUN_001AA170(pc->unit_index);
+        new_weapon = unit_find_nearest_biped(pc->unit_index);
       if (new_weapon != NONE)
         players_set_local_player_unit(local_player_index, new_weapon);
     }

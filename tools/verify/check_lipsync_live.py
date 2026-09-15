@@ -10,7 +10,7 @@ Keyes' mouth not moving while he hands over the pistol on a10.
 
 Oracle: `object + 0x298` (mouth aperture) is written ONLY by
 sound_object_apply_pitch_delta (0x1ac2f0), reached only when the identity
-test matches.  The per-tick decay in FUN_001b3690 can only subtract.  So a
+test matches.  The per-tick decay in unit_update can only subtract.  So a
 non-zero aperture on any unit is positive proof the path executes.
 
     golden  boot the PRISTINE cachebeta.xbe on a fixture core and record the

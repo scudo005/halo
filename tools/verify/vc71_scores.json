@@ -1905,7 +1905,7 @@
       "score": 100.0,
       "source": "src/halo/math/vector_math.c"
     },
-    "FUN_00013dd0": {
+    "actor_looking_collision_path_exists": {
       "abi_model": "regparam_stripped",
       "abi_model_items": 1,
       "abi_modeled_mnemonic_pct": 86.3,
@@ -1920,7 +1920,7 @@
       "score": 86.3,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00013ef0": {
+    "actor_looking_charge_init": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 80.1,
@@ -1935,7 +1935,7 @@
       "score": 80.1,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_000142a0": {
+    "actor_looking_conversation_init": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 96.8,
@@ -1950,7 +1950,7 @@
       "score": 96.8,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00014460": {
+    "validate_actor_handle": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -1965,7 +1965,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00014480": {
+    "actor_looking_prop_look_init": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 93.8,
@@ -1980,7 +1980,7 @@
       "score": 93.8,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00014540": {
+    "actor_looking_init_scripted": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -1995,7 +1995,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_000145c0": {
+    "actor_looking_stop_conversation": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -2010,7 +2010,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_000145f0": {
+    "actor_looking_stop_conversation2": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -2025,7 +2025,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00014620": {
+    "actor_looking_init_fight": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -2055,7 +2055,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_000146f0": {
+    "actor_looking_init_scripted_look": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 92.6,
@@ -2085,7 +2085,7 @@
       "score": 94.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00014b40": {
+    "actor_looking_stop_host_running_blindly": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -2100,7 +2100,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00014b70": {
+    "actor_looking_mark_as_controlled": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 96.0,
@@ -2145,7 +2145,7 @@
       "score": 93.6,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00014e90": {
+    "actor_looking_eval_flee_to_fire": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 87.6,
@@ -2190,7 +2190,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00015040": {
+    "actor_looking_flee_init": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 91.6,
@@ -2250,7 +2250,7 @@
       "score": 91.9,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_000153e0": {
+    "actor_looking_has_reached_flee_pos": {
       "abi_model": "regparam_stripped",
       "abi_model_items": 1,
       "abi_modeled_mnemonic_pct": 88.5,
@@ -2265,7 +2265,7 @@
       "score": 88.5,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00015520": {
+    "actor_looking_flee_update": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 89.8,
@@ -2340,7 +2340,7 @@
       "score": 95.8,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00015cf0": {
+    "actor_looking_guard_update": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 96.4,
@@ -2370,7 +2370,7 @@
       "score": 92.7,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00016050": {
+    "actor_looking_guard_init": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 93.1,
@@ -2385,7 +2385,7 @@
       "score": 93.1,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00016210": {
+    "actor_looking_guard_init_postcombat": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 91.6,
@@ -2400,7 +2400,7 @@
       "score": 91.6,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_000163d0": {
+    "actor_looking_firing_state_eval": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 93.7,
@@ -2430,7 +2430,7 @@
       "score": 96.4,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00016960": {
+    "actor_looking_fp_cmp": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -2535,7 +2535,7 @@
       "score": 87.1,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00016ff0": {
+    "actor_looking_prop_interest_scripted_update": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 89.7,
@@ -2550,7 +2550,7 @@
       "score": 89.7,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00017090": {
+    "actor_looking_compute_prop_interest": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -2595,7 +2595,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00017120": {
+    "actor_looking_fprint_action_elem": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 68.8,
@@ -2610,7 +2610,7 @@
       "score": 68.8,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_000178b0": {
+    "subtract_2dvec": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -2625,7 +2625,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00017910": {
+    "negate_3dvector": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -2640,7 +2640,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00017940": {
+    "getrand_int16": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -2760,7 +2760,7 @@
       "score": 98.6,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00019370": {
+    "actor_looking_init_action_look": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 90.6,
@@ -2850,7 +2850,7 @@
       "score": 93.3,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00019af0": {
+    "actor_looking_reset_look_targets": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 96.3,
@@ -2985,7 +2985,7 @@
       "score": 96.8,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_0001a5d0": {
+    "actor_looking_reset_look_targets2": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 96.3,
@@ -3015,7 +3015,7 @@
       "score": 97.3,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_0001a670": {
+    "actor_looking_uncover_init": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 96.5,
@@ -3045,7 +3045,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_0001aae0": {
+    "get_bounding_sphere": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 98.9,
@@ -3075,7 +3075,7 @@
       "score": 95.8,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_0001abd0": {
+    "actor_looking_clear_lookat_target": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -3210,7 +3210,7 @@
       "score": 90.8,
       "source": "src/halo/ai/action_vehicle.c"
     },
-    "FUN_0001d3c0": {
+    "actor_action_try_to_seek_cover_explicit": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 92.1,
@@ -3255,7 +3255,7 @@
       "score": 1.6,
       "source": "src/halo/unported_thunks.c"
     },
-    "FUN_00021010": {
+    "actor_combat_begin_firing_fixed": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -3270,7 +3270,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_combat.c"
     },
-    "FUN_00021040": {
+    "actor_combat_raise_burst": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 84.8,
@@ -3330,7 +3330,7 @@
       "score": 82.6,
       "source": "src/halo/ai/actions.c"
     },
-    "FUN_00021350": {
+    "actor_combat_round_fp": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -3465,7 +3465,7 @@
       "score": 81.8,
       "source": "src/halo/math/vector_math.c"
     },
-    "FUN_00022390": {
+    "actor_combat_update_aiming": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 79.6,
@@ -3630,7 +3630,7 @@
       "score": 97.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00024cf0": {
+    "actor_looking_eval_firing_positions": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 94.0,
@@ -3720,7 +3720,7 @@
       "score": 87.1,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00027090": {
+    "actor_looking_select_firing_position": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 89.7,
@@ -3735,7 +3735,7 @@
       "score": 89.7,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_000272d0": {
+    "actor_looking_assign_firing_position": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 91.5,
@@ -3765,7 +3765,7 @@
       "score": 87.7,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00027870": {
+    "actor_stop_scripted_look": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -3780,7 +3780,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_000278e0": {
+    "actor_looking_compute_prop_threat_score": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -3810,7 +3810,7 @@
       "score": 90.6,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00027a60": {
+    "actor_looking_set_secondary_look_target": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 96.5,
@@ -3870,7 +3870,7 @@
       "score": 89.5,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00027ff0": {
+    "actor_eval_fire_pos_for_lookat_target": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 88.8,
@@ -3885,7 +3885,7 @@
       "score": 88.8,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_00028cc0": {
+    "actor_primary_look_update": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 87.2,
@@ -3915,7 +3915,7 @@
       "score": 82.2,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_0002a2b0": {
+    "actor_update_look_direction_validity": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 91.3,
@@ -3930,7 +3930,7 @@
       "score": 91.3,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_0002a330": {
+    "set_actor_is_looking": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -3975,7 +3975,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_moving.c"
     },
-    "FUN_0002a3d0": {
+    "set_actor_is_in_veichle": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -3990,7 +3990,7 @@
       "score": 100.0,
       "source": "src/halo/ai/actor_looking.c"
     },
-    "FUN_0002a3f0": {
+    "actor_can_move": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -43078,7 +43078,7 @@
       "score": 1.3,
       "source": "src/halo/unported_thunks.c"
     },
-    "FUN_001AA170": {
+    "unit_find_nearest_biped": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 96.0,
@@ -43168,7 +43168,7 @@
       "score": 98.1,
       "source": "src/halo/units/bipeds.c"
     },
-    "FUN_001a0b30": {
+    "biped_check_bad_pos": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 1,
       "abi_modeled_mnemonic_pct": 82.1,
@@ -43183,7 +43183,7 @@
       "score": 82.1,
       "source": "src/halo/units/bipeds.c"
     },
-    "FUN_001a0be0": {
+    "biped_check_world_bound": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 4,
       "abi_modeled_mnemonic_pct": 96.3,
@@ -43198,7 +43198,7 @@
       "score": 96.3,
       "source": "src/halo/units/bipeds.c"
     },
-    "FUN_001a0e00": {
+    "biped_advance_anim": {
       "abi_model": "regparam_stripped",
       "abi_model_items": 1,
       "abi_modeled_mnemonic_pct": 87.2,
@@ -43213,7 +43213,7 @@
       "score": 87.2,
       "source": "src/halo/units/bipeds.c"
     },
-    "FUN_001a0f10": {
+    "biped_spawn_contact": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 2,
       "abi_modeled_mnemonic_pct": 92.4,
@@ -43228,7 +43228,7 @@
       "score": 92.4,
       "source": "src/halo/units/bipeds.c"
     },
-    "FUN_001a1a10": {
+    "biped_collision_direction": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 3,
       "abi_modeled_mnemonic_pct": 93.5,
@@ -43243,7 +43243,7 @@
       "score": 93.5,
       "source": "src/halo/units/bipeds.c"
     },
-    "FUN_001a1e70": {
+    "biped_check_stuck_falling": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 89.0,
@@ -43258,7 +43258,7 @@
       "score": 89.0,
       "source": "src/halo/units/bipeds.c"
     },
-    "FUN_001a1fb0": {
+    "biped_check_stuck_falling_veichle": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 95.1,
@@ -43513,7 +43513,7 @@
       "score": 0.8,
       "source": "src/halo/unported_thunks.c"
     },
-    "FUN_001a6280": {
+    "biped_death_handler": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 9,
       "abi_modeled_mnemonic_pct": 86.4,
@@ -43528,7 +43528,7 @@
       "score": 86.4,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a6350": {
+    "biped_update_dispatcher": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 89.9,
@@ -43543,7 +43543,7 @@
       "score": 89.9,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a67b0": {
+    "get_animation_state_str": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -43603,7 +43603,7 @@
       "score": 97.2,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a68d0": {
+    "unit_speech_slot_alloc": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 91.0,
@@ -43693,7 +43693,7 @@
       "score": 83.3,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a6e20": {
+    "unit_log_lost_speech": {
       "abi_model": "regparam_stripped",
       "abi_model_items": 1,
       "abi_modeled_mnemonic_pct": 98.6,
@@ -43723,7 +43723,7 @@
       "score": 95.8,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a70d0": {
+    "unit_direct_speech": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 94.0,
@@ -43813,7 +43813,7 @@
       "score": 89.1,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a7a90": {
+    "unit_apply_damage": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -43828,7 +43828,7 @@
       "score": 100.0,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a7ad0": {
+    "unit_apply_damage_child": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -43873,7 +43873,7 @@
       "score": 100.0,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a7cc0": {
+    "unit_get_body_vitality": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -43888,7 +43888,7 @@
       "score": 100.0,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a7d00": {
+    "unit_get_shield_vitality": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -43903,7 +43903,7 @@
       "score": 100.0,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a7d40": {
+    "unit_get_num_grenades": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 95.5,
@@ -44098,7 +44098,7 @@
       "score": 100.0,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001a88b0": {
+    "unit_map_animstate_to_idx": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -44203,7 +44203,7 @@
       "score": 90.3,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001ab6e0": {
+    "unit_get_base_seat_name": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 4,
       "abi_modeled_mnemonic_pct": 90.0,
@@ -44248,7 +44248,7 @@
       "score": 87.0,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001abd10": {
+    "unit_play_snd_melee_dmg": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 6,
       "abi_modeled_mnemonic_pct": 81.6,
@@ -44413,7 +44413,7 @@
       "score": 91.0,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001b0630": {
+    "unit_update_aim_constraints": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 77.2,
@@ -44428,7 +44428,7 @@
       "score": 77.2,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001b1400": {
+    "unit_select_movement_on_state": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 80.9,
@@ -44443,7 +44443,7 @@
       "score": 80.9,
       "source": "src/halo/units/units.c"
     },
-    "FUN_001b3690": {
+    "unit_update": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 81.5,

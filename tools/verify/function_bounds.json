@@ -172,17 +172,17 @@
   "0x13dd0": {
     "end": "0x13eee",
     "kind": "auto",
-    "name": "FUN_00013dd0"
+    "name": "actor_looking_collision_path_exists"
   },
   "0x13ef0": {
     "end": "0x14292",
     "kind": "auto",
-    "name": "FUN_00013ef0"
+    "name": "actor_looking_charge_init"
   },
   "0x142a0": {
     "end": "0x1434e",
     "kind": "auto",
-    "name": "FUN_000142a0"
+    "name": "actor_looking_conversation_init"
   },
   "0x14360": {
     "end": "0x14458",
@@ -192,12 +192,12 @@
   "0x14460": {
     "end": "0x14478",
     "kind": "auto",
-    "name": "FUN_00014460"
+    "name": "validate_actor_handle"
   },
   "0x14480": {
     "end": "0x1450d",
     "kind": "auto",
-    "name": "FUN_00014480"
+    "name": "actor_looking_prop_look_init"
   },
   "0x14510": {
     "end": "0x14540",
@@ -207,22 +207,22 @@
   "0x14540": {
     "end": "0x145bc",
     "kind": "auto",
-    "name": "FUN_00014540"
+    "name": "actor_looking_init_scripted"
   },
   "0x145c0": {
     "end": "0x145f0",
     "kind": "auto",
-    "name": "FUN_000145c0"
+    "name": "actor_looking_stop_conversation"
   },
   "0x145f0": {
     "end": "0x14620",
     "kind": "auto",
-    "name": "FUN_000145f0"
+    "name": "actor_looking_stop_conversation2"
   },
   "0x14620": {
     "end": "0x1465a",
     "kind": "auto",
-    "name": "FUN_00014620"
+    "name": "actor_looking_init_fight"
   },
   "0x14680": {
     "end": "0x146e3",
@@ -232,7 +232,7 @@
   "0x146f0": {
     "end": "0x1476c",
     "kind": "auto",
-    "name": "FUN_000146f0"
+    "name": "actor_looking_init_scripted_look"
   },
   "0x14770": {
     "end": "0x14b38",
@@ -242,12 +242,12 @@
   "0x14b40": {
     "end": "0x14b69",
     "kind": "auto",
-    "name": "FUN_00014b40"
+    "name": "actor_looking_stop_host_running_blindly"
   },
   "0x14b70": {
     "end": "0x14b97",
     "kind": "auto",
-    "name": "FUN_00014b70"
+    "name": "actor_looking_mark_as_controlled"
   },
   "0x14ba0": {
     "end": "0x14c03",
@@ -262,7 +262,7 @@
   "0x14e90": {
     "end": "0x14feb",
     "kind": "auto",
-    "name": "FUN_00014e90"
+    "name": "actor_looking_eval_flee_to_fire"
   },
   "0x14ff0": {
     "end": "0x15020",
@@ -277,7 +277,7 @@
   "0x15040": {
     "end": "0x15149",
     "kind": "auto",
-    "name": "FUN_00015040"
+    "name": "actor_looking_flee_init"
   },
   "0x15150": {
     "end": "0x151ac",
@@ -297,12 +297,12 @@
   "0x153e0": {
     "end": "0x1551e",
     "kind": "auto",
-    "name": "FUN_000153e0"
+    "name": "actor_looking_has_reached_flee_pos"
   },
   "0x15520": {
     "end": "0x15863",
     "kind": "auto",
-    "name": "FUN_00015520"
+    "name": "actor_looking_flee_update"
   },
   "0x15880": {
     "end": "0x158fb",
@@ -337,7 +337,7 @@
   "0x15cf0": {
     "end": "0x15ea9",
     "kind": "auto",
-    "name": "FUN_00015cf0"
+    "name": "actor_looking_guard_update"
   },
   "0x15eb0": {
     "end": "0x15f23",
@@ -362,17 +362,17 @@
   "0x16050": {
     "end": "0x16209",
     "kind": "auto",
-    "name": "FUN_00016050"
+    "name": "actor_looking_guard_init"
   },
   "0x16210": {
     "end": "0x163c6",
     "kind": "auto",
-    "name": "FUN_00016210"
+    "name": "actor_looking_guard_init_postcombat"
   },
   "0x163d0": {
     "end": "0x16585",
     "kind": "auto",
-    "name": "FUN_000163d0"
+    "name": "actor_looking_firing_state_eval"
   },
   "0x16590": {
     "end": "0x1694e",
@@ -382,7 +382,7 @@
   "0x16960": {
     "end": "0x16991",
     "kind": "auto",
-    "name": "FUN_00016960"
+    "name": "actor_looking_fp_cmp"
   },
   "0x169a0": {
     "end": "0x16b89",
@@ -427,7 +427,7 @@
   "0x16ff0": {
     "end": "0x1705a",
     "kind": "auto",
-    "name": "FUN_00016ff0"
+    "name": "actor_looking_prop_interest_scripted_update"
   },
   "0x17060": {
     "end": "0x1708e",
@@ -437,7 +437,7 @@
   "0x17090": {
     "end": "0x170be",
     "kind": "auto",
-    "name": "FUN_00017090"
+    "name": "actor_looking_compute_prop_interest"
   },
   "0x170c0": {
     "end": "0x170ee",
@@ -452,12 +452,12 @@
   "0x17120": {
     "end": "0x17838",
     "kind": "auto",
-    "name": "FUN_00017120"
+    "name": "actor_looking_fprint_action_elem"
   },
   "0x178b0": {
     "end": "0x178cd",
     "kind": "auto",
-    "name": "FUN_000178b0"
+    "name": "subtract_2dvec"
   },
   "0x178d0": {
     "end": "0x1790c",
@@ -467,12 +467,12 @@
   "0x17910": {
     "end": "0x17931",
     "kind": "auto",
-    "name": "FUN_00017910"
+    "name": "negate_3dvector"
   },
   "0x17940": {
     "end": "0x1795b",
     "kind": "auto",
-    "name": "FUN_00017940"
+    "name": "getrand_int16"
   },
   "0x17960": {
     "end": "0x17aa0",
@@ -512,7 +512,7 @@
   "0x19370": {
     "end": "0x19748",
     "kind": "auto",
-    "name": "FUN_00019370"
+    "name": "actor_looking_init_action_look"
   },
   "0x19750": {
     "end": "0x197c9",
@@ -542,7 +542,7 @@
   "0x19af0": {
     "end": "0x19b17",
     "kind": "auto",
-    "name": "FUN_00019af0"
+    "name": "actor_looking_reset_look_targets"
   },
   "0x19b20": {
     "end": "0x19c61",
@@ -592,7 +592,7 @@
   "0x1a5d0": {
     "end": "0x1a5f7",
     "kind": "auto",
-    "name": "FUN_0001a5d0"
+    "name": "actor_looking_reset_look_targets2"
   },
   "0x1a600": {
     "end": "0x1a666",
@@ -602,7 +602,7 @@
   "0x1a670": {
     "end": "0x1a7df",
     "kind": "auto",
-    "name": "FUN_0001a670"
+    "name": "actor_looking_uncover_init"
   },
   "0x1a7e0": {
     "end": "0x1aadc",
@@ -612,7 +612,7 @@
   "0x1aae0": {
     "end": "0x1ab61",
     "kind": "auto",
-    "name": "FUN_0001aae0"
+    "name": "get_bounding_sphere"
   },
   "0x1ab70": {
     "end": "0x1abbc",
@@ -622,7 +622,7 @@
   "0x1abd0": {
     "end": "0x1abf2",
     "kind": "auto",
-    "name": "FUN_0001abd0"
+    "name": "actor_looking_clear_lookat_target"
   },
   "0x1ac00": {
     "end": "0x1acaf",
@@ -837,7 +837,7 @@
   "0x1d3c0": {
     "end": "0x1d416",
     "kind": "auto",
-    "name": "FUN_0001d3c0"
+    "name": "actor_action_try_to_seek_cover_explicit"
   },
   "0x1d420": {
     "end": "0x1d4ec",
@@ -1032,12 +1032,12 @@
   "0x21010": {
     "end": "0x2103c",
     "kind": "auto",
-    "name": "FUN_00021010"
+    "name": "actor_combat_begin_firing_fixed"
   },
   "0x21040": {
     "end": "0x21076",
     "kind": "auto",
-    "name": "FUN_00021040"
+    "name": "actor_combat_raise_burst"
   },
   "0x21080": {
     "end": "0x210a7",
@@ -1072,7 +1072,7 @@
   "0x21350": {
     "end": "0x21361",
     "kind": "auto",
-    "name": "FUN_00021350"
+    "name": "actor_combat_round_fp"
   },
   "0x21370": {
     "end": "0x2137a",
@@ -1167,7 +1167,7 @@
   "0x22390": {
     "end": "0x22b3b",
     "kind": "auto",
-    "name": "FUN_00022390"
+    "name": "actor_combat_update_aiming"
   },
   "0x22b40": {
     "end": "0x22b99",
@@ -1267,7 +1267,7 @@
   "0x24cf0": {
     "end": "0x25333",
     "kind": "auto",
-    "name": "FUN_00024cf0"
+    "name": "actor_looking_eval_firing_positions"
   },
   "0x25340": {
     "end": "0x25510",
@@ -1302,12 +1302,12 @@
   "0x27090": {
     "end": "0x272c9",
     "kind": "auto",
-    "name": "FUN_00027090"
+    "name": "actor_looking_select_firing_position"
   },
   "0x272d0": {
     "end": "0x27404",
     "kind": "auto",
-    "name": "FUN_000272d0"
+    "name": "actor_looking_assign_firing_position"
   },
   "0x27410": {
     "end": "0x27869",
@@ -1317,12 +1317,12 @@
   "0x27870": {
     "end": "0x278df",
     "kind": "auto",
-    "name": "FUN_00027870"
+    "name": "actor_stop_scripted_look"
   },
   "0x278e0": {
     "end": "0x27a07",
     "kind": "auto",
-    "name": "FUN_000278e0"
+    "name": "actor_looking_compute_prop_threat_score"
   },
   "0x27a10": {
     "end": "0x27a57",
@@ -1332,7 +1332,7 @@
   "0x27a60": {
     "end": "0x27dc5",
     "kind": "auto",
-    "name": "FUN_00027a60"
+    "name": "actor_looking_set_secondary_look_target"
   },
   "0x27dd0": {
     "end": "0x27e4c",
@@ -1352,7 +1352,7 @@
   "0x27ff0": {
     "end": "0x2824a",
     "kind": "auto",
-    "name": "FUN_00027ff0"
+    "name": "actor_eval_fire_pos_for_lookat_target"
   },
   "0x28250": {
     "end": "0x283af",
@@ -1377,7 +1377,7 @@
   "0x28cc0": {
     "end": "0x28ecb",
     "kind": "auto",
-    "name": "FUN_00028cc0"
+    "name": "actor_primary_look_update"
   },
   "0x28ed0": {
     "end": "0x2903a",
@@ -1392,12 +1392,12 @@
   "0x2a2b0": {
     "end": "0x2a32a",
     "kind": "auto",
-    "name": "FUN_0002a2b0"
+    "name": "actor_update_look_direction_validity"
   },
   "0x2a330": {
     "end": "0x2a356",
     "kind": "auto",
-    "name": "FUN_0002a330"
+    "name": "set_actor_is_looking"
   },
   "0x2a360": {
     "end": "0x2a39d",
@@ -1412,12 +1412,12 @@
   "0x2a3d0": {
     "end": "0x2a3ee",
     "kind": "auto",
-    "name": "FUN_0002a3d0"
+    "name": "set_actor_is_in_veichle"
   },
   "0x2a3f0": {
     "end": "0x2a425",
     "kind": "auto",
-    "name": "FUN_0002a3f0"
+    "name": "actor_can_move"
   },
   "0x2a430": {
     "end": "0x2a461",
@@ -30320,12 +30320,12 @@
   "0x1a0b30": {
     "end": "0x1a0bd5",
     "kind": "auto",
-    "name": "FUN_001a0b30"
+    "name": "biped_check_bad_pos"
   },
   "0x1a0be0": {
     "end": "0x1a0da9",
     "kind": "auto",
-    "name": "FUN_001a0be0"
+    "name": "biped_check_world_bound"
   },
   "0x1a0db0": {
     "end": "0x1a0dfd",
@@ -30335,12 +30335,12 @@
   "0x1a0e00": {
     "end": "0x1a0f01",
     "kind": "auto",
-    "name": "FUN_001a0e00"
+    "name": "biped_advance_anim"
   },
   "0x1a0f10": {
     "end": "0x1a101a",
     "kind": "auto",
-    "name": "FUN_001a0f10"
+    "name": "biped_spawn_contact"
   },
   "0x1a1020": {
     "end": "0x1a1078",
@@ -30375,7 +30375,7 @@
   "0x1a1a10": {
     "end": "0x1a1b8b",
     "kind": "auto",
-    "name": "FUN_001a1a10"
+    "name": "biped_collision_direction"
   },
   "0x1a1b90": {
     "end": "0x1a1bb2",
@@ -30395,12 +30395,12 @@
   "0x1a1e70": {
     "end": "0x1a1fa6",
     "kind": "auto",
-    "name": "FUN_001a1e70"
+    "name": "biped_check_stuck_falling"
   },
   "0x1a1fb0": {
     "end": "0x1a215b",
     "kind": "auto",
-    "name": "FUN_001a1fb0"
+    "name": "biped_check_stuck_falling_veichle"
   },
   "0x1a2160": {
     "end": "0x1a228a",
@@ -30490,17 +30490,17 @@
   "0x1a6280": {
     "end": "0x1a634b",
     "kind": "auto",
-    "name": "FUN_001a6280"
+    "name": "biped_death_handler"
   },
   "0x1a6350": {
     "end": "0x1a6796",
     "kind": "auto",
-    "name": "FUN_001a6350"
+    "name": "biped_update_dispatcher"
   },
   "0x1a67b0": {
     "end": "0x1a67db",
     "kind": "auto",
-    "name": "FUN_001a67b0"
+    "name": "get_animation_state_str"
   },
   "0x1a67e0": {
     "end": "0x1a6820",
@@ -30520,7 +30520,7 @@
   "0x1a68d0": {
     "end": "0x1a6bb2",
     "kind": "auto",
-    "name": "FUN_001a68d0"
+    "name": "unit_speech_slot_alloc"
   },
   "0x1a6bc0": {
     "end": "0x1a6be1",
@@ -30550,7 +30550,7 @@
   "0x1a6e20": {
     "end": "0x1a6ee1",
     "kind": "auto",
-    "name": "FUN_001a6e20"
+    "name": "unit_log_lost_speech"
   },
   "0x1a6ef0": {
     "end": "0x1a70c1",
@@ -30560,7 +30560,7 @@
   "0x1a70d0": {
     "end": "0x1a71b6",
     "kind": "auto",
-    "name": "FUN_001a70d0"
+    "name": "unit_direct_speech"
   },
   "0x1a71c0": {
     "end": "0x1a74c8",
@@ -30590,12 +30590,12 @@
   "0x1a7a90": {
     "end": "0x1a7ac6",
     "kind": "auto",
-    "name": "FUN_001a7a90"
+    "name": "unit_apply_damage"
   },
   "0x1a7ad0": {
     "end": "0x1a7b42",
     "kind": "auto",
-    "name": "FUN_001a7ad0"
+    "name": "unit_apply_damage_child"
   },
   "0x1a7b50": {
     "end": "0x1a7c6f",
@@ -30610,17 +30610,17 @@
   "0x1a7cc0": {
     "end": "0x1a7cf8",
     "kind": "auto",
-    "name": "FUN_001a7cc0"
+    "name": "unit_get_body_vitality"
   },
   "0x1a7d00": {
     "end": "0x1a7d38",
     "kind": "auto",
-    "name": "FUN_001a7d00"
+    "name": "unit_get_shield_vitality"
   },
   "0x1a7d40": {
     "end": "0x1a7d72",
     "kind": "auto",
-    "name": "FUN_001a7d40"
+    "name": "unit_get_num_grenades"
   },
   "0x1a7d80": {
     "end": "0x1a7de5",
@@ -30735,7 +30735,7 @@
   "0x1a88b0": {
     "end": "0x1a88d5",
     "kind": "auto",
-    "name": "FUN_001a88b0"
+    "name": "unit_map_animstate_to_idx"
   },
   "0x1a8910": {
     "end": "0x1a892e",
@@ -30926,7 +30926,7 @@
   "0x1aa170": {
     "end": "0x1aa235",
     "kind": "auto",
-    "name": "FUN_001AA170"
+    "name": "unit_find_nearest_biped"
   },
   "0x1aa240": {
     "end": "0x1aa351",
@@ -31076,7 +31076,7 @@
   "0x1ab6e0": {
     "end": "0x1ab721",
     "kind": "auto",
-    "name": "FUN_001ab6e0"
+    "name": "unit_get_base_seat_name"
   },
   "0x1ab730": {
     "end": "0x1ab76b",
@@ -31131,7 +31131,7 @@
   "0x1abd10": {
     "end": "0x1abd81",
     "kind": "auto",
-    "name": "FUN_001abd10"
+    "name": "unit_play_snd_melee_dmg"
   },
   "0x1abd90": {
     "end": "0x1ac027",
@@ -31406,7 +31406,7 @@
   "0x1b0630": {
     "end": "0x1b0cf7",
     "kind": "auto",
-    "name": "FUN_001b0630"
+    "name": "unit_update_aim_constraints"
   },
   "0x1b0d00": {
     "end": "0x1b0d87",
@@ -31436,7 +31436,7 @@
   "0x1b1400": {
     "end": "0x1b1a10",
     "kind": "auto",
-    "name": "FUN_001b1400"
+    "name": "unit_select_movement_on_state"
   },
   "0x1b1a20": {
     "end": "0x1b1b34",
@@ -31546,7 +31546,7 @@
   "0x1b3690": {
     "end": "0x1b4da9",
     "kind": "auto",
-    "name": "FUN_001b3690"
+    "name": "unit_update"
   },
   "0x1b4dc0": {
     "end": "0x1b53f3",

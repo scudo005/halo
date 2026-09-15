@@ -924,14 +924,14 @@ void FUN_00123560(int model_tag, int permutation_data, int *node_matrices,
   } while (1);
 }
 
-/* FUN_001a6280 (0x1a6280)
+/* biped_death_handler (0x1a6280)
  * Biped death state handler. After a biped is killed, decides which
  * post-death sub-state to enter: limp-noodle (ragdoll-like), dying-airborne
  * (fell while dying), or normal dying. Checks limp-noodle counter, airborne
  * ticks, and animation state.
  * Register args: @edi = unit_handle, @ebx = pointer to state byte pair.
  * Confirmed from caller 0x1a6350 @001a65ed. */
-void FUN_001a6280(int unit_handle, char *state_out)
+void biped_death_handler(int unit_handle, char *state_out)
 {
   char *biped;
   char *biped_tag;
@@ -972,21 +972,21 @@ void FUN_001a6280(int unit_handle, char *state_out)
   state_out[1] = 0;
 }
 
-/* FUN_001a6350 (0x1a6350)
+/* biped_update_dispatcher (0x1a6350)
  * Biped per-tick update dispatcher. Called each tick for biped-type units.
  * If the biped is free (no parent object), runs the full update chain:
  *   - FUN_001a4440: pre-update setup
  *   - normalize forward vector at +0x1D4, set animation state byte at +0x42a
  *   - clamp/reset velocity at +0x228, melee counters at +0x459/+0x45a
  *   - FUN_001a4c50: turning, FUN_001a5300: moving
- *   - FUN_001a2900/FUN_001a2a60/FUN_001a2b10/FUN_001a6280: death/air/land/slip
+ *   - FUN_001a2900/FUN_001a2a60/FUN_001a2b10/biped_death_handler: death/air/land/slip
  *   - melee damage timer at +0x45d/+0x45e
- *   - FUN_001a2440, FUN_001a1e70, FUN_001a0b30: footstep/marker events
+ *   - FUN_001a2440, biped_check_stuck_falling, biped_check_bad_pos: footstep/marker events
  * If seated in a vehicle (parent +0xCC != -1), handles ejection and exit.
  * unit_update_animation runs at the end in both cases; tracks suspension ticks at +0x6C.
  * Always returns 1 (via CONCAT31).
  * Confirmed: cdecl, 1 stack param, returns char. */
-char FUN_001a6350(int unit_handle)
+char biped_update_dispatcher(int unit_handle)
 {
   unsigned int *biped;
   char *biped_tag;
@@ -1033,7 +1033,7 @@ char FUN_001a6350(int unit_handle)
       vehicle =
         (char *)object_get_and_verify_type(*(int *)((char *)biped + 0xcc), 2);
 
-      FUN_001a1fb0(unit_handle);
+      biped_check_stuck_falling_veichle(unit_handle);
 
       if ((*(unsigned char *)((char *)biped + 0x1b8) & 0x40) != 0) {
         unit_try_and_exit_seat(unit_handle);
@@ -1126,7 +1126,7 @@ char FUN_001a6350(int unit_handle)
        * The x component alone separates "equal" from "different"; the paired
        * capture already showed the dot is a bit-exact constant, so this only
        * has to say WHICH of the two is standing still.  +0x1b4 goes out whole
-       * because bit 0 selects FUN_001b3690's static arm, which writes the
+       * because bit 0 selects unit_update's static arm, which writes the
        * current facing into the desired-facing slot. */
       RNG_TRACE_EX(RNG_TRACE_KIND_DESIRED_X,
                    *(unsigned int *)((char *)biped + 0x1d4), unit_handle);
@@ -1152,7 +1152,7 @@ char FUN_001a6350(int unit_handle)
     FUN_001a2800(unit_handle, "post-moving");
 
     if ((*(unsigned char *)((char *)biped + 0xb6) & 0x4) != 0) {
-      FUN_001a6280(unit_handle, (char *)state_pair);
+      biped_death_handler(unit_handle, (char *)state_pair);
     } else {
       if ((*(int *)((char *)biped + 0x424) & 1) != 0) {
         FUN_001a2900(unit_handle, (char *)state_pair);
@@ -1200,8 +1200,8 @@ char FUN_001a6350(int unit_handle)
     }
 
     FUN_001a2440(unit_handle);
-    FUN_001a1e70(unit_handle);
-    FUN_001a0b30(unit_handle);
+    biped_check_stuck_falling(unit_handle);
+    biped_check_bad_pos(unit_handle);
   }
 
   /* Post-section: animation state update */
@@ -1228,7 +1228,7 @@ char FUN_001a6350(int unit_handle)
   return 1;
 }
 
-/* FUN_001a67b0 (0x1a67b0)
+/* get_animation_state_str (0x1a67b0)
  *
  * Returns the animation state string for the given animation index (param_1)
  * and column (param_2, 0 or 1) from the global animation-name table at
@@ -1238,7 +1238,7 @@ char FUN_001a6350(int unit_handle)
  * Confirmed: MOVSX EAX,CX (sign-extends param_1); MOVZX ECX (zero-extends
  * param_2); LEA EDX,[ECX + EAX*2]; MOV EAX,[EDX*4 + 0x32d7c8].
  */
-char *FUN_001a67b0(short param_1, unsigned char param_2)
+char *get_animation_state_str(short param_1, unsigned char param_2)
 {
   char *result;
 
@@ -1339,7 +1339,7 @@ int FUN_001a6870(int param_1, short param_2, char param_3)
     (int *)tag_block_get_element(block, (int)(short)i2, 0x30));
 }
 
-/* FUN_001a68d0 (0x1a68d0) — unit dialogue speech slot allocation.
+/* unit_speech_slot_alloc (0x1a68d0) — unit dialogue speech slot allocation.
  *
  * Resolves a vocalization type to a sound definition index via the unit's
  * dialogue tag (udlg). Walks the vocalization fallback table at 0x2b6420
@@ -1355,7 +1355,7 @@ int FUN_001a6870(int param_1, short param_2, char param_3)
  *
  * Source file: unit_dialogue.c, lines 0x80–0x82 asserts.
  */
-short FUN_001a68d0(int unit_handle, short priority, char param_3, char param_4,
+short unit_speech_slot_alloc(int unit_handle, short priority, char param_3, char param_4,
                    int *param_5, short *vocalization_type_ref,
                    int *sound_definition_index_ref)
 {
@@ -1608,7 +1608,7 @@ short FUN_001a6cd0(const char *param_1)
  * If the unit has no active speech (speech_count at +0x338 is 0),
  * outputs "<none>". Otherwise looks up the sound tag name via
  * tag_get_name(+0x33c), strips path components based on full_path flag,
- * and optionally prepends the dialogue variant name from FUN_001a67b0.
+ * and optionally prepends the dialogue variant name from get_animation_state_str.
  *
  * full_path=0: uses strrchr to find last backslash (show filename only)
  * full_path!=0: uses strchr loop to strip all path prefix (show leaf)
@@ -1658,11 +1658,11 @@ char *FUN_001a6d10(int unit_handle, char full_path, int16_t max_len,
   dialogue_index = *(int16_t *)(unit + 0x33a);
   if (dialogue_index != -1) {
     if (full_path == '\0') {
-      variant_name = FUN_001a67b0(dialogue_index, 0);
+      variant_name = get_animation_state_str(dialogue_index, 0);
       snprintf(output, (int)max_len, "%s", variant_name);
       return output;
     }
-    variant_name = FUN_001a67b0(dialogue_index, 0);
+    variant_name = get_animation_state_str(dialogue_index, 0);
     snprintf(output, (int)max_len, "%s %s", variant_name, current_name);
     return output;
   }
@@ -1671,13 +1671,13 @@ char *FUN_001a6d10(int unit_handle, char full_path, int16_t max_len,
   return output;
 }
 
-/* FUN_001a6e20 (0x1a6e20) — unit_dialogue_log_lost_speech
+/* unit_log_lost_speech (0x1a6e20) — unit_dialogue_log_lost_speech
  *
  * Logs a "lost speech" debug message when a speech item is being replaced.
  * Only produces output when the debug flag at 0x5aca56 is nonzero.
  *
  * Looks up the unit's tag name via tag_get('unit'), then resolves the speech
- * item's dialogue name either via FUN_001a67b0 (if speech_item+2 != -1) or
+ * item's dialogue name either via get_animation_state_str (if speech_item+2 != -1) or
  * via tag_get_name (if speech_item+4 != -1), falling back to "<unknown>".
  * Logs "lost <waiting|queued> speech <name>" via console_printf.
  *
@@ -1690,7 +1690,7 @@ char *FUN_001a6d10(int unit_handle, char full_path, int16_t max_len,
  * Confirmed: tag_get(0x756e6974, *unit) for unit tag name.
  * Confirmed: console_printf(0, "%s: lost %s speech %s", ...) at 0xff4d0.
  */
-void FUN_001a6e20(int unit_handle, void *speech_item, short priority)
+void unit_log_lost_speech(int unit_handle, void *speech_item, short priority)
 {
   char *unit;
   char *unit_tag;
@@ -1710,7 +1710,7 @@ void FUN_001a6e20(int unit_handle, void *speech_item, short priority)
     unit_tag = (char *)tag_get(0x756e6974, *(int *)unit);
     dialogue_index = *(int16_t *)((char *)speech_item + 2);
     if (dialogue_index != (int16_t)-1) {
-      speech_name = (char *)FUN_001a67b0(dialogue_index, 0);
+      speech_name = (char *)get_animation_state_str(dialogue_index, 0);
     } else {
       tag_index = *(int *)((char *)speech_item + 4);
       if (tag_index != -1) {
@@ -1780,7 +1780,7 @@ void FUN_001a6ef0(int unit_handle, short priority, void *speech_item)
   if (priority >= _unit_speech_pain) {
     /* Promoting to current slot — log existing speech being evicted */
     if (*(int16_t *)(unit + 0x338) > 0 && *(char *)(unit + 0x3a4) == '\0') {
-      FUN_001a6e20(unit_handle, unit + 0x338, 2);
+      unit_log_lost_speech(unit_handle, unit + 0x338, 2);
     }
 
     /* Copy 0x30 bytes of speech data to current slot (unit+0x338) */
@@ -1789,7 +1789,7 @@ void FUN_001a6ef0(int unit_handle, short priority, void *speech_item)
     /* Talk clears the backup slot if it exists and isn't the same item. */
     if (priority == _unit_speech_talk && *(int16_t *)(unit + 0x368) > 0) {
       if (speech_item != (void *)(unit + 0x368)) {
-        FUN_001a6e20(unit_handle, unit + 0x368, 1);
+        unit_log_lost_speech(unit_handle, unit + 0x368, 1);
       }
       *(int16_t *)(unit + 0x368) = 0;
     }
@@ -1834,9 +1834,9 @@ void FUN_001a6ef0(int unit_handle, short priority, void *speech_item)
   }
 }
 
-/* FUN_001a70d0 (0x1a70d0)
+/* unit_direct_speech (0x1a70d0)
  * Initiates direct sound speech on a unit (used for scripted dialogue). */
-void FUN_001a70d0(int unit_handle, int sound_tag, int sound_handle)
+void unit_direct_speech(int unit_handle, int sound_tag, int sound_handle)
 {
   char *unit;
   int result;
@@ -1845,7 +1845,7 @@ void FUN_001a70d0(int unit_handle, int sound_tag, int sound_handle)
 
   unit = (char *)object_get_and_verify_type(unit_handle, 3);
   l_8 = -1;
-  result = FUN_001a68d0(unit_handle, _unit_speech_scripted, 0, 0, 0,
+  result = unit_speech_slot_alloc(unit_handle, _unit_speech_scripted, 0, 0, 0,
                         (int16_t *)&l_8, &result);
   if ((int16_t)result < 3) {
     result = 2;
@@ -2018,7 +2018,7 @@ char FUN_001a71c0(int unit_handle, int *param_2, char param_3, char param_4,
     priority = _unit_speech_death;
   }
 
-  speech_count = FUN_001a68d0(unit_handle, (int)priority, 1, 0, 0,
+  speech_count = unit_speech_slot_alloc(unit_handle, (int)priority, 1, 0, 0,
                               (short *)&dialogue_type, &dialogue_obj_handle);
 
   if (*(char *)0x5ac9ca == '\0' && speech_count > 0) {
@@ -2059,7 +2059,7 @@ ai_effect:
  *   4 → 13 (pain_falling)
  *   5 → 0xb7 (183, death)
  * Then looks up the dialogue tag at unit+0x334, fetches the sound reference
- * at dialogue_index*0x10+0x1c, and calls FUN_001a68d0 to allocate a speech
+ * at dialogue_index*0x10+0x1c, and calls unit_speech_slot_alloc to allocate a speech
  * slot. On success, builds a speech item struct (0x30 bytes) and queues it
  * via FUN_001a6ef0.
  *
@@ -2126,7 +2126,7 @@ char FUN_001a74d0(int unit_handle, int scream_type)
     dialogue_tag = (char *)tag_get(0x75646c67, dialogue_tag_index);
     sound_ref = *(uint32_t *)(dialogue_tag + (int)dialogue_index * 0x10 + 0x1c);
     if (sound_ref != 0xffffffff) {
-      result = FUN_001a68d0(unit_handle, 9, 1, 0, 0, &dialogue_index,
+      result = unit_speech_slot_alloc(unit_handle, 9, 1, 0, 0, &dialogue_index,
                             (int *)&sound_ref);
       if (result > 0) {
         csmemset(speech_buf, 0, 0x30);
@@ -2360,7 +2360,7 @@ void FUN_001a7790(int param_1)
   }
 }
 
-/* FUN_001a7a90 (0x1a7a90)
+/* unit_apply_damage (0x1a7a90)
  * Applies damage to an object if it's not dead (bit 2 of +0xB6 clear).
  *
  * body_dmg/shield_dmg are passed BY VALUE. The original (delinked) takes three
@@ -2371,7 +2371,7 @@ void FUN_001a7790(int param_1)
  * reinterprets the float bit-pattern (1.0f == 0x3f800000) as an address and
  * dereferences it — an infinite page-fault storm that froze PoA after the intro
  * (FUN_000bf380 calls this with floats pushed by value). */
-void FUN_001a7a90(int param_1, float body_dmg, float shield_dmg)
+void unit_apply_damage(int param_1, float body_dmg, float shield_dmg)
 {
   char *obj;
 
@@ -2383,7 +2383,7 @@ void FUN_001a7a90(int param_1, float body_dmg, float shield_dmg)
   }
 }
 
-/* FUN_001a7ad0 (0x1a7ad0)
+/* unit_apply_damage_child (0x1a7ad0)
  * Iterates child objects and applies damage to each alive object.
  *
  * Confirmed: params 2 and 3 are floats, not ints.  The original copies them
@@ -2394,7 +2394,7 @@ void FUN_001a7a90(int param_1, float body_dmg, float shield_dmg)
  * bit-faithful (it cast the pointers, never the values); the float typing
  * additionally lets callers reproduce the original's FLD/FSTP argument
  * push instead of a PUSH. */
-void FUN_001a7ad0(int parent_handle, float param_2, float param_3)
+void unit_apply_damage_child(int parent_handle, float param_2, float param_3)
 {
   int iter_state;
   int child;
@@ -2480,9 +2480,9 @@ void FUN_001a7c70(int parent_handle, float body_damage, float shield_damage)
   }
 }
 
-/* FUN_001a7cc0 (0x1a7cc0)
+/* unit_get_body_vitality (0x1a7cc0)
  * Returns the body vitality (0x90) or 0.0 if dead, default if invalid. */
-float FUN_001a7cc0(int datum_handle)
+float unit_get_body_vitality(int datum_handle)
 {
   char *obj;
   float result;
@@ -2498,9 +2498,9 @@ float FUN_001a7cc0(int datum_handle)
   return result;
 }
 
-/* FUN_001a7d00 (0x1a7d00)
+/* unit_get_shield_vitality (0x1a7d00)
  * Returns the shield vitality (0x94) or 0.0 if dead, default if invalid. */
-float FUN_001a7d00(int datum_handle)
+float unit_get_shield_vitality(int datum_handle)
 {
   char *obj;
   float result;
@@ -2516,9 +2516,9 @@ float FUN_001a7d00(int datum_handle)
   return result;
 }
 
-/* FUN_001a7d40 (0x1a7d40)
+/* unit_get_num_grenades (0x1a7d40)
  * Sums grenade counts for all grenade types (2 types). */
-int FUN_001a7d40(int datum_handle)
+int unit_get_num_grenades(int datum_handle)
 {
   int i;
   int sum;
@@ -3199,9 +3199,9 @@ char FUN_001a8890(void *anim_state)
   return result;
 }
 
-/* FUN_001a88b0 (0x1a88b0)
+/* unit_map_animstate_to_idx (0x1a88b0)
  * Maps animation state to animation index. @ecx = anim state value. */
-int FUN_001a88b0(int16_t anim_state)
+int unit_map_animstate_to_idx(int16_t anim_state)
 {
   int result;
 
@@ -4973,7 +4973,7 @@ int units_debug_get_next_unit(int current_unit)
   return l_c;
 }
 
-/* FUN_001AA170 (0x1aa170) — find nearest biped
+/* unit_find_nearest_biped (0x1aa170) — find nearest biped
  *
  * Iterates all biped objects (type_mask=1) to find the nearest biped
  * to the given unit, excluding the unit itself and any biped with
@@ -4988,7 +4988,7 @@ int units_debug_get_next_unit(int current_unit)
  * Confirmed: FLOAT_002533c0 = 0.0f (used when unit_handle == -1).
  * Confirmed: initial best_dist = FLT_MAX (0x7f7fffff).
  */
-int FUN_001AA170(int unit_handle)
+int unit_find_nearest_biped(int unit_handle)
 {
   int best_handle;
   float best_dist;
@@ -6276,12 +6276,12 @@ void unit_aiming_vector(int unit_handle)
   *(float *)(unit + 0x310) = dz;
 }
 
-/* FUN_001ab6e0 (0x1ab6e0)
+/* unit_get_base_seat_name (0x1ab6e0)
  * Returns a pointer to the base seat name string given a base_seat_index.
  * Asserts that the index is in [0, NUMBER_OF_UNIT_BASE_SEATS).
  * The seat name table at 0x32e484 contains: asleep, alert, stand, crouch, flee,
  * flaming. */
-const char *FUN_001ab6e0(int16_t base_seat_index)
+const char *unit_get_base_seat_name(int16_t base_seat_index)
 {
   if (base_seat_index < 0 || base_seat_index >= NUMBER_OF_UNIT_BASE_SEATS) {
     display_assert(
@@ -6652,14 +6652,14 @@ void unit_handle_region_destroyed(int unit_handle, int param_2, uint32_t flags)
   }
 }
 
-/* FUN_001abd10 (0x1abd10)
+/* unit_play_snd_melee_dmg (0x1abd10)
  * Plays impact sounds for melee damage. Looks up the unit's material type
  * sound via FUN_0018e500 and plays it on the unit. If a damage effect tag is
  * provided, also plays the effect's melee impact sound (tag 'jpt!'+0x120).
  * Register args: @eax = material_type, @esi = unit_handle,
  *                @edi = damage_effect_tag (or -1).
  * Confirmed from callers 0x1ae840 @001aea76, 0x1aea90 @001af016. */
-void FUN_001abd10(int16_t material_type, int unit_handle, int weapon_tag_index)
+void unit_play_snd_melee_dmg(int16_t material_type, int unit_handle, int weapon_tag_index)
 {
   char *material_effects;
   int sound_tag;
@@ -7874,7 +7874,7 @@ bool unit_try_animation_state(int unit_handle, int seat_label, int weapon_label,
  * Confirmed: cdecl, 2 stack params (unit_handle, anim_state as int16_t).
  * Confirmed: jump table at 0x1ad714 (44 entries for states 0..0x2b).
  * Confirmed: calls unit_set_animation(@eax,@edi,@bx).
- * Confirmed: calls FUN_001a88b0(@ecx = anim_state).
+ * Confirmed: calls unit_map_animstate_to_idx(@ecx = anim_state).
  * Confirmed: DAT_005054fb = developer mode flag.
  * Confirmed: 0x322308 = mode anim name table, 0x322450 = overlay anim name
  * table.
@@ -8145,9 +8145,9 @@ apply_animation:
 resolve_weapon_idle: {
   int16_t new_weapon_idle;
 
-  new_weapon_idle = FUN_001a88b0(anim_state);
+  new_weapon_idle = unit_map_animstate_to_idx(anim_state);
 
-  if (was_none || new_weapon_idle != FUN_001a88b0(old_state)) {
+  if (was_none || new_weapon_idle != unit_map_animstate_to_idx(old_state)) {
     /* Resolve weapon idle animation */
     if (new_weapon_idle >= 0 &&
         (int)new_weapon_idle < *(int *)(mode_block + 0x98)) {
@@ -9273,7 +9273,7 @@ void unit_handle_deleted_object(int unit_handle, int deleted_handle)
  * then builds damage params and applies via object_cause_damage.
  * cdecl, 7 stack params.
  * If melee_hit is false and the collision result has a valid material type,
- * plays the melee clang sound via FUN_001abd10. */
+ * plays the melee clang sound via unit_play_snd_melee_dmg. */
 void unit_cause_melee_damage(int unit_handle, char melee_hit, int target_handle,
                              int param_4, int param_5, int param_6,
                              float *impact_direction)
@@ -9399,7 +9399,7 @@ void unit_cause_melee_damage(int unit_handle, char melee_hit, int target_handle,
   }
 
   if (melee_hit == 0 && *(int16_t *)(damage_params + 0x4c) != -1) {
-    FUN_001abd10(*(int16_t *)(damage_params + 0x4c), unit_handle,
+    unit_play_snd_melee_dmg(*(int16_t *)(damage_params + 0x4c), unit_handle,
                  damage_effect_index);
   }
 
@@ -9673,7 +9673,7 @@ got_damage_effect:
   }
 
   if ((short)hit_material != -1) {
-    FUN_001abd10((short)hit_material, unit_handle, melee_damage_effect);
+    unit_play_snd_melee_dmg((short)hit_material, unit_handle, melee_damage_effect);
     if (melee_response_effect != -1) {
       damage_data_new(damage_data, melee_response_effect);
       *(float *)(damage_data + 0x34) = -facing[0];
@@ -10721,13 +10721,13 @@ void FUN_001b04b0(int unit_handle, int node_matrices)
   }
 }
 
-/* FUN_001b0630 (0x1b0630) — euler aiming vector update
+/* unit_update_aim_constraints (0x1b0630) — euler aiming vector update
  *
  * Updates aiming/desired vectors with angular velocity constraints,
  * motion planning, and bounds clamping.
  * Confirmed: cdecl, 7 stack params.
  */
-void FUN_001b0630(int transform_matrix, float *aiming_vector,
+void unit_update_aim_constraints(int transform_matrix, float *aiming_vector,
                   float *desired_vector, float *angular_velocity,
                   float *aiming_bounds, float angular_velocity_limit,
                   float angular_acceleration_limit)
@@ -11154,7 +11154,7 @@ short unit_update_animation(int unit_handle, char *anim_state)
         char *weapon_name;
         const char *seat_label;
         weapon_name = unit_get_weapon_name(unit_handle, 1);
-        seat_label = FUN_001ab6e0(base_seat);
+        seat_label = unit_get_base_seat_name(base_seat);
         unit_set_or_test_seat_and_weapon_label(unit_handle, seat_label, weapon_name, 1);
       }
     }
@@ -11399,12 +11399,12 @@ char unit_has_night_vision_weapon(int unit_handle)
   return active;
 }
 
-/* FUN_001b1400 (0x1b1400) — animation impulse
+/* unit_select_movement_on_state (0x1b1400) — animation impulse
  *
  * Selects movement or attack animation based on unit state.
  * Confirmed: cdecl, 9 stack params.
  */
-void FUN_001b1400(int unit_handle, char is_melee, char is_throw,
+void unit_select_movement_on_state(int unit_handle, char is_melee, char is_throw,
                   char is_airborne, char is_ground, char is_ping,
                   float throttle_magnitude, int weapon_class,
                   int alignment_vector)
@@ -11623,7 +11623,7 @@ check_ping:
         frame_count = *(short *)(anim_element + 0x22);
         quarter = frame_count >> 2;
         half = (frame_count >> 1) + quarter;
-        random_frame = FUN_00017940(quarter, half);
+        random_frame = getrand_int16(quarter, half);
         *(char *)((int)unit + 0x23c) = (char)random_frame;
         if ((char)random_frame < 2) {
           *(char *)((int)unit + 0x23c) = 1;
@@ -12521,7 +12521,7 @@ void unit_place(int unit_handle, void *placement)
   /* Check the "dead" flag: bit 0 of the second dword (placement+4) */
   if ((*(int *)((char *)placement + 4) & 1) != 0) {
     /* Kill: set animation state and make dead */
-    FUN_001b1400(unit_handle, 1, 0, 0, 0, 0, 0, -1, 0);
+    unit_select_movement_on_state(unit_handle, 1, 0, 0, 0, 0, 0, -1, 0);
 
     if (*(char *)(unit + 0x253) == 0x19) {
       /* Clear weapons and grenade state */
@@ -13566,7 +13566,7 @@ char unit_try_and_exit_seat(int unit_handle)
   return 1;
 }
 
-/* FUN_001b3690 (0x1b3690) — unit_update
+/* unit_update (0x1b3690) — unit_update
  *
  * Main per-tick update for a unit (biped or vehicle). This is one of the
  * largest functions in units.obj (~5900 bytes, ~1600 instructions).
@@ -13592,7 +13592,7 @@ char unit_try_and_exit_seat(int unit_handle)
  * Stack frame: SUB ESP, 0x58. Returns char (always 1).
  * Confirmed: cdecl, 1 stack param. All offsets from disassembly.
  */
-char FUN_001b3690(int unit_handle)
+char unit_update(int unit_handle)
 {
   /* --- All variable declarations (C89) --- */
   int *unit;
@@ -13615,7 +13615,7 @@ char FUN_001b3690(int unit_handle)
   float saved_aim[3];
   /* Euler-aim transform (real_matrix4x3): scale + forward/left/up rows +
    * translation. MUST be one contiguous 13-float block — it is passed by
-   * address to FUN_001b0630, which does real_matrix4x3_transform_point on it.
+   * address to unit_update_aim_constraints, which does real_matrix4x3_transform_point on it.
    * The decompiler split it into separate stack locals (local_5c/58/4c/48/44/
    * 40/34) that MSVC happened to place contiguously; clang scatters separate
    * locals, so passing &local_5c yielded a garbage matrix and the AI aim
@@ -14057,7 +14057,7 @@ char FUN_001b3690(int unit_handle)
       em.translation[0] = grav[0];
       em.translation[1] = grav[1];
       em.translation[2] = grav[2];
-      FUN_001b0630((int)&em, aim_vec, (float *)((char *)unit + 0x1e0),
+      unit_update_aim_constraints((int)&em, aim_vec, (float *)((char *)unit + 0x1e0),
                    (float *)((char *)unit + 0x1f8),
                    (float *)((char *)unit + 0x268), aim_vel_limit,
                    aim_accel_limit);
@@ -14117,7 +14117,7 @@ char FUN_001b3690(int unit_handle)
       em.translation[0] = grav[0];
       em.translation[1] = grav[1];
       em.translation[2] = grav[2];
-      FUN_001b0630((int)&em, lk, (float *)((char *)unit + 0x204),
+      unit_update_aim_constraints((int)&em, lk, (float *)((char *)unit + 0x204),
                    (float *)((char *)unit + 0x21c),
                    (float *)((char *)unit + 0x278), aim_vel_limit,
                    aim_accel_limit);

@@ -19,11 +19,11 @@ The 12 dormant functions, with declarations and register-arg annotations:
 | addr | name / decl | calling conv | VC71* |
 |------|-------------|--------------|-------|
 | 0x1a0680 | `char FUN_001a0680(int unit_handle)` | **cdecl** | 61.5 raw / ~82 real |
-| 0x1a0b30 | `char FUN_001a0b30(int unit_handle@<edi>)` | fastcall @edi | 81.4 |
-| 0x1a0e00 | `void FUN_001a0e00(float threshold, int unit_handle@<eax>)` | reg @eax | 82.3 |
-| 0x1a1a10 | `int FUN_001a1a10(float scale, float *out_point, void *out_vec, float *direction@<eax>, int unit_handle@<edi>)` | reg @eax+@edi | 80.0 |
+| 0x1a0b30 | `char biped_check_bad_pos(int unit_handle@<edi>)` | fastcall @edi | 81.4 |
+| 0x1a0e00 | `void biped_advance_anim(float threshold, int unit_handle@<eax>)` | reg @eax | 82.3 |
+| 0x1a1a10 | `int biped_collision_direction(float scale, float *out_point, void *out_vec, float *direction@<eax>, int unit_handle@<edi>)` | reg @eax+@edi | 80.0 |
 | 0x1a1b90 | `int biped_approximate_surface_index(int unit_handle, float *out_point)` | **cdecl** | 78.6 |
-| 0x1a1e70 | `void FUN_001a1e70(int unit_handle)` | **cdecl** | 86.9 |
+| 0x1a1e70 | `void biped_check_stuck_falling(int unit_handle)` | **cdecl** | 86.9 |
 | 0x1a2160 | `void FUN_001a2160(int unit_handle@<eax>)` | reg @eax | 73.4 |
 | 0x1a2290 | `char FUN_001a2290(int unit_handle@<edi>)` | fastcall @edi | 84.4 |
 | 0x1a25e0 | `void FUN_001a25e0(int unit_handle@<ecx>)` | fastcall @ecx | 79.3 |
