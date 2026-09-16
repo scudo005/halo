@@ -2789,7 +2789,7 @@
       }
     },
     "0x81910": {
-      "name": "FUN_00081910",
+      "name": "destroy_mutex",
       "declared_stack": 0,
       "verdict": "UNDER-DECLARED",
       "observed": {

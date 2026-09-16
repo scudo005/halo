@@ -105,7 +105,7 @@ def test_interior_ret_does_not_end_a_function():
 
 def test_table_data_overrides_are_present():
     """A switch table after the final `ret` is part of the function."""
-    for addr, end, name in ((0x84520, 0x8473A, "FUN_00084520"),
+    for addr, end, name in ((0x84520, 0x8473A, "get_sender_address_udp"),
                             (0x12A2D0, 0x12A4F4,
                              "network_game_client_start_frame")):
         e = _entry(addr)

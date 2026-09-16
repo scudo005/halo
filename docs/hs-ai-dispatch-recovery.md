@@ -111,13 +111,13 @@ void hs_evaluate_<name>(int16_t function_index, int thread_datum, char init);
 3. **Native Engine Dispatch:** Passes the extracted parameters to internal AI/game subsystems:
    - `ai_set_return_state` $\rightarrow$ `FUN_000579d0(encounter_handle, return_state)`
    - `ai_set_current_state` $\rightarrow$ `FUN_00057aa0(encounter_handle, state)`
-   - `ai_playfight` $\rightarrow$ `FUN_00057c70(encounter_handle, value)`
+   - `ai_playfight` $\rightarrow$ `ai_playfight_encounter(encounter_handle, value)`
    - `ai_reconnect` $\rightarrow$ `FUN_00057c60()` (reconnects AI graph to structure BSP)
-   - `ai_vehicle_encounter` $\rightarrow$ `FUN_00057d00(handle, value)`
+   - `ai_vehicle_encounter` $\rightarrow$ `ai_vehicle_encounter(handle, value)`
    - `ai_vehicle_enterable_*` $\rightarrow$ configuration routines for impulsive vehicle boarding
    - `ai_look_at_object` / `ai_stop_looking` $\rightarrow$ AI gaze controller (`FUN_000581b0` / `FUN_00058220`)
    - `ai_follow_target_*` $\rightarrow$ squad leader tracking routines (`FUN_00058390`, `FUN_00058410`, `FUN_000584a0`)
-   - `ai_conversation_*` $\rightarrow$ scripted dialog trigger and status handlers (`FUN_000585d0`, `FUN_00058700`, `FUN_00058710`)
+   - `ai_conversation_*` $\rightarrow$ scripted dialog trigger and status handlers (`FUN_000585d0`, `ai_encounter_conversation_line`, `ai_encounter_conversation_status`)
    - `ai_is_attacking` / `ai_status` $\rightarrow$ combat status and behavior queries
    - `ai_living_count` / `ai_living_fraction` / `ai_strength` $\rightarrow$ census and vitality queries
 4. **Thread Return:** Commits the result back to the scripting thread via `hs_return(thread_datum, value)`.

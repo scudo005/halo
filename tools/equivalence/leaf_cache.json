@@ -3332,7 +3332,7 @@
     "class": "stubbable",
     "call_count": 1
   },
-  "0x00058720": {
+  "ai_link_activation": {
     "class": "stubbable",
     "dir32_count": 2,
     "call_count": 4

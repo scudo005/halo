@@ -199,7 +199,7 @@ short ai_scripting_command_list_status(int ai_index)
 
 /* 0x00058cc0 — ai_go_to_vehicle_override script command entry point.
  * Uses the same trace path and 0x100-byte name buffer as FUN_00058c40, but
- * forwards allow_type9 = 1 to FUN_00058af0.  The three parameters are stack
+ * forwards allow_type9 = 1 to ai_vehicle_enter.  The three parameters are stack
  * arguments at [EBP+8], [EBP+0xc], and [EBP+0x10]. */
 void ai_scripting_follow_distance(unsigned int ai_index, int vehicle_handle,
                                   const char *seat_substring)
@@ -213,7 +213,7 @@ void ai_scripting_follow_distance(unsigned int ai_index, int vehicle_handle,
           hs_runtime_get_executing_thread_name(), local_104,
           vehicle_handle & 0xffff, seat_substring);
   }
-  FUN_00058af0(ai_index, vehicle_handle, (int)seat_substring, 1);
+  ai_vehicle_enter(ai_index, vehicle_handle, (int)seat_substring, 1);
 }
 
 /* 0x00058d40 — "ai_renew" HS script command.

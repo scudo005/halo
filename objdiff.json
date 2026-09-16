@@ -240,7 +240,7 @@
    }
   },
   {
-   "name": "halo/FUN_000874d0",
+   "name": "halo/director_dispatch_allplayer_update",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/camera/director.c.obj",
    "base_path": "delinked/functions/000874d0.obj",
    "metadata": {
@@ -344,7 +344,7 @@
    }
   },
   {
-   "name": "halo/FUN_0008e650",
+   "name": "halo/debug_memory_initialize",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/cseries/errors.c.obj",
    "base_path": "delinked/functions/0008e650.obj",
    "metadata": {
@@ -4496,20 +4496,20 @@
    }
   },
   {
-   "name": "halo/bitmap_utilities_FUN_00075380",
+   "name": "halo/bitmap_utilities_bitmap_extract",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/bitmaps/bitmap_utilities.c.obj",
-   "base_path": "delinked/bitmap_utilities_FUN_00075380.obj",
+   "base_path": "delinked/bitmap_utilities_bitmap_extract.obj",
    "metadata": {
     "source_path": "src/halo/bitmaps/bitmap_utilities.c"
    }
   },
   {
-   "name": "halo/bitmap_utilities_FUN_00077120",
+   "name": "halo/bitmap_utilities_bitmap_group_add_bitmap",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/bitmaps/bitmap_utilities.c.obj",
    "base_path": "delinked/structures.obj",
    "metadata": {
     "source_path": "src/halo/bitmaps/bitmap_utilities.c",
-    "symbol": "FUN_00077120"
+    "symbol": "bitmap_group_add_bitmap"
    }
   },
   {

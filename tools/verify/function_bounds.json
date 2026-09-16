@@ -3702,7 +3702,7 @@
   "0x57bc0": {
     "end": "0x57c58",
     "kind": "auto",
-    "name": "FUN_00057bc0"
+    "name": "ai_status"
   },
   "0x57c60": {
     "end": "0x57c61",
@@ -3712,12 +3712,12 @@
   "0x57c70": {
     "end": "0x57cf4",
     "kind": "auto",
-    "name": "FUN_00057c70"
+    "name": "ai_playfight_encounter"
   },
   "0x57d00": {
     "end": "0x57eeb",
     "kind": "auto",
-    "name": "FUN_00057d00"
+    "name": "ai_vehicle_encounter"
   },
   "0x57ef0": {
     "end": "0x57f8e",
@@ -3807,17 +3807,17 @@
   "0x58700": {
     "end": "0x58709",
     "kind": "auto",
-    "name": "FUN_00058700"
+    "name": "ai_encounter_conversation_line"
   },
   "0x58710": {
     "end": "0x58719",
     "kind": "auto",
-    "name": "FUN_00058710"
+    "name": "ai_encounter_conversation_status"
   },
   "0x58720": {
     "end": "0x587c8",
     "kind": "auto",
-    "name": "FUN_00058720"
+    "name": "ai_link_activation"
   },
   "0x587d0": {
     "end": "0x5885f",
@@ -3842,17 +3842,17 @@
   "0x58a40": {
     "end": "0x58ad1",
     "kind": "auto",
-    "name": "FUN_00058a40"
+    "name": "ai_magically_see_players"
   },
   "0x58ae0": {
     "end": "0x58ae9",
     "kind": "auto",
-    "name": "FUN_00058ae0"
+    "name": "ai_encounter_maneuver"
   },
   "0x58af0": {
     "end": "0x58c3a",
     "kind": "auto",
-    "name": "FUN_00058af0"
+    "name": "ai_vehicle_enter"
   },
   "0x58c40": {
     "end": "0x58cb3",
@@ -3987,7 +3987,7 @@
   "0x5a430": {
     "end": "0x5a485",
     "kind": "auto",
-    "name": "FUN_0005a430"
+    "name": "actor_activate_encounterless"
   },
   "0x5a4e0": {
     "end": "0x5a596",
@@ -4682,7 +4682,7 @@
   "0x64f50": {
     "end": "0x64f77",
     "kind": "auto",
-    "name": "FUN_00064f50"
+    "name": "get_size_open_file_descriptor"
   },
   "0x64fa0": {
     "end": "0x64fdd",
@@ -5862,7 +5862,7 @@
   "0x75380": {
     "end": "0x75610",
     "kind": "auto",
-    "name": "FUN_00075380"
+    "name": "bitmap_extract"
   },
   "0x75630": {
     "end": "0x757f9",
@@ -5917,7 +5917,7 @@
   "0x76bd0": {
     "end": "0x76fe1",
     "kind": "auto",
-    "name": "FUN_00076bd0"
+    "name": "bitmap_group_postprocess"
   },
   "0x76ff0": {
     "end": "0x77031",
@@ -5927,27 +5927,27 @@
   "0x77040": {
     "end": "0x7711c",
     "kind": "auto",
-    "name": "FUN_00077040"
+    "name": "bitmap_group_get_bitmap"
   },
   "0x77120": {
     "end": "0x77503",
     "kind": "auto",
-    "name": "FUN_00077120"
+    "name": "bitmap_group_add_bitmap"
   },
   "0x77510": {
     "end": "0x7753e",
     "kind": "auto",
-    "name": "FUN_00077510"
+    "name": "bitmap_fill"
   },
   "0x77540": {
     "end": "0x77586",
     "kind": "auto",
-    "name": "FUN_00077540"
+    "name": "bitmap_alpha_to_rgb"
   },
   "0x77590": {
     "end": "0x7771d",
     "kind": "auto",
-    "name": "FUN_00077590"
+    "name": "bitmap_clone"
   },
   "0x77720": {
     "end": "0x779a9",
@@ -5997,27 +5997,27 @@
   "0x79180": {
     "end": "0x7924a",
     "kind": "auto",
-    "name": "FUN_00079180"
+    "name": "bitmap_cubemap_sharpen_stub"
   },
   "0x79250": {
     "end": "0x79474",
     "kind": "auto",
-    "name": "FUN_00079250"
+    "name": "bitmap_2d_alpha_bleed"
   },
   "0x79480": {
     "end": "0x79586",
     "kind": "auto",
-    "name": "FUN_00079480"
+    "name": "bitmap_3d_alpha_bleed"
   },
   "0x79590": {
     "end": "0x7962e",
     "kind": "auto",
-    "name": "FUN_00079590"
+    "name": "bitmap_cubemap_alpha_bleed_stub"
   },
   "0x79630": {
     "end": "0x796d7",
     "kind": "auto",
-    "name": "FUN_00079630"
+    "name": "bitmap_cubemap_heightmap_stub"
   },
   "0x796e0": {
     "end": "0x798d9",
@@ -6127,7 +6127,7 @@
   "0x7b940": {
     "end": "0x7ba50",
     "kind": "auto",
-    "name": "FUN_0007b940"
+    "name": "bitmap_heightmap_to_bumpmap"
   },
   "0x7ba50": {
     "end": "0x7bca8",
@@ -6562,7 +6562,7 @@
   "0x81910": {
     "end": "0x8197b",
     "kind": "auto",
-    "name": "FUN_00081910"
+    "name": "destroy_mutex"
   },
   "0x81980": {
     "end": "0x81a17",
@@ -6832,7 +6832,7 @@
   "0x84520": {
     "end": "0x8473a",
     "kind": "table_data",
-    "name": "FUN_00084520",
+    "name": "get_sender_address_udp",
     "note": "switch table after the final ret at 0x84711: 3 dword targets at 0x84714 (0x8469d/0x846a8/0x846b7) + 26-byte index table at 0x84720"
   },
   "0x84740": {
@@ -6858,7 +6858,7 @@
   "0x849f0": {
     "end": "0x84a0b",
     "kind": "auto",
-    "name": "FUN_000849f0"
+    "name": "bored_camera_getrand"
   },
   "0x84a10": {
     "end": "0x84a62",
@@ -7068,7 +7068,7 @@
   "0x874d0": {
     "end": "0x8750b",
     "kind": "auto",
-    "name": "FUN_000874d0"
+    "name": "director_dispatch_allplayer_update"
   },
   "0x87520": {
     "end": "0x875cd",
@@ -7578,12 +7578,12 @@
   "0x8e5f0": {
     "end": "0x8e64a",
     "kind": "auto",
-    "name": "FUN_0008e5f0"
+    "name": "debug_exception_reporter"
   },
   "0x8e650": {
     "end": "0x8e67d",
     "kind": "auto",
-    "name": "FUN_0008e650"
+    "name": "debug_memory_initialize"
   },
   "0x8e680": {
     "end": "0x8e6cd",
@@ -7668,7 +7668,7 @@
   "0x8f1e0": {
     "end": "0x8f1e9",
     "kind": "auto",
-    "name": "FUN_0008f1e0"
+    "name": "debug_dump_allocs"
   },
   "0x8f1f0": {
     "end": "0x8f1f5",
@@ -7713,7 +7713,7 @@
   "0x8f630": {
     "end": "0x8f6a8",
     "kind": "auto",
-    "name": "FUN_0008f630"
+    "name": "debug_reset_ringbuf"
   },
   "0x8f6b0": {
     "end": "0x8f80a",
@@ -7788,7 +7788,7 @@
   "0x906d0": {
     "end": "0x90742",
     "kind": "auto",
-    "name": "FUN_000906d0"
+    "name": "profile_dump_framedump"
   },
   "0x907c0": {
     "end": "0x9085e",
@@ -8628,7 +8628,7 @@
   "0x97a50": {
     "end": "0x97adf",
     "kind": "auto",
-    "name": "FUN_00097a50"
+    "name": "contrail_tick_counter"
   },
   "0x97ae0": {
     "end": "0x97c78",
@@ -8668,7 +8668,7 @@
   "0x98200": {
     "end": "0x9857d",
     "kind": "auto",
-    "name": "FUN_00098200"
+    "name": "contrail_point_keyframe_tick"
   },
   "0x98580": {
     "end": "0x986c6",
@@ -9158,12 +9158,12 @@
   "0xa1210": {
     "end": "0xa12dd",
     "kind": "auto",
-    "name": "FUN_000a1210"
+    "name": "particle_sys_header_init"
   },
   "0xa12e0": {
     "end": "0xa1472",
     "kind": "auto",
-    "name": "FUN_000a12e0"
+    "name": "particle_sys_header_init_from_attachment"
   },
   "0xa1480": {
     "end": "0xa14ac",
@@ -31976,7 +31976,7 @@
   "0x1bc280": {
     "end": "0x1bc35e",
     "kind": "auto",
-    "name": "FUN_001bc280"
+    "name": "init_cache_decompress"
   },
   "0x1bc360": {
     "end": "0x1bc3a3",
@@ -31991,7 +31991,7 @@
   "0x1bc5c0": {
     "end": "0x1bc61c",
     "kind": "auto",
-    "name": "FUN_001bc5c0"
+    "name": "cache_files_find_ioreq_slot"
   },
   "0x1bc620": {
     "end": "0x1bc698",
@@ -32116,7 +32116,7 @@
   "0x1bcea0": {
     "end": "0x1bcef2",
     "kind": "auto",
-    "name": "FUN_001bcea0"
+    "name": "cache_files_delete_cache_map_files"
   },
   "0x1bcf00": {
     "end": "0x1bcf9c",

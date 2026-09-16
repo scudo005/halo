@@ -1086,21 +1086,21 @@
   },
   {
     "addr": "0x58700",
-    "name": "FUN_00058700",
+    "name": "ai_encounter_conversation_line",
     "object": "encounters.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"
   },
   {
     "addr": "0x58710",
-    "name": "FUN_00058710",
+    "name": "ai_encounter_conversation_status",
     "object": "encounters.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"
   },
   {
     "addr": "0x58ae0",
-    "name": "FUN_00058ae0",
+    "name": "ai_encounter_maneuver",
     "object": "encounters.obj",
     "reason": "pre-gate baseline 2026-06-10",
     "since": "2026-06-10"

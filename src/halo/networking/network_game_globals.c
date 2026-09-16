@@ -226,7 +226,7 @@ bool FUN_00129cf0(int connection, int timeout, int *output)
         ((network_connection *)connection)->datagrams_received = ((network_connection *)connection)->datagrams_received + 1;
       }
     } else {
-      bytes_read = FUN_00084520((int *)((network_connection *)connection)->unreliable_endpoint, recv_buf,
+      bytes_read = get_sender_address_udp((int *)((network_connection *)connection)->unreliable_endpoint, recv_buf,
                                 400, addr_buf);
       if (bytes_read > 0) {
         if (*(int *)(connection + 0x18) != 0) {

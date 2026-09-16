@@ -12,7 +12,7 @@
 | Address | Function Name | HS Builtin Name | Table Index | Return Type | Description |
 |---|---|---|---|---|---|
 | `0xc1ee0` | `hs_evaluate_sound_cache_flush` | `sound_cache_flush` | 269 | void | Unconditionally flushes audio cache via `sound_cache_flush` (`0x1be490`). |
-| `0xc1f00` | `hs_evaluate_debug_memory` | `debug_memory` | 270 | void | Dumps memory debug state via `FUN_0008f1e0`. |
+| `0xc1f00` | `hs_evaluate_debug_memory` | `debug_memory` | 270 | void | Dumps memory debug state via `debug_dump_allocs`. |
 | `0xc1f20` | `hs_evaluate_debug_memory_by_file` | `debug_memory_by_file` | 271 | void | Dumps file-aggregated memory debug stats via `FUN_0008f210`. |
 | `0xc1f40` | `hs_evaluate_debug_memory_for_file` | `debug_memory_for_file` | 272 | void | Dumps memory allocated by specific file via `FUN_0008f240`. |
 | `0xc1f80` | `hs_evaluate_debug_tags` | `debug_tags` | 273 | void | Dumps tag allocation debug information via `tag_files_dump_allocation_stats` (`0x110280`). |

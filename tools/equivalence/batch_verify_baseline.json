@@ -393,7 +393,7 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_00057bc0",
+      "name": "ai_status",
       "status": "fail",
       "reason": "divergence"
     },
@@ -508,12 +508,12 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_0008e5f0",
+      "name": "debug_exception_reporter",
       "status": "error",
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_00098200",
+      "name": "contrail_point_keyframe_tick",
       "status": "error",
       "reason": "timeout"
     },

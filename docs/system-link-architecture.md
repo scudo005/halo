@@ -84,7 +84,7 @@ game_time_update 0xb6020  — lockstep tick advance
 Two translation units make up `transport_endpoint_set_winsock.obj`: `transport_endpoint_set_winsock.c` and `transport_endpoint_winsock.c`.
 - An endpoint set is a socket file-descriptor array, with operations `create`, `delete`, `add`, `remove`, `rewind`, `count`, `poll`, and `get_next`.
 - The endpoint pool has a cleanup function, `endpoint_pool_cleanup`. Endpoints support create, bind, connect, listen, and accept operations.
-- The API includes `recv_endpoint` (0x82e50), `send_endpoint` (0x82f50), `close_endpoint` (0x84000), the datagram functions `FUN_00084520` (recvfrom) and `FUN_00084740` (sendto, unported), and `transport_server_initialize`/`transport_server_terminate`.
+- The API includes `recv_endpoint` (0x82e50), `send_endpoint` (0x82f50), `close_endpoint` (0x84000), the datagram functions `get_sender_address_udp` (recvfrom) and `FUN_00084740` (sendto, unported), and `transport_server_initialize`/`transport_server_terminate`.
 - `game_initialize` calls `transport_initialize` (0x82130), and `game_dispose` calls `transport_dispose` (0x822d0) (`src/halo/game/game.c:119`). Three helper functions, `transport_get_nonce`, `transport_get_key`, and `transport_get_xnaddr`, support Xbox secure-address authentication.
 
 ## Layer 2 — connection (`network_connection.c`, 18/18 ported)

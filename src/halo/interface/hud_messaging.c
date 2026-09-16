@@ -41,7 +41,7 @@ void FUN_000d3fe0(int param_1, short *param_2, int param_3,
   i1 = verify_tag_reference((int *)(param_3 + 0x24));
   l_8 = (short *)tag_get(0x6269746d, i1);
   l_c =
-    (int)FUN_00077040(*(int *)(param_3 + 0x30), *(short *)(param_3 + 0x54), 0);
+    (int)bitmap_group_get_bitmap(*(int *)(param_3 + 0x30), *(short *)(param_3 + 0x54), 0);
   i2 = (int)xbox_texture_cache_get_hardware_format((void *)l_c, 0, 1);
   if (i2 != 0) {
     pu3 =

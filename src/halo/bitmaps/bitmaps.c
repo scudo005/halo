@@ -420,8 +420,8 @@ void FUN_0007c490(float *rgb_result, uint32_t flags, float *lower_bound,
  *
  * Dispatches bump-height processing to the appropriate per-type helper:
  *   type 0 (_bitmap_type_2d)       -> FUN_0007b510 (bitmap in ESI)
- *   type 1 (_bitmap_type_3d)       -> FUN_0007b940 (bitmap in EBX)
- *   type 2 (_bitmap_type_cube_map) -> FUN_00079630 (bitmap in ESI)
+ *   type 1 (_bitmap_type_3d)       -> bitmap_heightmap_to_bumpmap (bitmap in EBX)
+ *   type 2 (_bitmap_type_cube_map) -> bitmap_cubemap_heightmap_stub (bitmap in ESI)
  *   other                          -> assert + system_exit
  *
  * bump_height must be > 0.0f (compared against DAT_002533c0 == 0.0f).
@@ -448,11 +448,11 @@ void FUN_0007c5f0(void *bitmap, float bump_height)
       return;
     case 1:
       /* _bitmap_type_3d: bitmap passed via EBX (register arg). */
-      FUN_0007b940(bump_height, bitmap);
+      bitmap_heightmap_to_bumpmap(bump_height, bitmap);
       return;
     case 2:
       /* _bitmap_type_cube_map: bitmap passed via ESI (register arg). */
-      FUN_00079630(bump_height, bitmap);
+      bitmap_cubemap_heightmap_stub(bump_height, bitmap);
       return;
     default:
       break;

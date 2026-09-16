@@ -220,7 +220,7 @@ int tag_get_group_tag(int tag_index)
  * local below reproduces.
  *
  *   +0x95c  thread handle passed to SetThreadPriority. Written by
- *           FUN_001bc280 (cache_files_windows.c) as the copy-worker thread
+ *           init_cache_decompress (cache_files_windows.c) as the copy-worker thread
  *           handle, which is where the "cache-copy worker" role comes from.
  *   +0x988  byte written unconditionally with the argument itself, before
  *           the branch. Meaning beyond "mirrors this argument" is unproven.
@@ -256,7 +256,7 @@ void *FUN_001ba250(char raise_priority)
  * with no MOV EAX, so the function returns nothing.
  *
  *   +0x95c  thread handle passed to SetThreadPriority (written by
- *           FUN_001bc280 in cache_files_windows.c as the copy-worker
+ *           init_cache_decompress in cache_files_windows.c as the copy-worker
  *           thread handle).
  *   +0x988  byte written unconditionally with the argument itself, before
  *           the branch. Meaning beyond "mirrors this argument" is unproven.
@@ -286,19 +286,19 @@ void FUN_001ba290(char raise_priority)
  * at MOV EAX,[0x0032ea98] and ends at RET, 12 instructions total).
  *
  * The globals block is reached through the POINTER global at 0x32ea98,
- * the same block written by FUN_001bc280 in cache_files_windows.c. The
+ * the same block written by init_cache_decompress in cache_files_windows.c. The
  * original reloads that pointer after the first call (MOV EAX,[0x32ea98]
  * at 0x1ba5d0 and MOV EDX,[0x32ea98] at 0x1ba5e7), which the repeated
  * deref below reproduces.
  *
  *   +0x954  event polled with a zero timeout (WaitForSingleObject with
  *           PUSH 0x0 as the timeout, PUSH ECX as the handle). Created by
- *           FUN_001bc280 as manual-reset, initially SIGNALED -- inferred
+ *           init_cache_decompress as manual-reset, initially SIGNALED -- inferred
  *           role "worker idle" from those CreateEventA arguments, not
  *           from an assert string.
  *   +0x950  event signalled when the poll returns non-zero, i.e. when
  *           +0x954 was NOT signalled (WAIT_OBJECT_0 == 0 is the only
- *           value skipped by TEST EAX,EAX / JZ). Created by FUN_001bc280
+ *           value skipped by TEST EAX,EAX / JZ). Created by init_cache_decompress
  *           as manual-reset, initially non-signaled.
  *
  * Type asymmetry between the two calls follows the kb decls:
@@ -314,7 +314,7 @@ void FUN_001ba5d0(void)
 /* 0x1ba660 - cache_copy_compressed_alloc: zlib allocator over the cache
  * globals' fixed decompression scratch buffer (a bump allocator).
  *
- * Installed as a DATA reference at 0x1bc333 inside FUN_001bc280 (the same
+ * Installed as a DATA reference at 0x1bc333 inside init_cache_decompress (the same
  * function that builds the globals block reached through the POINTER
  * global at 0x32ea98), i.e. it is a zlib alloc_func slot and is never
  * reached by a direct CALL -- callers[] is empty and xrefs_to reports
@@ -372,7 +372,7 @@ void *cache_copy_compressed_alloc(void *opaque, int items, int size)
  *
  * Like the allocator, this is never reached by a direct CALL -- callers[]
  * is empty and the only xref is the [DATA] reference at 0x1bc33f inside
- * FUN_001bc280, which stores it into the cache globals block at +0x92c,
+ * init_cache_decompress, which stores it into the cache globals block at +0x92c,
  * the slot immediately after the alloc_func slot at +0x928. That pairing
  * plus the frame shape is what types the signature: the body reads only
  * [EBP+0xc] (MOV ESI,[EBP+0xc]) and never touches [EBP+0x8], so the
@@ -574,7 +574,7 @@ void cache_copy_initialize_and_fill_with_garbage(char *self)
  * parameter.
  *
  *   +0x950  manual-reset event handle (assert-proven role via
- *           FUN_001bc280's comment in cache_files_windows.c; passed here
+ *           init_cache_decompress's comment in cache_files_windows.c; passed here
  *           to WaitForSingleObjectEx)
  *   +0x994  overlapped_in_use_flags (assert-proven name, reused from
  *           FUN_001bb8a0's comment); bit 0x100 here is a distinct flag
@@ -784,7 +784,7 @@ void get_write_buffer_size(char *self)
  *
  * The globals block is reached through the POINTER global at 0x32ea98, the
  * same block used by FUN_001ba250 / FUN_001ba290 / get_write_buffer_size
- * above and written by FUN_001bc280 in cache_files_windows.c. The pointer
+ * above and written by init_cache_decompress in cache_files_windows.c. The pointer
  * is loaded ONCE into EAX and the +0x904 dword is read-modify-written
  * through it.
  *
@@ -889,7 +889,7 @@ void FUN_001baca0(void)
  * at 0x1baf50 to RET at 0x1baf9b, 21 instructions).
  *
  * The globals block is reached through the POINTER global at 0x32ea98, the
- * same block built by FUN_001bc280 in cache_files_windows.c. The original
+ * same block built by init_cache_decompress in cache_files_windows.c. The original
  * reloads that pointer before every use (MOV EAX,[0x32ea98] at 0x1baf50,
  * MOV EDX,[0x32ea98] at 0x1baf67, MOV ECX,[0x32ea98] at 0x1baf79), which the
  * repeated deref below reproduces.

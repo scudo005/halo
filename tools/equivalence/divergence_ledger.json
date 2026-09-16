@@ -1045,7 +1045,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x57bc0": {
-      "name": "FUN_00057bc0",
+      "name": "ai_status",
       "obj": "encounters.obj",
       "addr": "0x57bc0",
       "category": "stub_residual",
@@ -1154,7 +1154,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x58720": {
-      "name": "FUN_00058720",
+      "name": "ai_link_activation",
       "obj": "encounters.obj",
       "addr": "0x58720",
       "category": "call_seq_truncated",

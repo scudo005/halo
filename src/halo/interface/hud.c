@@ -570,7 +570,7 @@ void FUN_000d0e90(int player_handle)
   }
 
   sprite_handle = interface_get_tag_index(9);
-  sprite_handle = (int)FUN_00077040(sprite_handle, 0, 0);
+  sprite_handle = (int)bitmap_group_get_bitmap(sprite_handle, 0, 0);
   if (xbox_texture_cache_get_hardware_format((void *)sprite_handle, 0, 1) ==
       NULL) {
     return;
@@ -1064,7 +1064,7 @@ void FUN_000d16a0(int bitmap_tag, short sequence_index,
       sprite_count = *(int *)((char *)seq_elem + 0x34);
       if (sprite_count == 0) {
         *out_bitmap =
-          (int)FUN_00077040(bitmap_tag, sequence_index, (short)frame_index);
+          (int)bitmap_group_get_bitmap(bitmap_tag, sequence_index, (short)frame_index);
       } else {
         sprite_elem =
           tag_block_get_element((char *)seq_elem + 0x34,
@@ -1902,11 +1902,11 @@ void FUN_000d27a0(int element, float *scale, int local_player_index,
    * != 0 unconditionally, so these MUST be written into render_desc, not a
    * separate local array. */
   *(int *)(render_desc + 0xc) =
-    (int)FUN_00077040(*(int *)(element + 0x70), 0, 0); /* map[0] */
+    (int)bitmap_group_get_bitmap(*(int *)(element + 0x70), 0, 0); /* map[0] */
   *(int *)(render_desc + 0x10) =
-    (int)FUN_00077040(*(int *)(element + 0x80), 0, 0); /* map[1] */
+    (int)bitmap_group_get_bitmap(*(int *)(element + 0x80), 0, 0); /* map[1] */
   *(int *)(render_desc + 0x14) =
-    (int)FUN_00077040(*(int *)(element + 0x90), 0, 0); /* map[2] */
+    (int)bitmap_group_get_bitmap(*(int *)(element + 0x90), 0, 0); /* map[2] */
 
   /* Per-icon scale and texture-normalization reciprocals.
    * element+0x34+8k = scale.x, element+0x38+8k = scale.y -> normalize slots

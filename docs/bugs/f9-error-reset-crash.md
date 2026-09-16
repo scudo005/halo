@@ -26,7 +26,7 @@ that the log never receives.
 
 ## Why F9 specifically
 
-F9 (debug key entry [8], key_code 0x09) calls `FUN_000ffe90` → `FUN_0008f630`
+F9 (debug key entry [8], key_code 0x09) calls `FUN_000ffe90` → `debug_reset_ringbuf`
 (errors.obj, unported). Among the error-log globals it resets, it sets
 `profile_global_enable` (`0x449ef1`) to 1.
 

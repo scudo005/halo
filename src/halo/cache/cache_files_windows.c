@@ -160,7 +160,7 @@ void acquire_read_request(char *self, short *request)
  *           "global_self->async_write_bytes_left==0"; zeroed on entry,
  *           then asserted zero via a fresh read of the *global* pointer
  *           at 0x32ea98 rather than the local self copy -- reproduced
- *           as-is, matching FUN_001bc280's documented "reloads it after
+ *           as-is, matching init_cache_decompress's documented "reloads it after
  *           every call" idiom for that same globals-block pointer)
  *   +0xaa0  field_aa0 (zeroed)
  *   +0xaa4  field_aa4 (set to 0x800)
@@ -340,7 +340,7 @@ typedef union {
   __int64 QuadPart;
 } CACHE_DECOMPRESS_LARGE_INTEGER;
 
-/* FUN_001bc280 — initialize the cache decompression system.
+/* init_cache_decompress — initialize the cache decompression system.
  *
  * Latches the low dword of the performance-counter frequency into the
  * global at 0x32ea9c, creates the four decompression events, installs the
@@ -363,7 +363,7 @@ typedef union {
  * Source: c:\halo\SOURCE\cache\cache_files_decompress_windows.c line 0x1e7.
  * Unlike FUN_001bda90 below, this function does NOT null-check any of the
  * returned handles — do not add checks. */
-void FUN_001bc280(void)
+void init_cache_decompress(void)
 {
   CACHE_DECOMPRESS_LARGE_INTEGER freq;
 
@@ -421,7 +421,7 @@ void cache_files_dispose(void)
              "c:\\halo\\SOURCE\\cache\\cache_files_windows.c", 0xcb);
 }
 
-/* FUN_001bc5c0 — find the first free (inactive) cache IO request slot.
+/* cache_files_find_ioreq_slot — find the first free (inactive) cache IO request slot.
  * Scans the 512-entry request array at DAT_004e9250 (each entry 0x20
  * bytes) for a slot whose active byte at +0x1d is zero, validating each
  * index against [0, MAXIMUM_SIMULTANEOUS_CACHE_REQUESTS) as it goes (same
@@ -434,7 +434,7 @@ void cache_files_dispose(void)
  * regardless of its value).
  * Called by cache_file_read (0x1bc9e0) to allocate a request slot.
  */
-short FUN_001bc5c0(void)
+short cache_files_find_ioreq_slot(void)
 {
   bool looped;
   short request_index;
@@ -678,7 +678,7 @@ void cache_file_close(void)
 }
 
 /* cache_file_read — submit an async IO request to the cache file system.
- * Allocates a free request slot via FUN_001bc5c0, validates inputs, fills the
+ * Allocates a free request slot via cache_files_find_ioreq_slot, validates inputs, fills the
  * slot (offset +0..+0x1e), clears the completion flag, and fires the IO event.
  * Size is rounded up to the next multiple of 0x200 if not aligned.
  * Returns the request slot index.
@@ -689,7 +689,7 @@ short cache_file_read(int param_1, int offset, unsigned int size, int buffer,
   short request_index;
   char *req;
 
-  request_index = FUN_001bc5c0();
+  request_index = cache_files_find_ioreq_slot();
   if (request_index < 0 || request_index > 0x1ff) {
     display_assert(
       "request_index>=0 && request_index<MAXIMUM_SIMULTANEOUS_CACHE_REQUESTS",
@@ -961,11 +961,11 @@ void structure_bsp_header_deregister_vertex_buffers(void *block)
   *(char *)0x325652 = 0;
 }
 
-/* FUN_001bcea0 — delete cache map files z:\cacheNNN.map starting at
+/* cache_files_delete_cache_map_files — delete cache map files z:\cacheNNN.map starting at
  * map_file_index+1 up to but not including 20 (@<ax> = map_file_index).
  * Calls SetLastError(0) at the end to clear any DeleteFile error.
  */
-void FUN_001bcea0(short map_file_index)
+void cache_files_delete_cache_map_files(short map_file_index)
 {
   char local_buf[256];
   int i;
@@ -1239,7 +1239,7 @@ void FUN_001bd5f0(void)
   uint32_t bytes_read;
   uint32_t last_error;
 
-  FUN_001bcea0(6);
+  cache_files_delete_cache_map_files(6);
   nuke_extra = 0;
   entry_ptr = (char *)0x4e6204;
 
@@ -1290,7 +1290,7 @@ void FUN_001bd5f0(void)
     }
 
     if (!nuke_extra) {
-      FUN_001bcea0(i);
+      cache_files_delete_cache_map_files(i);
       nuke_extra = 1;
     }
 
@@ -1477,7 +1477,7 @@ void FUN_001bdb10(void)
   }
   FUN_001bda90();
   FUN_001bd5f0();
-  FUN_001bc280();
+  init_cache_decompress();
 }
 
 /* Load cached game state if the cached map metadata matches the currently

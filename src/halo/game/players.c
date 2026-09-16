@@ -11826,7 +11826,7 @@ void FUN_000c0330(int16_t function_index, int thread_datum, char init)
  * hs_macro_function_evaluate; while arguments are still being evaluated the
  * return is NULL and nothing is dispatched this tick. Once the evaluated
  * values array is ready, forwards its first dword to
- * ai_magically_see_players (FUN_00058a40) and commits a zero result to the
+ * ai_magically_see_players (ai_magically_see_players) and commits a zero result to the
  * calling thread via hs_return. The only difference from FUN_000c0330 is the
  * worker (0x58a40 vs 0x58970) and its one-argument arity.
  *
@@ -11840,7 +11840,7 @@ void FUN_000c0330(int16_t function_index, int thread_datum, char init)
  *     CALL 0xcc560, ADD ESP,0xc => hs_macro_function_evaluate(function_index,
  *     thread_datum, init).
  *   - TEST EAX,EAX; JZ end => NULL check on the evaluated values array.
- *   - MOV EDX,[EAX]; PUSH EDX; CALL 0x58a40 => FUN_00058a40(result[0]), a
+ *   - MOV EDX,[EAX]; PUSH EDX; CALL 0x58a40 => ai_magically_see_players(result[0]), a
  *     single full-dword argument (no second push before the CALL).
  *   - PUSH 0; PUSH ESI; CALL 0xcbf80 => hs_return(thread_datum, 0).
  *   - The single ADD ESP,0xc at 0xc039c is the shared cdecl cleanup for both
@@ -11856,7 +11856,7 @@ void FUN_000c0370(int16_t function_index, int thread_datum, char init)
   result =
     (int *)hs_macro_function_evaluate(function_index, thread_datum, init);
   if (result != NULL) {
-    FUN_00058a40(result[0]);
+    ai_magically_see_players(result[0]);
     hs_return(thread_datum, 0);
   }
 }
@@ -12376,7 +12376,7 @@ void FUN_000c04f0(int16_t function_index, int thread_datum, char init)
  *     The argument is the DEREFERENCED first dword of the record, not the
  *     record pointer itself.
  *   CALL -> 0xcbf80: PUSH 0x0; PUSH ESI => hs_return(thread_datum, 0). The 0
- *     is an immediate, NOT the FUN_00058ae0 result -- that worker returns void.
+ *     is an immediate, NOT the ai_encounter_maneuver result -- that worker returns void.
  *
  * NULL guard: TEST EAX,EAX; JZ skips BOTH tail calls, so the guard is
  * `record != NULL` (not inverted), and the 0xcc560 return value is
@@ -12392,13 +12392,13 @@ void FUN_000c04f0(int16_t function_index, int thread_datum, char init)
  *
  * Apparent arg-count hazard on hs_return is a FALSE POSITIVE: the single
  * `ADD ESP,0xc` at 0xc055c is a MERGED cleanup for BOTH tail calls -- 1 dword
- * for FUN_00058ae0 (PUSH EDX) plus 2 dwords for hs_return (PUSH 0; PUSH ESI)
+ * for ai_encounter_maneuver (PUSH EDX) plus 2 dwords for hs_return (PUSH 0; PUSH ESI)
  * = 3 dwords. MSVC combined the two cdecl cleanups; hs_return's 2-arg decl and
- * FUN_00058ae0's 1-arg decl are both correct. Do NOT "fix" hs_return's decl.
+ * ai_encounter_maneuver's 1-arg decl are both correct. Do NOT "fix" hs_return's decl.
  *
  * Callees (all cdecl, all in kb.json, no @<reg> args anywhere):
  *   0xcc560  = hs_macro_function_evaluate(int16_t, int, char) -> record ptr
- *   0x58ae0  = FUN_00058ae0(unsigned int combined_index)  [not yet ported]
+ *   0x58ae0  = ai_encounter_maneuver(unsigned int combined_index)  [not yet ported]
  *   0xcbf80  = hs_return(int thread_handle, int value)
  *
  * Placement: kept here beside its twins deliberately. NOTE: do NOT run
@@ -12411,7 +12411,7 @@ void FUN_000c0530(int16_t function_index, int thread_datum, char init)
   record =
     (int *)hs_macro_function_evaluate(function_index, thread_datum, init);
   if (record != NULL) {
-    FUN_00058ae0((unsigned int)record[0]);
+    ai_encounter_maneuver((unsigned int)record[0]);
     hs_return(thread_datum, 0);
   }
 }

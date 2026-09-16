@@ -1575,7 +1575,7 @@
       "kind": "function",
       "status": "ported",
       "inferred": [
-        "Prototype narrowed from the pre-lift kb decl int(int) to int16_t(int16_t): the parameter is read as word ptr [EBP+8] (MOV SI) at 0x434ec and both exits return in AX, so int would be a LOADW-class width bug; the only caller, the tail-call thunk FUN_00058700 at 0x58700, still declares int and converts implicitly.",
+        "Prototype narrowed from the pre-lift kb decl int(int) to int16_t(int16_t): the parameter is read as word ptr [EBP+8] (MOV SI) at 0x434ec and both exits return in AX, so int would be a LOADW-class width bug; the only caller, the tail-call thunk ai_encounter_conversation_line at 0x58700, still declares int and converts implicitly.",
         "The 999 not-found sentinel is modelled as an int-width local narrowed at the return because the reference materializes it 32-bit (MOV EDI,0x3e7 at 0x434d2) and truncates at the exit (MOV AX,DI at 0x43506); VC71 still constant-folds it to MOV AX,0x3e7 in our build, which is the entire residual VC71 gap along with a loop-alignment LEA EBX,[EBX]."
       ],
       "uncertain": [
@@ -2168,11 +2168,11 @@
       "kind": "function",
       "status": "ported",
       "inferred": [
-        "Only the low 16 bits of vehicle_handle are logged (MOV ECX,EBX; AND ECX,0xffff at 0x58cff), while the full 32-bit handle is forwarded to FUN_00058af0 via EBX which stays live from the prologue through the tail call at 0x58d24.",
-        "The target allocates exactly 0x100 bytes at EBP-0x100 for ai_index_to_string, and the final FUN_00058af0 call passes allow_type9=1 on the stack while ai_index and vehicle_handle remain in EAX and EBX."
+        "Only the low 16 bits of vehicle_handle are logged (MOV ECX,EBX; AND ECX,0xffff at 0x58cff), while the full 32-bit handle is forwarded to ai_vehicle_enter via EBX which stays live from the prologue through the tail call at 0x58d24.",
+        "The target allocates exactly 0x100 bytes at EBP-0x100 for ai_index_to_string, and the final ai_vehicle_enter call passes allow_type9=1 on the stack while ai_index and vehicle_handle remain in EAX and EBX."
       ],
       "uncertain": [
-        "The kb.json name ai_scripting_follow_distance disagrees with the binary: the trace format string at 0x25d1d0 reads '%s: ai_go_to_vehicle_override %s 0x%04X %s', and the function is the immediate sibling of ai_go_to_vehicle (0x58c40) forwarding to the same vehicle-entry order builder FUN_00058af0 with allow_type9=1, so the original Bungie name is almost certainly ai_go_to_vehicle_override.",
+        "The kb.json name ai_scripting_follow_distance disagrees with the binary: the trace format string at 0x25d1d0 reads '%s: ai_go_to_vehicle_override %s 0x%04X %s', and the function is the immediate sibling of ai_go_to_vehicle (0x58c40) forwarding to the same vehicle-entry order builder ai_vehicle_enter with allow_type9=1, so the original Bungie name is almost certainly ai_go_to_vehicle_override.",
         "The existing ai_scripting_follow_distance name is retained because the binary proves ai_go_to_vehicle_override behavior through its format string but does not prove the original source symbol name."
       ]
     },
@@ -3399,7 +3399,7 @@
       "kind": "function",
       "status": "unknown",
       "inferred": [
-        "The temp bitmap NULL-check reads +0x2c as the pixel-data pointer; the offset is confirmed by the disassembly but the field name is inferred from the identical check in the 3D alpha_bleed sibling FUN_00079480."
+        "The temp bitmap NULL-check reads +0x2c as the pixel-data pointer; the offset is confirmed by the disassembly but the field name is inferred from the identical check in the 3D alpha_bleed sibling bitmap_3d_alpha_bleed."
       ],
       "uncertain": [
         "The reference emits two dispose+epilogue blocks (0x7ba27 loop-exit and 0x7ba43 shared tail) but the lift emits one, leaving a measured 7-instruction gap; writing the split explicitly in C regressed the match to 88.9% at an unchanged 91 instruction count, so the original source shape that produces the duplicate is still unknown."

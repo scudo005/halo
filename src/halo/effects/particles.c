@@ -2,7 +2,7 @@
  * Copies position, velocity, and tint/orientation data into the datum,
  * resolves lighting color via FUN_00139480, then runs setup (FUN_000a0fd0).
  * Returns the datum handle, or -1 on failure. */
-int FUN_000a1210(int tag_index, float *position, float *velocity,
+int particle_sys_header_init(int tag_index, float *position, float *velocity,
                  void *ext_data, float scale)
 {
   int handle;
@@ -50,7 +50,7 @@ int FUN_000a1210(int tag_index, float *position, float *velocity,
  * root location, sets up velocity and function-value flag, then calls
  * FUN_000a0fd0 to allocate the particle pool.
  * Returns the datum handle, or -1 on failure. */
-int FUN_000a12e0(int particle_tag_index, int object_handle,
+int particle_sys_header_init_from_attachment(int particle_tag_index, int object_handle,
                  int16_t attach_index)
 {
   int datum_handle;
@@ -869,7 +869,7 @@ void particle_new(void *spawn_params)
   if (*(float *)((char *)tag + 0x84) == 0.0f) {
     *(float *)(datum + 0x20) = *(float *)0x2548fc; /* FLT_MAX */
   } else {
-    float anim_rate = FUN_000849f0(*(float *)((char *)tag + 0x80),
+    float anim_rate = bored_camera_getrand(*(float *)((char *)tag + 0x80),
                                    *(float *)((char *)tag + 0x84));
     *(float *)(datum + 0x20) = 1.0f / anim_rate;
   }

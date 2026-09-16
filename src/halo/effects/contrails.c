@@ -179,7 +179,7 @@ void contrails_reconnect_to_structure_bsp(void)
 }
 
 /*
- * FUN_00097a50 (0x97a50): contrail tick counter — given a contrail handle and
+ * contrail_tick_counter (0x97a50): contrail tick counter — given a contrail handle and
  * delta_time, computes how many full emission periods fit in delta_time and
  * updates the per-datum time accumulator (datum+0x20).
  *
@@ -195,7 +195,7 @@ void contrails_reconnect_to_structure_bsp(void)
  * Returns the number of complete emission periods that elapsed.
  * Called by contrail_set_state_for_object and contrails_update.
  */
-int16_t FUN_00097a50(int contrail_handle, float delta_time)
+int16_t contrail_tick_counter(int contrail_handle, float delta_time)
 {
   char *datum;
   char *tag;
@@ -580,7 +580,7 @@ void FUN_00097e40(int contrail_handle /* @<eax> */, int count, int flag)
 }
 
 /*
- * FUN_00098200 (0x98200): contrail point keyframe tick — for each active chain
+ * contrail_point_keyframe_tick (0x98200): contrail point keyframe tick — for each active chain
  * attached to the contrail datum, walks every point datum in the chain,
  * advances its normalised time, transitions it to the next keyframe when the
  * current one expires, applies physics if the keyframe defines a physics
@@ -611,7 +611,7 @@ void FUN_00097e40(int contrail_handle /* @<eax> */, int count, int flag)
  *   +0x2c : int16_t[4] per-chain point counts
  *   +0x34 : int[4] per-chain head handles
  */
-void FUN_00098200(int contrail_handle, float delta_time)
+void contrail_point_keyframe_tick(int contrail_handle, float delta_time)
 {
   char *datum;
   char *tag;
@@ -940,7 +940,7 @@ void contrail_set_state_for_object(int contrail_handle, bool reset_points,
   (void)tag_get(0x636f6e74, *(int *)((char *)datum + 4));
 
   if (*(uint8_t *)((char *)datum + 2) & 1) {
-    new_points = FUN_00097a50(contrail_handle, delta_time);
+    new_points = contrail_tick_counter(contrail_handle, delta_time);
     count = (new_points < 1) ? 1 : (int)new_points;
     FUN_00097e40(contrail_handle, count, 0);
   }
@@ -1026,7 +1026,7 @@ void contrails_update(float delta_time)
         *(uint8_t *)(datum + 2) &= 0xfe;
       } else {
         *(uint8_t *)(datum + 2) |= 1;
-        result = FUN_00097a50(datum_handle, delta_time);
+        result = contrail_tick_counter(datum_handle, delta_time);
         /* contrail_set_state: EAX = datum_handle, stack = (result, 1) */
         {
           int _eax = datum_handle;

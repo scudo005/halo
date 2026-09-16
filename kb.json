@@ -4726,7 +4726,7 @@
     },
     {
      "addr": "0x1bc280",
-     "decl": "void FUN_001bc280(void);",
+     "decl": "void init_cache_decompress(void);",
      "ported": true,
      "status": "ported"
     },
@@ -4748,7 +4748,7 @@
     },
     {
      "addr": "0x1bc5c0",
-     "decl": "short FUN_001bc5c0(void);",
+     "decl": "short cache_files_find_ioreq_slot(void);",
      "ported": true
     },
     {
@@ -4884,7 +4884,7 @@
     },
     {
      "addr": "0x1bcea0",
-     "decl": "void FUN_001bcea0(short map_file_index@<ax>);",
+     "decl": "void cache_files_delete_cache_map_files(short map_file_index@<ax>);",
      "ported": true,
      "status": "ported"
     },
@@ -5582,7 +5582,7 @@
     },
     {
      "addr": "0x97a50",
-     "decl": "int16_t FUN_00097a50(int contrail_handle @<eax>, float delta_time);",
+     "decl": "int16_t contrail_tick_counter(int contrail_handle @<eax>, float delta_time);",
      "ported": true
     },
     {
@@ -5622,7 +5622,7 @@
     },
     {
      "addr": "0x98200",
-     "decl": "void FUN_00098200(int contrail_handle, float delta_time);",
+     "decl": "void contrail_point_keyframe_tick(int contrail_handle, float delta_time);",
      "delinked": "delinked/contrails_98200.obj",
      "ported": true,
      "src": "src/halo/effects/contrails.c"
@@ -6854,7 +6854,7 @@
     },
     {
      "addr": "0x874d0",
-     "decl": "void FUN_000874d0(int16_t local_player_index@<ecx>, char reset_flag@<eax>, char mode_flags@<edx>);",
+     "decl": "void director_dispatch_allplayer_update(int16_t local_player_index@<ecx>, char reset_flag@<eax>, char mode_flags@<edx>);",
      "ported": true
     },
     {
@@ -7230,12 +7230,12 @@
     },
     {
      "addr": "0x8e5f0",
-     "decl": "int FUN_0008e5f0(uint32_t code, int exception_pointers);",
+     "decl": "int debug_exception_reporter(uint32_t code, int exception_pointers);",
      "ported": true
     },
     {
      "addr": "0x8e650",
-     "decl": "void FUN_0008e650(void);",
+     "decl": "void debug_memory_initialize(void);",
      "ported": true,
      "source_path": "src/halo/cseries/errors.c"
     },
@@ -7308,7 +7308,7 @@
     },
     {
      "addr": "0x8f1e0",
-     "decl": "void FUN_0008f1e0(void);",
+     "decl": "void debug_dump_allocs(void);",
      "ported": true,
      "source_path": "halo/cseries/errors.c"
     },
@@ -7339,7 +7339,7 @@
     },
     {
      "addr": "0x8f630",
-     "decl": "void FUN_0008f630(void);",
+     "decl": "void debug_reset_ringbuf(void);",
      "ported": true
     },
     {
@@ -17365,7 +17365,7 @@
    "functions": [
     {
      "addr": "0xa1210",
-     "decl": "int FUN_000a1210(int tag_index, float *position, float *velocity, void *ext_data, float scale);",
+     "decl": "int particle_sys_header_init(int tag_index, float *position, float *velocity, void *ext_data, float scale);",
      "ported": true
     },
     {
@@ -17436,7 +17436,7 @@
     },
     {
      "addr": "0xa12e0",
-     "decl": "int FUN_000a12e0(int particle_tag_index, int object_handle, int16_t attach_index);",
+     "decl": "int particle_sys_header_init_from_attachment(int particle_tag_index, int object_handle, int16_t attach_index);",
      "ported": true
     },
     {
@@ -19852,7 +19852,7 @@
     },
     {
      "addr": "0x906d0",
-     "decl": "void FUN_000906d0(char *param_1 /* @<edi> */);",
+     "decl": "void profile_dump_framedump(char *param_1 /* @<edi> */);",
      "ported": true,
      "reg_args": {
       "param_1": "edi"
@@ -26550,7 +26550,7 @@
     },
     {
      "addr": "0x81910",
-     "decl": "void FUN_00081910(int *mutex_reference);",
+     "decl": "void destroy_mutex(int *mutex_reference);",
      "ported": true
     },
     {
@@ -26651,7 +26651,7 @@
     },
     {
      "addr": "0x84520",
-     "decl": "int FUN_00084520(int *ep, void *buffer, int length, void *addr);",
+     "decl": "int get_sender_address_udp(int *ep, void *buffer, int length, void *addr);",
      "ported": true
     },
     {
@@ -31961,7 +31961,7 @@
    "functions": [
     {
      "addr": "0x75380",
-     "decl": "short FUN_00075380(void *bitmap /* @<eax> */);",
+     "decl": "short bitmap_extract(void *bitmap /* @<eax> */);",
      "ported": true,
      "reg_args": {
       "bitmap": "eax"
@@ -32024,7 +32024,7 @@
     },
     {
      "addr": "0x76bd0",
-     "decl": "char FUN_00076bd0(int tag_index);",
+     "decl": "char bitmap_group_postprocess(int tag_index);",
      "ported": true,
      "source_path": "halo/bitmaps/bitmap_utilities.c"
     },
@@ -32035,29 +32035,29 @@
     },
     {
      "addr": "0x77040",
-     "decl": "void *FUN_00077040(int tag_index, short sequence_index, short frame_index);",
-     "name": "FUN_00077040",
+     "decl": "void *bitmap_group_get_bitmap(int tag_index, short sequence_index, short frame_index);",
+     "name": "bitmap_group_get_bitmap",
      "ported": true
     },
     {
      "addr": "0x77120",
-     "decl": "short FUN_00077120(void *group, short type, short width, short height, short depth, short format, short mipmap_count);",
+     "decl": "short bitmap_group_add_bitmap(void *group, short type, short width, short height, short depth, short format, short mipmap_count);",
      "ported": true,
      "source_path": "src/halo/bitmaps/bitmap_utilities.c"
     },
     {
      "addr": "0x77510",
-     "decl": "void FUN_00077510(void *bitmap, int fill_color);",
+     "decl": "void bitmap_fill(void *bitmap, int fill_color);",
      "ported": true
     },
     {
      "addr": "0x77540",
-     "decl": "void FUN_00077540(void *bitmap);",
+     "decl": "void bitmap_alpha_to_rgb(void *bitmap);",
      "ported": true
     },
     {
      "addr": "0x77590",
-     "decl": "void *FUN_00077590(void *bitmap);",
+     "decl": "void *bitmap_clone(void *bitmap);",
      "ported": true
     },
     {
@@ -32116,7 +32116,7 @@
     },
     {
      "addr": "0x79180",
-     "decl": "void FUN_00079180(int unused, int positive_table, int negative_table, void *bitmap /* @<esi> */);",
+     "decl": "void bitmap_cubemap_sharpen_stub(int unused, int positive_table, int negative_table, void *bitmap /* @<esi> */);",
      "ported": true,
      "reg_args": {
       "bitmap": "esi"
@@ -32124,7 +32124,7 @@
     },
     {
      "addr": "0x79250",
-     "decl": "void FUN_00079250(short passes /* @<eax> */, void *bitmap);",
+     "decl": "void bitmap_2d_alpha_bleed(short passes /* @<eax> */, void *bitmap);",
      "ported": true,
      "reg_args": {
       "passes": "eax"
@@ -32133,17 +32133,17 @@
     },
     {
      "addr": "0x79480",
-     "decl": "void FUN_00079480(short passes, void *bitmap /* @<edi> */);",
+     "decl": "void bitmap_3d_alpha_bleed(short passes, void *bitmap /* @<edi> */);",
      "ported": true
     },
     {
      "addr": "0x79590",
-     "decl": "void FUN_00079590(short passes, void *bitmap /* @<esi> */);",
+     "decl": "void bitmap_cubemap_alpha_bleed_stub(short passes, void *bitmap /* @<esi> */);",
      "ported": true
     },
     {
      "addr": "0x79630",
-     "decl": "void FUN_00079630(float bump_height, void *bitmap /* @<esi> */);",
+     "decl": "void bitmap_cubemap_heightmap_stub(float bump_height, void *bitmap /* @<esi> */);",
      "ported": true
     },
     {
@@ -32253,7 +32253,7 @@
     },
     {
      "addr": "0x7b940",
-     "decl": "void FUN_0007b940(float bump_height, void *bitmap /* @<ebx> */);",
+     "decl": "void bitmap_heightmap_to_bumpmap(float bump_height, void *bitmap /* @<ebx> */);",
      "ported": true
     }
    ],
@@ -35227,7 +35227,7 @@
     },
     {
      "addr": "0x57bc0",
-     "decl": "short FUN_00057bc0(int encounter_handle);",
+     "decl": "short ai_status(int encounter_handle);",
      "ported": true
     },
     {
@@ -35237,12 +35237,12 @@
     },
     {
      "addr": "0x57c70",
-     "decl": "void FUN_00057c70(int encounter_handle, char param_2);",
+     "decl": "void ai_playfight_encounter(int encounter_handle, char param_2);",
      "ported": true
     },
     {
      "addr": "0x57d00",
-     "decl": "void FUN_00057d00(int param_1, int param_2);",
+     "decl": "void ai_vehicle_encounter(int param_1, int param_2);",
      "ported": true
     },
     {
@@ -35332,17 +35332,17 @@
     },
     {
      "addr": "0x58700",
-     "decl": "int16_t FUN_00058700(int16_t param_1);",
+     "decl": "int16_t ai_encounter_conversation_line(int16_t param_1);",
      "ported": true
     },
     {
      "addr": "0x58710",
-     "decl": "int16_t FUN_00058710(int16_t param_1);",
+     "decl": "int16_t ai_encounter_conversation_status(int16_t param_1);",
      "ported": true
     },
     {
      "addr": "0x58720",
-     "decl": "void FUN_00058720(unsigned int param_1, int param_2);",
+     "decl": "void ai_link_activation(unsigned int param_1, int param_2);",
      "ported": true
     },
     {
@@ -35367,18 +35367,18 @@
     },
     {
      "addr": "0x58a40",
-     "decl": "void FUN_00058a40(int combined_handle);",
+     "decl": "void ai_magically_see_players(int combined_handle);",
      "name": "ai_magically_see_players",
      "ported": true
     },
     {
      "addr": "0x58ae0",
-     "decl": "void FUN_00058ae0(unsigned int combined_index);",
+     "decl": "void ai_encounter_maneuver(unsigned int combined_index);",
      "ported": true
     },
     {
      "addr": "0x58af0",
-     "decl": "void FUN_00058af0(unsigned int ai_index @<eax>, int vehicle_handle @<ebx>, int seat_substring, char allow_type9);",
+     "decl": "void ai_vehicle_enter(unsigned int ai_index @<eax>, int vehicle_handle @<ebx>, int seat_substring, char allow_type9);",
      "ported": true
     },
     {
@@ -35502,7 +35502,7 @@
     },
     {
      "addr": "0x5a430",
-     "decl": "void FUN_0005a430(int actor_handle);",
+     "decl": "void actor_activate_encounterless(int actor_handle);",
      "ported": true
     },
     {
@@ -35820,7 +35820,7 @@
     },
     {
      "addr": "0x64f50",
-     "decl": "int FUN_00064f50(int file);",
+     "decl": "int get_size_open_file_descriptor(int file);",
      "ported": true
     },
     {
@@ -36854,7 +36854,7 @@
    "functions": [
     {
      "addr": "0x849f0",
-     "decl": "float FUN_000849f0(float min, float max);",
+     "decl": "float bored_camera_getrand(float min, float max);",
      "ported": true
     }
    ],

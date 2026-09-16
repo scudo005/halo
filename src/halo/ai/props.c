@@ -1022,7 +1022,7 @@ void FUN_00064ee0(int tif_)
   debug_free(tif, "c:\\halo\\SOURCE\\bitmaps\\libtiff\\tif_close.c", 0x3d);
 }
 
-/* FUN_00064f50 (0x64f50) — return the size in bytes of an open file
+/* get_size_open_file_descriptor (0x64f50) — return the size in bytes of an open file
  * descriptor, or 0 if the stat call fails.
  *
  * NOTE ON OBJECT ATTRIBUTION: kb.json maps this address to props.obj
@@ -1066,7 +1066,7 @@ void FUN_00064ee0(int tif_)
  * SETL (signed) means the success predicate is `rc >= 0`, matching CRT
  * _fstat semantics (0 on success, -1 on failure). The branchless
  * SETL/DEC/AND sequence is MSVC codegen for the ternary below. */
-int FUN_00064f50(int file)
+int get_size_open_file_descriptor(int file)
 {
   int stat_buf[9]; /* struct _stat, 0x24 bytes */
   int rc;

@@ -8190,7 +8190,7 @@ int object_mark(int object_handle)
  * FUN_0013b1b0  (light)        ; sets object flag 0x100 type 1 'lsnd' ->
  * game_looping_sound_new       ; sets object flag 0x400 type 2 'effe' ->
  * FUN_0009eb40  (effect) type 3 'cont' -> contrail_new type 4 'pctl' ->
- * FUN_000a12e0  (particle) The attachment type byte is stored at object+0xf4+i
+ * particle_sys_header_init_from_attachment  (particle) The attachment type byte is stored at object+0xf4+i
  * and the created handle at object+0xfc+i*4. Marker indices passed to creators
  * are element fields minus 1 (element+0x30/+0x32/+0x34 -> marker / secondary /
  * tertiary).
@@ -8276,7 +8276,7 @@ void attachments_new(int object_handle)
         handle = contrail_new((int)def, object_handle, i);
         break;
       case 4:
-        handle = FUN_000a12e0((int)def, object_handle, i);
+        handle = particle_sys_header_init_from_attachment((int)def, object_handle, i);
         break;
       default:
         break;

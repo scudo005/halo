@@ -1906,7 +1906,7 @@ void close_endpoint(int *ep)
  * close_endpoint (0x84000, cdecl 1 arg);
  * debug_free (0x8ef70, cdecl 3 args, line 0x252);
  * release_mutex (0x818d0, cdecl 1 arg);
- * FUN_00081910 (0x81910, cdecl 1 arg — the PUSH ESI at 0x84187 is covered by
+ * destroy_mutex (0x81910, cdecl 1 arg — the PUSH ESI at 0x84187 is covered by
  * the ADD ESP,0x14 at 0x8418d that also cleans the debug_free and
  * release_mutex pushes, so the callee does not pop its argument);
  * FUN_00082cf0 (0x82cf0, no arguments, no stack cleanup);
@@ -1979,7 +1979,7 @@ int __stdcall FUN_00084080(int *input)
       "c:\\halo\\SOURCE\\bungie_net\\network\\transport_endpoint_winsock.c",
       0x252);
     release_mutex(mutex);
-    FUN_00081910(mutex);
+    destroy_mutex(mutex);
   }
 
   if (input != NULL) {
@@ -2145,7 +2145,7 @@ int FUN_00084450(int listening_endpoint)
  * xapi_GetLastError (0x2235c4); transport_initialized at 0x335090.
  * Assert strings at 0x266db0/0x266618; source lines 0x377-0x38b.
  */
-int FUN_00084520(int *ep, void *buffer, int length, void *addr)
+int get_sender_address_udp(int *ep, void *buffer, int length, void *addr)
 {
   int socket_result;
   short bind_result;

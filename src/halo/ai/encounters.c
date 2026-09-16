@@ -22,7 +22,7 @@
  *   actor+0x3a = squad_index (int16_t, -1 = NONE)
  *   actor+0x3c = platoon_index (int16_t, -1 = NONE)
  *
- * Ported: FUN_00058a40 (ai_magically_see_players), encounters_dispose (stub),
+ * Ported: ai_magically_see_players (ai_magically_see_players), encounters_dispose (stub),
  * encounter_compute_activation_cluster_bit_vector (dispose pools),
  * encounterless_attach_actor (encounter_enter), encounterless_detach_actor
  * (encounter_leave), encounters_create_for_new_map (tally reset), FUN_0005de80
@@ -1663,7 +1663,7 @@ void FUN_00057aa0(int encounter_handle, short state)
   }
 }
 
-/* FUN_00057bc0 — ai_status.
+/* ai_status — ai_status.
  *
  * Returns the maximum status level across all platoons in an encounter.
  * If the AI trace flag (0x5aca59) is set, logs the thread name and encounter
@@ -1672,7 +1672,7 @@ void FUN_00057aa0(int encounter_handle, short state)
  * FUN_00057b40 for each actor to get individual status, tracking the maximum.
  * 0x57bc0 / encounters.obj
  */
-short FUN_00057bc0(int encounter_handle)
+short ai_status(int encounter_handle)
 {
   char local_21c[512];
   char local_1c[24];
@@ -1702,9 +1702,9 @@ void FUN_00057c60(void)
 {
 }
 
-/* FUN_00057c70 (0x57c70) — ai_playfight script command. Sets the playfight
+/* ai_playfight_encounter (0x57c70) — ai_playfight script command. Sets the playfight
  * flag (encounter+0x60) for an encounter. Logs if AI trace is enabled. */
-void FUN_00057c70(int encounter_handle, char param_2)
+void ai_playfight_encounter(int encounter_handle, char param_2)
 {
   char *encounter;
   char local_204[512];
@@ -1724,7 +1724,7 @@ void FUN_00057c70(int encounter_handle, char param_2)
 }
 
 /*
- * FUN_00057d00 (0x57d00) — ai_vehicle_encounter script command.  Binds a unit
+ * ai_vehicle_encounter (0x57d00) — ai_vehicle_encounter script command.  Binds a unit
  * (biped/vehicle, object type mask 3) to an encounter+squad by writing the
  * resolved encounter index to unit+0x2e4 and the squad index to unit+0x2e6
  * (both int16, -1 = NONE).  Before overwriting, if the unit already carries an
@@ -1749,7 +1749,7 @@ void FUN_00057c70(int encounter_handle, char param_2)
  * word,CX); byte 2 of param_2 is a MOVZX byte load compared against the
  * uint16 at squad+0x22.
  * 0x57d00 / encounters.obj */
-void FUN_00057d00(int param_1, int param_2)
+void ai_vehicle_encounter(int param_1, int param_2)
 {
   int out_squad;
   int saved_encounter_index;
@@ -2393,25 +2393,25 @@ void FUN_000586a0(int param_1)
   ai_conversation_advance(param_1);
 }
 
-/* FUN_00058700 (0x58700) — Tail-call wrapper for ai_conversation_line.
+/* ai_encounter_conversation_line (0x58700) — Tail-call wrapper for ai_conversation_line.
  * The original is a JMP to 0x434c0, so the arg is forwarded and the callee's
  * return is this wrapper's return. Disasm at the hs call site 0xc1574 (`xor
  * edx,edx; mov dx,[eax]; push edx; call 0x58700; mov [ebp-4],ax`) confirms one
  * zero-extended uint16 stack arg and a 16-bit AX return. */
-int16_t FUN_00058700(int16_t param_1)
+int16_t ai_encounter_conversation_line(int16_t param_1)
 {
   return ai_conversation_line(param_1);
 }
 
-/* FUN_00058710 (0x58710) — Frame-forwarding thunk (PUSH EBP;MOV EBP,ESP;POP
+/* ai_encounter_conversation_status (0x58710) — Frame-forwarding thunk (PUSH EBP;MOV EBP,ESP;POP
  * EBP;JMP 0x433b0) to ai_conversation_status. Inherits its ABI: a 16-bit stack
- * arg and a 16-bit AX return (mirror of neighbor FUN_00058700). */
-int16_t FUN_00058710(int16_t param_1)
+ * arg and a 16-bit AX return (mirror of neighbor ai_encounter_conversation_line). */
+int16_t ai_encounter_conversation_status(int16_t param_1)
 {
   return ai_conversation_status(param_1);
 }
 
-/* 0x00058720 — FUN_00058720 (ai_link_activation script command).
+/* ai_link_activation — ai_link_activation (ai_link_activation script command).
  *
  * Links two encounter activation states together. If the AI trace flag
  * (0x5aca59) is set, logs both encounter names via error(). Then, if
@@ -2425,7 +2425,7 @@ int16_t FUN_00058710(int16_t param_1)
  *   - encounter_link_activation takes (short, int) and returns char (bool).
  *   - MAXIMUM_ACTIVATION_LINK_INDICES_PER_ENCOUNTER is 3.
  */
-void FUN_00058720(unsigned int param_1, int param_2)
+void ai_link_activation(unsigned int param_1, int param_2)
 {
   char local_404[512];
   char local_204[512];
@@ -2612,7 +2612,7 @@ void FUN_00058970(int param_1, int param_2)
   }
 }
 
-/* 0x00058a40 — ai_magically_see_players (FUN_00058a40).
+/* 0x00058a40 — ai_magically_see_players (ai_magically_see_players).
  *
  * Forces all active players to be "magically seen" by the encounter
  * specified by combined_handle.  This overrides normal AI perception rules
@@ -2643,7 +2643,7 @@ void FUN_00058970(int param_1, int param_2)
  *   - MOV EDX,[0x005aa6d4] dereferences player_data before data_iterator_new.
  *   - player+0x34 is the field passed as arg2 to ai_magically_see_unit.
  */
-void FUN_00058a40(int combined_handle)
+void ai_magically_see_players(int combined_handle)
 {
   char name_buf[256];
   char iter_buf[16];
@@ -2666,16 +2666,16 @@ void FUN_00058a40(int combined_handle)
   }
 }
 
-/* FUN_00058ae0 (0x58ae0) — Tail-call wrapper for ai_maneuver (ai_maneuver);
+/* ai_encounter_maneuver (0x58ae0) — Tail-call wrapper for ai_maneuver (ai_maneuver);
  * forwards combined_index. Dormant (ported=false); the original runs at
  * runtime. Signature follows ai_maneuver now that it is lifted as 1-arg. */
-void FUN_00058ae0(unsigned int combined_index)
+void ai_encounter_maneuver(unsigned int combined_index)
 {
   ai_maneuver(combined_index);
 }
 
 /* One entry of the nearest-first candidate table built on the stack by
- * FUN_00058af0.  Confirmed from the index math at 0x58b5f
+ * ai_vehicle_enter.  Confirmed from the index math at 0x58b5f
  * (MOVSX ECX,SI; LEA ECX,[ECX+ECX*2]; SHL ECX,2 => i*12) and the field stores
  * at +0x0 / +0x4 / +0x8 relative to EBP-0x348. */
 typedef struct {
@@ -2720,7 +2720,7 @@ typedef struct {
  * The `return` inside the placement loop is a real early exit to the epilogue
  * (an actor of type 9 blocks the whole order unless the flag allows it); it is
  * not a `break`. */
-void FUN_00058af0(unsigned int ai_index, int vehicle_handle, int seat_substring,
+void ai_vehicle_enter(unsigned int ai_index, int vehicle_handle, int seat_substring,
                   char allow_type9)
 {
   vehicle_enter_candidate_t candidates[0x40];
@@ -2775,7 +2775,7 @@ void FUN_00058af0(unsigned int ai_index, int vehicle_handle, int seat_substring,
 
 /* 0x00058c40 — ai_go_to_vehicle script command entry point.
  * Emits a trace line when the AI script-trace flag at 0x5aca59 is set, then
- * forwards the request to the vehicle-entry order builder FUN_00058af0 with
+ * forwards the request to the vehicle-entry order builder ai_vehicle_enter with
  * allow_type9 = 0.
  *
  * Parameters come off the stack and are cached in callee-saved registers by
@@ -2786,7 +2786,7 @@ void FUN_00058af0(unsigned int ai_index, int vehicle_handle, int seat_substring,
  * The error() call pushes SIX stack args (ADD ESP,0x18 at 0x58c9c); Ghidra
  * dropped the trailing seat_substring vararg.  Only the low 16 bits of the
  * vehicle handle are logged (MOV ECX,EBX; AND ECX,0xffff at 0x58c79/0x58c7c),
- * while the full 32-bit handle is forwarded to FUN_00058af0 (EBX still live
+ * while the full 32-bit handle is forwarded to ai_vehicle_enter (EBX still live
  * at the tail call, 0x58ca4). */
 void FUN_00058c40(unsigned int ai_index, int vehicle_handle,
                   const char *seat_substring)
@@ -2800,7 +2800,7 @@ void FUN_00058c40(unsigned int ai_index, int vehicle_handle,
           hs_runtime_get_executing_thread_name(), local_104,
           vehicle_handle & 0xffff, seat_substring);
   }
-  FUN_00058af0(ai_index, vehicle_handle, (int)seat_substring, 0);
+  ai_vehicle_enter(ai_index, vehicle_handle, (int)seat_substring, 0);
 }
 
 /* 0x00058eb0 — encounters_initialize.
@@ -4045,7 +4045,7 @@ short FUN_0005a3b0(void *squad_def)
   return 0xe;
 }
 
-/* FUN_0005a430 (0x5a430) — actor_activate_encounterless.
+/* actor_activate_encounterless (0x5a430) — actor_activate_encounterless.
  * Asserts the actor is marked encounterless (actor+9 != 0), sets the actor's
  * encounter timer (actor+0x10) to 90 ticks (0x5a), then activates the actor.
  * Called when an encounterless actor is being brought into active duty.
@@ -4055,7 +4055,7 @@ short FUN_0005a3b0(void *squad_def)
  * Confirmed: *(int16_t*)(actor+0x10) = 0x5a at 0x5a46a.
  * Confirmed: actor_set_active(actor_handle, 1) at 0x5a474.
  */
-void FUN_0005a430(int actor_handle)
+void actor_activate_encounterless(int actor_handle)
 {
   char *actor_ptr;
 
@@ -4796,13 +4796,13 @@ void encounter_set_deaf(int encounter_handle, char param_2)
  * pointer.
  *   - tag_block_get_element(EBX+0x80, (int16_t)param_2, 0xe8) → squad_def.
  *   - MOV word ptr [ECX+0x12],0 at 0x5ae1e clears squad delay counter.
- *   - Bit 0x10 of squad_def+0x28 gates FUN_00058a40 call
+ *   - Bit 0x10 of squad_def+0x28 gates ai_magically_see_players call
  * (ai_magically_see_players).
- *   - Handle for FUN_00058a40: ((squad_index & 0xff | 0xffff8000) << 16) |
+ *   - Handle for ai_magically_see_players: ((squad_index & 0xff | 0xffff8000) << 16) |
  * (encounter_handle & 0xffff).
  *   - ADD ESP,0x20 at 0x5ae27 cleans up 8 dwords (first tag_block 3 +
  * encounter_get_squad 2 + second tag_block 3).
- *   - ADD ESP,0x4 at 0x5ae4c cleans FUN_00058a40 arg.
+ *   - ADD ESP,0x4 at 0x5ae4c cleans ai_magically_see_players arg.
  *   - ADD ESP,0x10 at 0x5ae67 cleans console_printf args.
  *
  * Store-offset table (squad record writes):
@@ -4828,7 +4828,7 @@ void encounter_squad_timer_expire(int encounter_handle, int16_t squad_index)
     handle =
       (int)(((unsigned int)(((int)squad_index & 0xff) | 0xffff8000U) << 16) |
             (unsigned int)(encounter_handle & 0xffff));
-    FUN_00058a40(handle);
+    ai_magically_see_players(handle);
   }
   if (*(char *)0x5aca4b != '\0') {
     console_printf(0, "%s/%s: delay timer finished", squad, squad_def);

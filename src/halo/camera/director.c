@@ -520,7 +520,7 @@ bool director_compute_camera_input(short *out_buf, int local_player_index)
 }
 
 /*
- * FUN_000874d0 — dispatch per-player camera update based on director mode.
+ * director_dispatch_allplayer_update — dispatch per-player camera update based on director mode.
  *
  * Reads the global director mode from 0x3352ac (short) and calls the
  * appropriate per-player camera function:
@@ -534,7 +534,7 @@ bool director_compute_camera_input(short *out_buf, int local_player_index)
  *
  * 0x874d0 / director.obj
  */
-void FUN_000874d0(int16_t local_player_index, char reset_flag, char mode_flags)
+void director_dispatch_allplayer_update(int16_t local_player_index, char reset_flag, char mode_flags)
 {
   switch (*(int16_t *)0x3352ac) {
   case 0:

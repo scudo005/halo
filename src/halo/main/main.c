@@ -214,11 +214,11 @@ void FUN_000ffe70(char param_1)
   }
 }
 
-/* Guard wrapper: if param_1 is nonzero, call FUN_0008f630. */
+/* Guard wrapper: if param_1 is nonzero, call debug_reset_ringbuf. */
 void FUN_000ffe90(char param_1)
 {
   if (param_1 != '\0') {
-    FUN_0008f630();
+    debug_reset_ringbuf();
     return;
   }
 }

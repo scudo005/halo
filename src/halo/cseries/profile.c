@@ -343,7 +343,7 @@ void profile_dump_to_file(const char *substring)
   crt_fclose(stream);
 }
 
-/* FUN_000906d0 (0x906d0) -- dump one profile ring-buffer entry to
+/* profile_dump_framedump (0x906d0) -- dump one profile ring-buffer entry to
  * "d:\framedump.txt". Only caller: profile_frame_end's do_output loop,
  * which passes EDI = 0x3365c8 + (int16_t)idx*0x1128 (base of the ring
  * slot that qmemcpy copies the current-frame struct into, 0x1128 bytes
@@ -363,7 +363,7 @@ void profile_dump_to_file(const char *substring)
  * POP ESI restore at 0x90736 -- both are consumed only by the callee, so
  * FUN_0008fb60 takes the ring-entry pointer in EAX and the destination
  * buffer in ESI. */
-void FUN_000906d0(char *param_1 /* @<edi> */)
+void profile_dump_framedump(char *param_1 /* @<edi> */)
 {
   char buf[0x200];
 
@@ -394,7 +394,7 @@ void FUN_000906d0(char *param_1 /* @<edi> */)
  * supplied flag.
  *
  * substring arrives in EDI (unaff_EDI in the decompile -- caller-set,
- * never saved/restored here, matching FUN_000906d0's @<edi> pattern).
+ * never saved/restored here, matching profile_dump_framedump's @<edi> pattern).
  * active is an ordinary cdecl stack arg, read/written as a single byte
  * at [EBP+8]/[section+8].
  *
@@ -943,7 +943,7 @@ do_output: {
   int idx = ((int)*(int16_t *)0x3365c4 + 0xfd) % 0x100;
   do {
     if ((int16_t)idx < *(int16_t *)0x3365c2)
-      FUN_000906d0((char *)(0x3365c8 + (int)(int16_t)idx * 0x1128));
+      profile_dump_framedump((char *)(0x3365c8 + (int)(int16_t)idx * 0x1128));
     idx = ((int)(int16_t)idx + 1) % 0x100;
   } while ((int16_t)idx != *(int16_t *)0x3365c4);
 }

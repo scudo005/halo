@@ -201,7 +201,7 @@ void FUN_000d3340(int param_1, int param_2, int meter_def, int param_4,
   csmemset(guard, 0x62, 0x200);
   resolved_tag = verify_tag_reference((int *)(meter_def + 0x24));
   bitmap = (short *)tag_get(0x6269746d, resolved_tag);
-  bitmap_data = (int)FUN_00077040(*(int *)(meter_def + 0x30),
+  bitmap_data = (int)bitmap_group_get_bitmap(*(int *)(meter_def + 0x30),
                                   *(short *)(meter_def + 0x46), 0);
   hardware_format =
     (int)xbox_texture_cache_get_hardware_format((void *)bitmap_data, 0, 1);
@@ -401,7 +401,7 @@ void FUN_000d3860(short local_player, void *element, void *position, int value,
   int canary;
   int guard[128];
   int div_scratch; /* local_38 (loop quotient temp) */
-  int bitmap_data; /* local_28 (FUN_00077040 result) */
+  int bitmap_data; /* local_28 (bitmap_group_get_bitmap result) */
   short *source_bitmap; /* local_2c (bitm tag) */
   int color; /* local_1c (forwarded to d3200 color; raw int) */
   float base_x; /* local_18 (running float x before _ftol2) */
@@ -428,7 +428,7 @@ void FUN_000d3860(short local_player, void *element, void *position, int value,
   if (hud != -1) {
     hud = (int)tag_get(0x68756423, hud);
     source_bitmap = (short *)tag_get(0x6269746d, *(int *)(hud + 0xc));
-    bitmap_data = (int)FUN_00077040(*(int *)(hud + 0xc), 0, 0);
+    bitmap_data = (int)bitmap_group_get_bitmap(*(int *)(hud + 0xc), 0, 0);
     sVar8 = (short)value;
     special_big = (char)(999 < sVar8);
     gate =

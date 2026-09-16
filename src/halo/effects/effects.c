@@ -1311,7 +1311,7 @@ void FUN_0009dcf0(float *position, void *effect, void *location, void *part,
     direction[1] += vel[1];
     direction[2] += vel[2];
 
-    FUN_000a1210(*(int *)(loc_entry + 0x24), position, direction, &particle_data,
+    particle_sys_header_init(*(int *)(loc_entry + 0x24), position, direction, &particle_data,
                  scale);
     break;
   }

@@ -170,8 +170,8 @@ real, localizable regression in the 1590-commit window — not World B / foundat
 
 **Commit-bisect abandoned:** mid-range commits are NOT clean-buildable. Auto-lift/
 worktree merges (10 merges in good..bad) leave kb<->source desyncs that a fresh
-recompile surfaces (e.g. `f8a4f775`: source `char FUN_00076bd0(int)` vs kb
-`void FUN_00076bd0(void)` ported:null — introduced by merge `7cc35a2d` reverting kb
+recompile surfaces (e.g. `f8a4f775`: source `char bitmap_group_postprocess(int)` vs kb
+`void bitmap_group_postprocess(void)` ported:null — introduced by merge `7cc35a2d` reverting kb
 over the `1abc3b7a` port). `f8a4f775` is on the first-parent chain, so `--first-parent`
 does not dodge it. Bisect log saved: `/tmp/orb_bisect.log`.
 

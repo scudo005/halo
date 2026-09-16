@@ -7185,7 +7185,7 @@
       "score": 96.6,
       "source": "src/halo/ai/encounters.c"
     },
-    "FUN_00057bc0": {
+    "ai_status": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 94.5,
@@ -7215,7 +7215,7 @@
       "score": 100.0,
       "source": "src/halo/ai/encounters.c"
     },
-    "FUN_00057c70": {
+    "ai_playfight_encounter": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 91.1,
@@ -7230,7 +7230,7 @@
       "score": 91.1,
       "source": "src/halo/ai/encounters.c"
     },
-    "FUN_00057d00": {
+    "ai_vehicle_encounter": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 96.5,
@@ -7500,7 +7500,7 @@
       "score": 100.0,
       "source": "src/halo/ai/encounters.c"
     },
-    "FUN_00058700": {
+    "ai_encounter_conversation_line": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -7515,7 +7515,7 @@
       "score": 100.0,
       "source": "src/halo/ai/encounters.c"
     },
-    "FUN_00058710": {
+    "ai_encounter_conversation_status": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -7530,7 +7530,7 @@
       "score": 100.0,
       "source": "src/halo/ai/encounters.c"
     },
-    "FUN_00058720": {
+    "ai_link_activation": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 90.3,
@@ -7605,7 +7605,7 @@
       "score": 90.9,
       "source": "src/halo/ai/encounters.c"
     },
-    "FUN_00058a40": {
+    "ai_magically_see_players": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -7620,7 +7620,7 @@
       "score": 100.0,
       "source": "src/halo/ai/encounters.c"
     },
-    "FUN_00058ae0": {
+    "ai_encounter_maneuver": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -7635,7 +7635,7 @@
       "score": 100.0,
       "source": "src/halo/ai/encounters.c"
     },
-    "FUN_00058af0": {
+    "ai_vehicle_enter": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 3,
       "abi_modeled_mnemonic_pct": 98.7,
@@ -7785,7 +7785,7 @@
       "score": 94.9,
       "source": "src/halo/ai/encounters.c"
     },
-    "FUN_0005a430": {
+    "actor_activate_encounterless": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -8745,7 +8745,7 @@
       "score": 100.0,
       "source": "src/halo/ai/props.c"
     },
-    "FUN_00064f50": {
+    "get_size_open_file_descriptor": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -10303,7 +10303,7 @@
       "score": 2.6,
       "source": "src/halo/unported_thunks.c"
     },
-    "FUN_00075380": {
+    "bitmap_extract": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 89.4,
@@ -10453,7 +10453,7 @@
       "score": 100.0,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00076bd0": {
+    "bitmap_group_postprocess": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 87.9,
@@ -10483,7 +10483,7 @@
       "score": 100.0,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00077040": {
+    "bitmap_group_get_bitmap": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 91.3,
@@ -10498,7 +10498,7 @@
       "score": 91.3,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00077120": {
+    "bitmap_group_add_bitmap": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 80.4,
@@ -10513,7 +10513,7 @@
       "score": 80.4,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00077510": {
+    "bitmap_fill": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -10528,7 +10528,7 @@
       "score": 100.0,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00077540": {
+    "bitmap_alpha_to_rgb": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 98.5,
@@ -10543,7 +10543,7 @@
       "score": 98.5,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00077590": {
+    "bitmap_clone": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 98.6,
@@ -10663,7 +10663,7 @@
       "score": 100.0,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00079180": {
+    "bitmap_cubemap_sharpen_stub": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 3,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -10678,7 +10678,7 @@
       "score": 100.0,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00079250": {
+    "bitmap_2d_alpha_bleed": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 75.5,
@@ -10693,7 +10693,7 @@
       "score": 75.5,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00079480": {
+    "bitmap_3d_alpha_bleed": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 4,
       "abi_modeled_mnemonic_pct": 96.3,
@@ -10708,7 +10708,7 @@
       "score": 96.3,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00079590": {
+    "bitmap_cubemap_alpha_bleed_stub": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 3,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -10723,7 +10723,7 @@
       "score": 100.0,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_00079630": {
+    "bitmap_cubemap_heightmap_stub": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 3,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -10813,7 +10813,7 @@
       "score": 99.8,
       "source": "src/halo/bitmaps/bitmap_utilities.c"
     },
-    "FUN_0007b940": {
+    "bitmap_heightmap_to_bumpmap": {
       "abi_model": "regparam_stripped_saves",
       "abi_model_items": 5,
       "abi_modeled_mnemonic_pct": 95.9,
@@ -11068,7 +11068,7 @@
       "score": 93.8,
       "source": "src/halo/bungie_net/thread_win32.c"
     },
-    "FUN_00081910": {
+    "destroy_mutex": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -11458,7 +11458,7 @@
       "score": 100.0,
       "source": "src/halo/bungie_net/network/transport_endpoint_set_winsock.c"
     },
-    "FUN_00084520": {
+    "get_sender_address_udp": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 70.8,
@@ -11518,7 +11518,7 @@
       "score": 100.0,
       "source": "src/halo/bungie_net/network/transport_endpoint_set_winsock.c"
     },
-    "FUN_000849f0": {
+    "bored_camera_getrand": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -11728,7 +11728,7 @@
       "score": 100.0,
       "source": "src/halo/camera/director.c"
     },
-    "FUN_000874d0": {
+    "director_dispatch_allplayer_update": {
       "abi_model": "regparam_stripped",
       "abi_model_items": 3,
       "abi_modeled_mnemonic_pct": 76.6,
@@ -11863,7 +11863,7 @@
       "score": 100.0,
       "source": "src/halo/cseries/cseries_windows.c"
     },
-    "FUN_0008e5f0": {
+    "debug_exception_reporter": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -11878,7 +11878,7 @@
       "score": 100.0,
       "source": "src/halo/cseries/errors.c"
     },
-    "FUN_0008e650": {
+    "debug_memory_initialize": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -12028,7 +12028,7 @@
       "score": 86.3,
       "source": "src/halo/cseries/errors.c"
     },
-    "FUN_0008f1e0": {
+    "debug_dump_allocs": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -12043,7 +12043,7 @@
       "score": 100.0,
       "source": "src/halo/cseries/errors.c"
     },
-    "FUN_0008f630": {
+    "debug_reset_ringbuf": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 84.6,
@@ -12103,7 +12103,7 @@
       "score": 100.0,
       "source": "src/halo/cseries/profile.c"
     },
-    "FUN_000906d0": {
+    "profile_dump_framedump": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 91.4,
@@ -13033,7 +13033,7 @@
       "score": 100.0,
       "source": "src/halo/game/editor_stubs.c"
     },
-    "FUN_00097a50": {
+    "contrail_tick_counter": {
       "abi_model": "regparam_stripped",
       "abi_model_items": 1,
       "abi_modeled_mnemonic_pct": 73.5,
@@ -13093,7 +13093,7 @@
       "score": 86.0,
       "source": "src/halo/effects/contrails.c"
     },
-    "FUN_00098200": {
+    "contrail_point_keyframe_tick": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 82.2,
@@ -13903,7 +13903,7 @@
       "score": 98.5,
       "source": "src/halo/effects/particle_systems.c"
     },
-    "FUN_000a1210": {
+    "particle_sys_header_init": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 87.3,
@@ -13918,7 +13918,7 @@
       "score": 87.3,
       "source": "src/halo/effects/particles.c"
     },
-    "FUN_000a12e0": {
+    "particle_sys_header_init_from_attachment": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 89.0,
@@ -44878,7 +44878,7 @@
       "score": 94.8,
       "source": "src/halo/cache/cache_files_windows.c"
     },
-    "FUN_001bc280": {
+    "init_cache_decompress": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 96.8,
@@ -44893,7 +44893,7 @@
       "score": 96.8,
       "source": "src/halo/cache/cache_files_windows.c"
     },
-    "FUN_001bc5c0": {
+    "cache_files_find_ioreq_slot": {
       "abi_model": "raw",
       "abi_model_items": 0,
       "abi_modeled_mnemonic_pct": 100.0,
@@ -45058,7 +45058,7 @@
       "score": 100.0,
       "source": "src/halo/cache/cache_files_windows.c"
     },
-    "FUN_001bcea0": {
+    "cache_files_delete_cache_map_files": {
       "abi_model": "regparam_stripped",
       "abi_model_items": 1,
       "abi_modeled_mnemonic_pct": 95.2,

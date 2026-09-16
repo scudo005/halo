@@ -2,15 +2,15 @@
  * subsystems, then clear the profiling-enable flag. */
 void cseries_initialize(void)
 {
-  FUN_0008e650();
-  FUN_0008f630();
+  debug_memory_initialize();
+  debug_reset_ringbuf();
   *(uint8_t *)0x449ef1 = 0;
 }
 
 /* cseries_dispose (0x8d850) — thunk → debug_dump_memory_for_file(NULL). */
 void cseries_dispose(void)
 {
-  FUN_0008f1e0();
+  debug_dump_allocs();
 }
 
 /* string_to_tag (0x8d860) — byte-swap the 4-character tag stored at *param_1

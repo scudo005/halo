@@ -11,7 +11,7 @@
  *   0x81770  thread_close
  *   0x81870  mutex_acquire (take_mutex)
  *   0x818d0  mutex_release (release_mutex)
- *   0x81910  FUN_00081910
+ *   0x81910  destroy_mutex
  *   0x81980  FUN_00081980
  */
 
@@ -415,13 +415,13 @@ void release_mutex(int *mutex_reference)
 }
 
 /*
- * FUN_00081910 — close a mutex handle and clear its reference.
+ * destroy_mutex — close a mutex handle and clear its reference.
  *
  * Confirmed: asserts "mutex_reference" at line 0xf0 and
  * "mutex_reference->in_use" at line 0xf1; calls CloseHandle before clearing
  * offsets +0x04, +0x00, and +0x24, in that order.
  */
-void FUN_00081910(int *mutex_reference)
+void destroy_mutex(int *mutex_reference)
 {
   if (mutex_reference == NULL) {
     display_assert("mutex_reference",

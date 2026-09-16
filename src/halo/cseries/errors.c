@@ -11,7 +11,7 @@ typedef struct debug_allocation_header {
   uint32_t checksum;
 } debug_allocation_header_t;
 
-/* FUN_0008e5f0 (0x8e5f0) — top-level structured-exception reporter.
+/* debug_exception_reporter (0x8e5f0) — top-level structured-exception reporter.
  *
  * Installed as the unhandled/structured exception filter (no direct call
  * xref; referenced via function pointer). Resolves the exception code to a
@@ -22,7 +22,7 @@ typedef struct debug_allocation_header {
  * param_1: exception code (passed to system_exception_name in ECX).
  * param_2: EXCEPTION_POINTERS *; field at +4 is the CONTEXT record, handed
  *          to stack_walk_with_context for the trace. */
-int FUN_0008e5f0(uint32_t code, int exception_pointers)
+int debug_exception_reporter(uint32_t code, int exception_pointers)
 {
   const char *name;
 
@@ -39,7 +39,7 @@ int FUN_0008e5f0(uint32_t code, int exception_pointers)
 /* debug_memory_initialize (0x8e650) — initialize the debug memory manager
  * sentinel structure: writes SAFT guards at both ends and zeroes the
  * counters/state fields between them. */
-void FUN_0008e650(void)
+void debug_memory_initialize(void)
 {
   *(uint32_t *)0x2ee74c = 0x53414654; /* begin SAFT guard */
   *(uint32_t *)0x2ee750 = 0;
@@ -427,8 +427,8 @@ update_stats:
   return result;
 }
 
-/* FUN_0008f1e0 (0x8f1e0) — dump all debug allocations to heap_dump.txt. */
-void FUN_0008f1e0(void)
+/* debug_dump_allocs (0x8f1e0) — dump all debug allocations to heap_dump.txt. */
+void debug_dump_allocs(void)
 {
   debug_dump_memory_for_file(NULL);
 }
@@ -662,12 +662,12 @@ bool error_occurred(void)
   return occurred;
 }
 
-/* FUN_0008f630 (0x8f630) — reset error-tracking ring buffer
+/* debug_reset_ringbuf (0x8f630) — reset error-tracking ring buffer
  *
  * Stamps the ring buffer header with a magic value, then iterates through
  * any live entry pointers, clearing their handle field to INVALID (0xffffffff).
  * Resets all ring buffer counters and flags to their initial states. */
-void FUN_0008f630(void)
+void debug_reset_ringbuf(void)
 {
   int16_t i;
   int32_t *entry;
