@@ -1971,7 +1971,7 @@
       }
     },
     "0x2b310": {
-      "name": "FUN_0002b310",
+      "name": "actor_move_find_avoidance_sector",
       "declared_stack": 6,
       "verdict": "OVER-DECLARED",
       "observed": {
@@ -1979,7 +1979,7 @@
       }
     },
     "0x2b830": {
-      "name": "FUN_0002b830",
+      "name": "actor_move_choose_facing_vector",
       "declared_stack": 6,
       "verdict": "OVER-DECLARED",
       "observed": {
@@ -1987,7 +1987,7 @@
       }
     },
     "0x2bd80": {
-      "name": "FUN_0002bd80",
+      "name": "actor_move_compute_avoidance",
       "declared_stack": 4,
       "verdict": "OVER-DECLARED",
       "observed": {
@@ -2135,7 +2135,7 @@
       }
     },
     "0x43740": {
-      "name": "FUN_00043740",
+      "name": "ai_conversation_start",
       "declared_stack": 0,
       "verdict": "UNDER-DECLARED",
       "observed": {

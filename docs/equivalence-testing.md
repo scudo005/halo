@@ -394,7 +394,7 @@ Read the side attribution with care: the oracle runs first, so an
 `ORACLE-CRASH` masks the candidate entirely. The 186/129 split is mostly
 ordering, not evidence that the reference is worse.
 
-The mechanism, from a `BIPED_RING_TRACE=1` trace of `FUN_0003a810`
+The mechanism, from a `BIPED_RING_TRACE=1` trace of `actor_type_init_dispatch`
 (`init_cb = *(void(**)(int))(type_def + 0x10); if (init_cb) init_cb(...)`):
 a stubbed `datum_get` returns 0, so the chain reads a **small non-zero**
 value out of synthetic state, that value passes the `!= NULL` check, and the

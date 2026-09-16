@@ -133,22 +133,22 @@
       "reason": "divergence"
     },
     {
-      "name": "FUN_0002b830",
+      "name": "actor_move_choose_facing_vector",
       "status": "fail",
       "reason": "divergence"
     },
     {
-      "name": "FUN_0002bab0",
+      "name": "actor_move_facing_to_movement_frame",
       "status": "fail",
       "reason": "divergence"
     },
     {
-      "name": "FUN_0002f5b0",
+      "name": "actor_perception_cmp_props",
       "status": "error",
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_00036a90",
+      "name": "actor_seek_prop",
       "status": "fail",
       "reason": "divergence"
     },
@@ -163,7 +163,7 @@
       "reason": "divergence"
     },
     {
-      "name": "FUN_00036c50",
+      "name": "actor_prop_react",
       "status": "error",
       "reason": "emulation_error"
     },
@@ -178,12 +178,12 @@
       "reason": "divergence"
     },
     {
-      "name": "FUN_000374f0",
+      "name": "actor_take_cover",
       "status": "fail",
       "reason": "divergence"
     },
     {
-      "name": "FUN_00037630",
+      "name": "actor_surprise_update",
       "status": "fail",
       "reason": "divergence"
     },
@@ -233,12 +233,12 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_0003a800",
+      "name": "actor_type_is_swarm",
       "status": "error",
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_0003a810",
+      "name": "actor_type_init_dispatch",
       "status": "error",
       "reason": "emulation_error"
     },
@@ -248,7 +248,7 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_0003a8a0",
+      "name": "actor_swarm_control_dispatch",
       "status": "error",
       "reason": "emulation_error"
     },
@@ -258,7 +258,7 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_0003b860",
+      "name": "actor_reset_all_unit_control_state",
       "status": "fail",
       "reason": "divergence"
     },
@@ -268,7 +268,7 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_0003be90",
+      "name": "actor_watchdog",
       "status": "error",
       "reason": "emulation_error"
     },
@@ -278,17 +278,17 @@
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_0003d9f0",
+      "name": "actor_pre_activate_check",
       "status": "error",
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_0003dc20",
+      "name": "actor_input_update",
       "status": "error",
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_0003ec80",
+      "name": "actor_activate",
       "status": "error",
       "reason": "emulation_error"
     },
@@ -308,27 +308,27 @@
       "reason": "divergence"
     },
     {
-      "name": "FUN_00054a80",
+      "name": "ai_attach_children",
       "status": "error",
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_00054b20",
+      "name": "ai_detach_children",
       "status": "error",
       "reason": "timeout"
     },
     {
-      "name": "FUN_00054ca0",
+      "name": "ai_kill",
       "status": "error",
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_00054d00",
+      "name": "ai_kill_silent",
       "status": "error",
       "reason": "emulation_error"
     },
     {
-      "name": "FUN_000551e0",
+      "name": "ai_magically_see",
       "status": "error",
       "reason": "emulation_error"
     },

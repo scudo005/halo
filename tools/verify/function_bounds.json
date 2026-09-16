@@ -1402,12 +1402,12 @@
   "0x2a360": {
     "end": "0x2a39d",
     "kind": "auto",
-    "name": "FUN_0002a360"
+    "name": "actor_is_in_swarm_or_veichle"
   },
   "0x2a3a0": {
     "end": "0x2a3cd",
     "kind": "auto",
-    "name": "FUN_0002a3a0"
+    "name": "actor_move_reset_movement"
   },
   "0x2a3d0": {
     "end": "0x2a3ee",
@@ -1477,17 +1477,17 @@
   "0x2ade0": {
     "end": "0x2b01b",
     "kind": "auto",
-    "name": "FUN_0002ade0"
+    "name": "actor_move_build_obstacle_list"
   },
   "0x2b020": {
     "end": "0x2b307",
     "kind": "auto",
-    "name": "FUN_0002b020"
+    "name": "actor_move_avoidance_ray_cast"
   },
   "0x2b310": {
     "end": "0x2b3f6",
     "kind": "auto",
-    "name": "FUN_0002b310"
+    "name": "actor_move_find_avoidance_sector"
   },
   "0x2b400": {
     "end": "0x2b487",
@@ -1512,17 +1512,17 @@
   "0x2b830": {
     "end": "0x2baa2",
     "kind": "auto",
-    "name": "FUN_0002b830"
+    "name": "actor_move_choose_facing_vector"
   },
   "0x2bab0": {
     "end": "0x2bd7d",
     "kind": "auto",
-    "name": "FUN_0002bab0"
+    "name": "actor_move_facing_to_movement_frame"
   },
   "0x2bd80": {
     "end": "0x2cda2",
     "kind": "auto",
-    "name": "FUN_0002bd80"
+    "name": "actor_move_compute_avoidance"
   },
   "0x2cdb0": {
     "end": "0x2d333",
@@ -1567,12 +1567,12 @@
   "0x2f1a0": {
     "end": "0x2f224",
     "kind": "auto",
-    "name": "FUN_0002f1a0"
+    "name": "actor_perception_set_destination"
   },
   "0x2f230": {
     "end": "0x2f2ae",
     "kind": "auto",
-    "name": "FUN_0002f230"
+    "name": "actor_perception_refresh_path"
   },
   "0x2f2b0": {
     "end": "0x2f379",
@@ -1582,7 +1582,7 @@
   "0x2f380": {
     "end": "0x2f46b",
     "kind": "auto",
-    "name": "FUN_0002f380"
+    "name": "actor_perception_get_engagement_to_prop"
   },
   "0x2f470": {
     "end": "0x2f5ac",
@@ -1592,7 +1592,7 @@
   "0x2f5b0": {
     "end": "0x2f5ed",
     "kind": "auto",
-    "name": "FUN_0002f5b0"
+    "name": "actor_perception_cmp_props"
   },
   "0x2f5f0": {
     "end": "0x2f6d9",
@@ -1792,7 +1792,7 @@
   "0x36860": {
     "end": "0x36887",
     "kind": "auto",
-    "name": "FUN_00036860"
+    "name": "actor_clear_decisions"
   },
   "0x36890": {
     "end": "0x36956",
@@ -1817,7 +1817,7 @@
   "0x36a90": {
     "end": "0x36b01",
     "kind": "auto",
-    "name": "FUN_00036a90"
+    "name": "actor_seek_prop"
   },
   "0x36b10": {
     "end": "0x36b4e",
@@ -1837,12 +1837,12 @@
   "0x36c00": {
     "end": "0x36c50",
     "kind": "auto",
-    "name": "FUN_00036c00"
+    "name": "actor_react_scatter"
   },
   "0x36c50": {
     "end": "0x36d9b",
     "kind": "auto",
-    "name": "FUN_00036c50"
+    "name": "actor_prop_react"
   },
   "0x36da0": {
     "end": "0x36dbf",
@@ -1857,17 +1857,17 @@
   "0x36e30": {
     "end": "0x36e4f",
     "kind": "auto",
-    "name": "FUN_00036e30"
+    "name": "actor_mark_active_approach"
   },
   "0x36e50": {
     "end": "0x36f17",
     "kind": "auto",
-    "name": "FUN_00036e50"
+    "name": "actor_flight_countdown_handler"
   },
   "0x36f20": {
     "end": "0x37240",
     "kind": "auto",
-    "name": "FUN_00036f20"
+    "name": "actor_surprise_handler"
   },
   "0x37240": {
     "end": "0x373a8",
@@ -1882,12 +1882,12 @@
   "0x374f0": {
     "end": "0x3762f",
     "kind": "auto",
-    "name": "FUN_000374f0"
+    "name": "actor_take_cover"
   },
   "0x37630": {
     "end": "0x377c3",
     "kind": "auto",
-    "name": "FUN_00037630"
+    "name": "actor_surprise_update"
   },
   "0x377d0": {
     "end": "0x378d7",
@@ -1902,27 +1902,27 @@
   "0x379f0": {
     "end": "0x37b24",
     "kind": "auto",
-    "name": "FUN_000379f0"
+    "name": "actor_update"
   },
   "0x37b50": {
     "end": "0x37d15",
     "kind": "auto",
-    "name": "FUN_00037b50"
+    "name": "actor_surprise_update"
   },
   "0x37d50": {
     "end": "0x37fcb",
     "kind": "auto",
-    "name": "FUN_00037d50"
+    "name": "actor_guard_update"
   },
   "0x38000": {
     "end": "0x381c5",
     "kind": "auto",
-    "name": "FUN_00038000"
+    "name": "actor_ambush_update"
   },
   "0x38200": {
     "end": "0x38338",
     "kind": "auto",
-    "name": "FUN_00038200"
+    "name": "actor_berserk_update"
   },
   "0x38370": {
     "end": "0x3887f",
@@ -1932,17 +1932,17 @@
   "0x38880": {
     "end": "0x38adf",
     "kind": "auto",
-    "name": "FUN_00038880"
+    "name": "actor_panic_berserk_update"
   },
   "0x38b10": {
     "end": "0x38c48",
     "kind": "auto",
-    "name": "FUN_00038b10"
+    "name": "actor_fight_retreat_update"
   },
   "0x38c70": {
     "end": "0x38d71",
     "kind": "auto",
-    "name": "FUN_00038c70"
+    "name": "actor_combat_update"
   },
   "0x38da0": {
     "end": "0x38dff",
@@ -1967,7 +1967,7 @@
   "0x39f30": {
     "end": "0x3a159",
     "kind": "auto",
-    "name": "FUN_00039f30"
+    "name": "actor_active_cover_update"
   },
   "0x3a190": {
     "end": "0x3a380",
@@ -2027,12 +2027,12 @@
   "0x3a800": {
     "end": "0x3a810",
     "kind": "auto",
-    "name": "FUN_0003a800"
+    "name": "actor_type_is_swarm"
   },
   "0x3a810": {
     "end": "0x3a83f",
     "kind": "auto",
-    "name": "FUN_0003a810"
+    "name": "actor_type_init_dispatch"
   },
   "0x3a840": {
     "end": "0x3a894",
@@ -2042,7 +2042,7 @@
   "0x3a8a0": {
     "end": "0x3a91b",
     "kind": "auto",
-    "name": "FUN_0003a8a0"
+    "name": "actor_swarm_control_dispatch"
   },
   "0x3a920": {
     "end": "0x3a986",
@@ -2082,7 +2082,7 @@
   "0x3ac20": {
     "end": "0x3ac9b",
     "kind": "auto",
-    "name": "FUN_0003ac20"
+    "name": "actor_check_unit_activation_logic"
   },
   "0x3aca0": {
     "end": "0x3ad75",
@@ -2157,7 +2157,7 @@
   "0x3b410": {
     "end": "0x3b5d1",
     "kind": "auto",
-    "name": "FUN_0003b410"
+    "name": "actor_replace_prop_reference"
   },
   "0x3b5e0": {
     "end": "0x3b62e",
@@ -2182,12 +2182,12 @@
   "0x3b7e0": {
     "end": "0x3b85e",
     "kind": "auto",
-    "name": "FUN_0003b7e0"
+    "name": "actor_reset_unit_control_state"
   },
   "0x3b860": {
     "end": "0x3b8fc",
     "kind": "auto",
-    "name": "FUN_0003b860"
+    "name": "actor_reset_all_unit_control_state"
   },
   "0x3b900": {
     "end": "0x3b93e",
@@ -2212,7 +2212,7 @@
   "0x3bb50": {
     "end": "0x3bbe2",
     "kind": "auto",
-    "name": "FUN_0003bb50"
+    "name": "actor_update_cognition_score"
   },
   "0x3bbf0": {
     "end": "0x3bc8a",
@@ -2237,7 +2237,7 @@
   "0x3be90": {
     "end": "0x3c0b4",
     "kind": "auto",
-    "name": "FUN_0003be90"
+    "name": "actor_watchdog"
   },
   "0x3c0c0": {
     "end": "0x3c1b5",
@@ -2367,12 +2367,12 @@
   "0x3d9f0": {
     "end": "0x3dc18",
     "kind": "auto",
-    "name": "FUN_0003d9f0"
+    "name": "actor_pre_activate_check"
   },
   "0x3dc20": {
     "end": "0x3e56c",
     "kind": "auto",
-    "name": "FUN_0003dc20"
+    "name": "actor_input_update"
   },
   "0x3e570": {
     "end": "0x3e792",
@@ -2382,7 +2382,7 @@
   "0x3e7a0": {
     "end": "0x3eaa3",
     "kind": "auto",
-    "name": "FUN_0003e7a0"
+    "name": "actor_apply_control_data"
   },
   "0x3eab0": {
     "end": "0x3ec79",
@@ -2392,7 +2392,7 @@
   "0x3ec80": {
     "end": "0x3edbd",
     "kind": "auto",
-    "name": "FUN_0003ec80"
+    "name": "actor_activate"
   },
   "0x3edc0": {
     "end": "0x3f02e",
@@ -2767,7 +2767,7 @@
   "0x43740": {
     "end": "0x43861",
     "kind": "auto",
-    "name": "FUN_00043740"
+    "name": "ai_conversation_start"
   },
   "0x43870": {
     "end": "0x43a1c",
@@ -2952,12 +2952,12 @@
   "0x494d0": {
     "end": "0x494dd",
     "kind": "auto",
-    "name": "FUN_000494d0"
+    "name": "ai_debug_set_raytest_success"
   },
   "0x494e0": {
     "end": "0x495a2",
     "kind": "auto",
-    "name": "FUN_000494e0"
+    "name": "ai_debug_draw_los_ray"
   },
   "0x495b0": {
     "end": "0x496b7",
@@ -2992,7 +2992,7 @@
   "0x49c70": {
     "end": "0x49d60",
     "kind": "auto",
-    "name": "FUN_00049c70"
+    "name": "ai_debug_resolve_lookat"
   },
   "0x49d60": {
     "end": "0x49f54",
@@ -3362,27 +3362,27 @@
   "0x54860": {
     "end": "0x54a7e",
     "kind": "auto",
-    "name": "FUN_00054860"
+    "name": "ai_attach"
   },
   "0x54a80": {
     "end": "0x54abf",
     "kind": "auto",
-    "name": "FUN_00054a80"
+    "name": "ai_attach_children"
   },
   "0x54ac0": {
     "end": "0x54b16",
     "kind": "auto",
-    "name": "FUN_00054ac0"
+    "name": "ai_detach"
   },
   "0x54b20": {
     "end": "0x54ba7",
     "kind": "auto",
-    "name": "FUN_00054b20"
+    "name": "ai_detach_children"
   },
   "0x54bb0": {
     "end": "0x54c3a",
     "kind": "auto",
-    "name": "FUN_00054bb0"
+    "name": "ai_place"
   },
   "0x54c40": {
     "end": "0x54c91",
@@ -3392,27 +3392,27 @@
   "0x54ca0": {
     "end": "0x54cfe",
     "kind": "auto",
-    "name": "FUN_00054ca0"
+    "name": "ai_kill"
   },
   "0x54d00": {
     "end": "0x54d5e",
     "kind": "auto",
-    "name": "FUN_00054d00"
+    "name": "ai_kill_silent"
   },
   "0x54d60": {
     "end": "0x54dec",
     "kind": "auto",
-    "name": "FUN_00054d60"
+    "name": "ai_erase"
   },
   "0x54df0": {
     "end": "0x54e1f",
     "kind": "auto",
-    "name": "FUN_00054df0"
+    "name": "ai_erase_all"
   },
   "0x54e20": {
     "end": "0x54e39",
     "kind": "auto",
-    "name": "FUN_00054e20"
+    "name": "ai_debug_all"
   },
   "0x54e40": {
     "end": "0x54e74",
@@ -3422,42 +3422,42 @@
   "0x54e80": {
     "end": "0x54f88",
     "kind": "auto",
-    "name": "FUN_00054e80"
+    "name": "ai_spawn_actor"
   },
   "0x54f90": {
     "end": "0x5500b",
     "kind": "auto",
-    "name": "FUN_00054f90"
+    "name": "ai_set_respawn"
   },
   "0x55010": {
     "end": "0x5508b",
     "kind": "auto",
-    "name": "FUN_00055010"
+    "name": "ai_set_deaf"
   },
   "0x55090": {
     "end": "0x5510b",
     "kind": "auto",
-    "name": "FUN_00055090"
+    "name": "ai_set_blind"
   },
   "0x55110": {
     "end": "0x551dc",
     "kind": "auto",
-    "name": "FUN_00055110"
+    "name": "ai_magically_see_unit"
   },
   "0x551e0": {
     "end": "0x5521f",
     "kind": "auto",
-    "name": "FUN_000551e0"
+    "name": "ai_magically_see"
   },
   "0x55220": {
     "end": "0x552a9",
     "kind": "auto",
-    "name": "FUN_00055220"
+    "name": "ai_timer_start"
   },
   "0x552b0": {
     "end": "0x55342",
     "kind": "auto",
-    "name": "FUN_000552b0"
+    "name": "ai_timer_expire"
   },
   "0x55350": {
     "end": "0x5561a",
@@ -3497,22 +3497,22 @@
   "0x55750": {
     "end": "0x557d8",
     "kind": "auto",
-    "name": "FUN_00055750"
+    "name": "ai_attack"
   },
   "0x557e0": {
     "end": "0x55868",
     "kind": "auto",
-    "name": "FUN_000557e0"
+    "name": "ai_defend"
   },
   "0x55870": {
     "end": "0x558f9",
     "kind": "auto",
-    "name": "FUN_00055870"
+    "name": "ai_maneuver"
   },
   "0x55900": {
     "end": "0x5599d",
     "kind": "auto",
-    "name": "FUN_00055900"
+    "name": "ai_maneuver_enable"
   },
   "0x559a0": {
     "end": "0x55dcb",

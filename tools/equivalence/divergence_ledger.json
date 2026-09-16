@@ -569,7 +569,7 @@
       "notes": ""
     },
     "0x2b830": {
-      "name": "FUN_0002b830",
+      "name": "actor_move_choose_facing_vector",
       "obj": "actor_moving.obj",
       "addr": "0x2b830",
       "category": "genuine",
@@ -590,7 +590,7 @@
       "notes": ""
     },
     "0x2bab0": {
-      "name": "FUN_0002bab0",
+      "name": "actor_move_facing_to_movement_frame",
       "obj": "actor_moving.obj",
       "addr": "0x2bab0",
       "category": "assert_metadata",
@@ -612,7 +612,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x36a90": {
-      "name": "FUN_00036a90",
+      "name": "actor_seek_prop",
       "obj": "actors.obj",
       "addr": "0x36a90",
       "category": "call_seq_truncated",
@@ -678,7 +678,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x36c50": {
-      "name": "FUN_00036c50",
+      "name": "actor_prop_react",
       "obj": "actors.obj",
       "addr": "0x36c50",
       "category": "call_seq_truncated",
@@ -744,7 +744,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x374f0": {
-      "name": "FUN_000374f0",
+      "name": "actor_take_cover",
       "obj": "actors.obj",
       "addr": "0x374f0",
       "category": "call_seq_truncated",
@@ -766,7 +766,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x37630": {
-      "name": "FUN_00037630",
+      "name": "actor_surprise_update",
       "obj": "actors.obj",
       "addr": "0x37630",
       "category": "stale",
@@ -831,7 +831,7 @@
       "notes": ""
     },
     "0x3b860": {
-      "name": "FUN_0003b860",
+      "name": "actor_reset_all_unit_control_state",
       "obj": "actors.obj",
       "addr": "0x3b860",
       "category": "call_seq",
@@ -874,7 +874,7 @@
       "notes": ""
     },
     "0x3be90": {
-      "name": "FUN_0003be90",
+      "name": "actor_watchdog",
       "obj": "actors.obj",
       "addr": "0x3be90",
       "category": "arg_mismatch",
@@ -917,7 +917,7 @@
       "resolved_in": "2026-09-13"
     },
     "0x3d9f0": {
-      "name": "FUN_0003d9f0",
+      "name": "actor_pre_activate_check",
       "obj": "actors.obj",
       "addr": "0x3d9f0",
       "category": "exec_asymmetry",
@@ -938,7 +938,7 @@
       "notes": ""
     },
     "0x3ec80": {
-      "name": "FUN_0003ec80",
+      "name": "actor_activate",
       "obj": "actors.obj",
       "addr": "0x3ec80",
       "category": "call_seq_truncated",

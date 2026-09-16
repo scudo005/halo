@@ -295,7 +295,7 @@ char actor_looking_conversation_init(int actor_handle, int action_handle, int *s
  * qualifies (field_32 >= 2) and its distance (field_11c) is within the
  * actor's tolerance (field_a4), or the prop distance is less than 0.7f; if
  * so, marks the actor as ready (field_a1 = 1).  When ready, calls
- * FUN_0002f1a0 (perception acknowledge) and returns the current state byte
+ * actor_perception_set_destination (perception acknowledge) and returns the current state byte
  * (field_a0).  Otherwise tries to move toward the prop via
  * actor_move_to_prop; sets field_a0 = 1 if no prop at all, or if
  * actor_move_to_prop returns 0.
@@ -334,7 +334,7 @@ char actor_update_prop_desire(int actor_handle)
     }
   }
   if (((actor_t *)actor)->field_0a1 != '\0') {
-    FUN_0002f1a0(actor_handle);
+    actor_perception_set_destination(actor_handle);
     return ((actor_t *)actor)->field_0a0;
   }
   if (actor_move_to_prop(actor_handle, *(int *)(actor + 0xac),
@@ -421,7 +421,7 @@ void actor_set_prop_if_match(int actor_handle, int old_prop, int new_prop)
 /* actor_looking_init_scripted (0x14540)
  * Initialize actor looking state from the scripted look target at activation.
  *
- * Called during actor activation (FUN_0003ec80) after prop and movement init.
+ * Called during actor activation (actor_activate) after prop and movement init.
  * Reads the actor's scripted-look target handle at actor+0x1dc.  If set (not
  * -1) and the actor also has a secondary-look object handle at actor+0x1e0,
  * it attempts to find an existing look-at entry for that object via
@@ -747,7 +747,7 @@ unsigned int FUN_00014770(int actor_handle)
 
 reset_fp:
   ((actor_t *)actor)->firing_positions_current_position_index = -1;
-  FUN_0002f1a0(actor_handle);
+  actor_perception_set_destination(actor_handle);
 
 tail:
   if (((actor_t *)actor)->target_target_type < 7)
@@ -1286,10 +1286,10 @@ void FUN_000151b0(int actor_handle)
  *   - actor+0x424 = 1, actor+0x425 = 0
  *
  * Then dispatches the look target:
- *   - If actor+0xa4 == -1: call FUN_0002f1a0 and return.
+ *   - If actor+0xa4 == -1: call actor_perception_set_destination and return.
  *   - If actor+0x4c != 0: try actor_move_to_firing_position.
  *     On success: copy actor+0xa4..0xa6 into actor+0x3b8..0x3ba and return.
- *     On failure: if actor+0x3b8 != -1, dispatch FUN_00024be0 + FUN_0002f1a0
+ *     On failure: if actor+0x3b8 != -1, dispatch FUN_00024be0 + actor_perception_set_destination
  *                 and clear 0x3b8.  Then set actor+0xa4=-1, actor+0xa2=1.
  *
  * Note: The original has a goto from branch 2 to the shared tail, bypassing
@@ -1351,7 +1351,7 @@ FUN_00015250_tail:
   ((actor_t *)actor)->field_425 = 0;
 
   if (*(short *)(actor + 0xa4) == -1) {
-    FUN_0002f1a0(actor_handle);
+    actor_perception_set_destination(actor_handle);
     return;
   }
   if (((actor_t *)actor)->field_04c != 0) {
@@ -1367,7 +1367,7 @@ FUN_00015250_tail:
       FUN_00024be0(actor_handle,
                    ((actor_t *)actor)->firing_positions_current_position_index,
                    0);
-      FUN_0002f1a0(actor_handle);
+      actor_perception_set_destination(actor_handle);
       ((actor_t *)actor)->firing_positions_current_position_index = -1;
     }
     *(short *)(actor + 0xa4) = -1;
@@ -2312,7 +2312,7 @@ unsigned int actor_looking_firing_state_eval(int actor_handle)
  *
  * Sets look-flag bytes actor+0x426/427/428/424/425 from actr tag bits and
  * actor stance (a4/a6). Dispatches:
- *   0/1 → retreat (FUN_0002f1a0)
+ *   0/1 → retreat (actor_perception_set_destination)
  *   2   → approach position (actor_move_to_point or retreat)
  *   3   → move to firing position (actor_move_to_firing_position)
  * On approach success: fires FUN_00015bb0 if prop-ready (actor+0xa1) and
@@ -2369,14 +2369,14 @@ void FUN_00016590(int actor_handle)
   switch (((actor_t *)actor)->field_0c0) {
   case 0:
   case 1:
-    FUN_0002f1a0(actor_handle);
+    actor_perception_set_destination(actor_handle);
     bVar2 = 1;
     break;
   case 2:
     fsq = distance_squared3d((float *)(actor + 0x12c), (float *)(actor + 0xc4));
     thresh = ((actor_t *)actor)->field_0d4;
     if (fsq < thresh * thresh) {
-      FUN_0002f1a0(actor_handle);
+      actor_perception_set_destination(actor_handle);
     } else {
       actor_move_to_point(actor_handle, (float *)(actor + 0xc4),
                           ((actor_t *)actor)->field_0d0, -1);
@@ -2541,7 +2541,7 @@ void FUN_000169a0(volatile int actor_handle, int unit_handle,
   case 0: /* case 1 */
   case 1: /* case 2 */
     if (unit_handle == ((actor_t *)actor)->field_018) {
-      FUN_0002f1a0(actor_handle);
+      actor_perception_set_destination(actor_handle);
     }
     if (param_4 != 0) {
       *(char *)(param_4 + 4) = 0;
@@ -3552,7 +3552,7 @@ bool FUN_00017ab0(int actor_handle, short scenario_idx, char *state_data,
       *(short *)(state_data + 8) = mode;
     }
     if (unit_handle == ((actor_t *)actor)->field_018) {
-      FUN_0002f1a0(actor_handle);
+      actor_perception_set_destination(actor_handle);
     }
     state_data[5] = (char)((state_data[5] & 0xfd) | 1);
     break;
@@ -3980,7 +3980,7 @@ bool FUN_00017ab0(int actor_handle, short scenario_idx, char *state_data,
     object_update_children_recursive(unit_handle);
     if (unit_handle == ((actor_t *)actor)->field_018) {
       FUN_0003bde0(actor_handle, ((actor_t *)actor)->field_018, actor + 0x120);
-      FUN_0002f1a0(actor_handle);
+      actor_perception_set_destination(actor_handle);
     }
     result = 1;
     break;
@@ -4154,7 +4154,7 @@ bool FUN_00018b90(int unit_handle, int actor_handle, short scenario_index,
           return 0;
         }
       }
-      FUN_0002f1a0(actor_handle);
+      actor_perception_set_destination(actor_handle);
       return result;
     }
     break;
@@ -4493,7 +4493,7 @@ LAB_done:
  *
  * Post-initialization:
  *   - Copies field_c8 to 426/427, field_ca to 42c.
- *   - If field_f8 is set and FUN_0002a360 passes: dispatches
+ *   - If field_f8 is set and actor_is_in_swarm_or_veichle passes: dispatches
  *     actor_move_animation_impulse and ai_communication_event for firing-position
  * targets.
  *   - field_a9&1: copies field_b0/ac to 430-43c.
@@ -4599,7 +4599,7 @@ LAB_done:
   ((actor_t *)actor)->field_42c = ((actor_t *)actor)->field_0ca;
 
   if (((actor_t *)actor)->field_0f8 != '\0' &&
-      (char)FUN_0002a360(actor_handle) == '\0') {
+      (char)actor_is_in_swarm_or_veichle(actor_handle) == '\0') {
     animation_impulse = ((actor_t *)actor)->field_0fa;
     if (animation_impulse != -1) {
       tmp_v[1] = ((actor_t *)actor)->control_desired_facing_vector[1];
@@ -5011,7 +5011,7 @@ void FUN_00019c70(int actor_handle)
  * encounter_mark_examined_pursuit_position at 0x19fac. Confirmed: fallback
  * actor_move_to_prop(actor_handle, field_270, 3.0f) at 0x19feb. or
  * actor_move_to_firing_position(actor_handle, field_a6, 0) at 0x19fa2a.
- * Confirmed: FUN_0002f1a0(actor_handle) call at 0x1a035. */
+ * Confirmed: actor_perception_set_destination(actor_handle) call at 0x1a035. */
 int actor_look_secondary(int actor_handle)
 {
   char *actor;
@@ -5142,7 +5142,7 @@ int actor_look_secondary(int actor_handle)
     }
   }
 
-  FUN_0002f1a0(actor_handle);
+  actor_perception_set_destination(actor_handle);
   return *(int *)(actor + 0x9c);
 }
 
@@ -7465,7 +7465,7 @@ short actor_looking_select_firing_position(int actor_handle, void *param_2, void
 /* actor_looking_assign_firing_position (0x272d0)
  * Assign a firing position to an actor, evicting any previous occupant.
  *
- * If param_2 == -1: clears actor firing position via FUN_0002f1a0, sets
+ * If param_2 == -1: clears actor firing position via actor_perception_set_destination, sets
  * actor+0x3b8 = -1. Else: validates encounter, displaces any current
  * holder of the slot (param_4), sets actor+0x3b8 = param_2, updates the
  * platform prop if needed, and calls
@@ -7483,7 +7483,7 @@ short actor_looking_assign_firing_position(int actor_handle, short param_2, void
 
   actor = (char *)datum_get(actor_data, actor_handle);
   if ((short)param_2 == -1) {
-    FUN_0002f1a0(actor_handle);
+    actor_perception_set_destination(actor_handle);
   } else {
     if (*(int *)(actor + 0x34) == -1) {
       display_assert("actor->meta.encounter_index != NONE",
@@ -7505,7 +7505,7 @@ short actor_looking_assign_firing_position(int actor_handle, short param_2, void
                        1);
         system_exit(-1);
       }
-      FUN_0002f1a0(param_4);
+      actor_perception_set_destination(param_4);
       *(short *)(prev_actor + 0x3b8) = -1;
     }
     if (((actor_t *)actor)->firing_positions_current_position_index !=
@@ -9260,7 +9260,7 @@ LAB_00029e6d:
          * `je` fires when C0=C3=0, i.e. dot > snap_cos -- the snap is KEPT
          * while the vector is still inside the cone. This lift had the
          * test inverted (dot <= snap_cos), clearing actor+0x590 and
-         * calling FUN_00036e50 exactly when it should have been left. */
+         * calling actor_flight_countdown_handler exactly when it should have been left. */
         if (dot4 > snap_cos)
           goto LAB_0002a0c3;
       }
@@ -9289,7 +9289,7 @@ LAB_00029e6d:
     }
   LAB_0002a0a7:
     ((actor_t *)actor)->field_590 = 0;
-    FUN_00036e50(actor_handle);
+    actor_flight_countdown_handler(actor_handle);
   }
 
 LAB_0002a0c3:

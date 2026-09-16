@@ -223,11 +223,11 @@ void FUN_000ffe90(char param_1)
   }
 }
 
-/* Guard wrapper: if param_1 is nonzero, call FUN_00054df0 (ai_erase_all). */
+/* Guard wrapper: if param_1 is nonzero, call ai_erase_all (ai_erase_all). */
 void FUN_000ffeb0(char param_1)
 {
   if (param_1 != '\0') {
-    FUN_00054df0();
+    ai_erase_all();
     return;
   }
 }

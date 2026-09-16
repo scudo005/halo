@@ -316,7 +316,7 @@
     },
     {
       "addr": "0x2a360",
-      "name": "FUN_0002a360",
+      "name": "actor_is_in_swarm_or_veichle",
       "obj": "actors.obj",
       "seeds": 20,
       "flags": [
@@ -386,7 +386,7 @@
     },
     {
       "addr": "0x36e30",
-      "name": "FUN_00036e30",
+      "name": "actor_mark_active_approach",
       "obj": "actors.obj",
       "seeds": 20,
       "flags": [
@@ -406,7 +406,7 @@
     },
     {
       "addr": "0x3ac20",
-      "name": "FUN_0003ac20",
+      "name": "actor_check_unit_activation_logic",
       "obj": "actors.obj",
       "seeds": 20,
       "flags": [
@@ -486,7 +486,7 @@
     },
     {
       "addr": "0x3bb50",
-      "name": "FUN_0003bb50",
+      "name": "actor_update_cognition_score",
       "obj": "actors.obj",
       "seeds": 20,
       "flags": [

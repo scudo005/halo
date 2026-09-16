@@ -1118,7 +1118,7 @@ void ai_conversation_finish(int conversation_handle, char param_2, char param_3)
   datum_delete(*(data_t **)0x6324ec, conversation_handle);
 }
 
-/* FUN_00043740 (0x43740) — begin (or force-start) a scenario conversation.
+/* ai_conversation_start (0x43740) — begin (or force-start) a scenario conversation.
  * Tries to allocate a fresh conversation datum; if the pool is full and the
  * caller passed a non-zero param_2, it evicts one running conversation
  * (lowest +0x4 byte, tie-broken by oldest +0xc timestamp), finishes it, and
@@ -1163,7 +1163,7 @@ void ai_conversation_finish(int conversation_handle, char param_2, char param_3)
  *   and as the eviction key) and of +0x48; no string or struct evidence at
  *   this call site, so both stay raw offsets and param_2 keeps a mechanical
  *   name. */
-int FUN_00043740(int16_t scenario_conversation_index, char param_2)
+int ai_conversation_start(int16_t scenario_conversation_index, char param_2)
 {
   data_iter_t iter;
   char *conversation;
@@ -1822,7 +1822,7 @@ int ai_communication_find_global_actor_to_talk(int16_t param_1, int param_2,
 /* ai_conversation (0x46b60) — script entry point that starts a scenario
  * conversation by index.  Validates the 16-bit index against the scenario
  * tag's conversation block count at +0x468, allocates/force-starts the
- * conversation datum via FUN_00043740, then tries to begin it.  Returns
+ * conversation datum via ai_conversation_start, then tries to begin it.  Returns
  * true when the conversation is running or has been queued to keep trying,
  * false when the index is out of range or the conversation pool is full.
  *
@@ -1838,7 +1838,7 @@ int ai_communication_find_global_actor_to_talk(int16_t param_1, int param_2,
  *   - global_scenario_get() is called once up front (0x46b66) and again at
  *     EACH print site (0x46ba5, 0x46c06, 0x46c40, 0x46c6e) — four separate
  *     calls, not a cached pointer.
- *   - FUN_00043740 (0x46b8f): pushes are [EBP+0xc] then [EBP+8], i.e.
+ *   - ai_conversation_start (0x46b8f): pushes are [EBP+0xc] then [EBP+8], i.e.
  *     (param_1, param_2) cdecl.  Ghidra's `void (void)` prototype swallowed
  *     both args (§7_GETTER_SWALLOWED); `ADD ESP,0x8` proves the 2 args.
  *   - ai_conversation_begin (0x46bee): pushes are LEA ECX,[EBP+0xb] then
@@ -1861,7 +1861,7 @@ int ai_communication_find_global_actor_to_talk(int16_t param_1, int param_2,
  *     args plus console_printf's 3.
  *   - Both false exits are `MOV AL,BL` with BL zeroed at 0x46b6e — a bool
  *     return, not a status variable.
- * Uncertain: the meaning of param_2 beyond FUN_00043740's force-start flag,
+ * Uncertain: the meaning of param_2 beyond ai_conversation_start's force-start flag,
  *   and of ai_conversation_finish's ('\1','\0') argument pair here. */
 int ai_conversation(int param_1, int param_2)
 {
@@ -1874,7 +1874,7 @@ int ai_conversation(int param_1, int param_2)
   scenario = (char *)global_scenario_get();
   index = (int)(short)param_1;
   if ((short)param_1 >= 0 && index < *(int *)(scenario + 0x468)) {
-    conversation_handle = FUN_00043740((int16_t)param_1, (char)param_2);
+    conversation_handle = ai_conversation_start((int16_t)param_1, (char)param_2);
     if (*(char *)0x5aca5f != '\0') {
       console_printf(0, "%s: script tried to start conversation",
                      tag_block_get_element(

@@ -876,7 +876,7 @@ starting at `0x005ac9c0`) and dispatches:
 | Flag Address     | Function        | Purpose                                            |
 |------------------|-----------------|----------------------------------------------------|
 | `0x5aca65`       | (master switch) | All AI debug rendering enabled (set by `ai_debug`) |
-| `0x5aca69`       | `FUN_000494e0`  | Line-of-fire ray rendering                         |
+| `0x5aca69`       | `ai_debug_draw_los_ray`  | Line-of-fire ray rendering                         |
 | `0x5aca6a`       | `FUN_00049990`  | Line-of-sight geometry rendering                   |
 | `0x5aca6b`       | `FUN_000495b0`  | Idle look vector rendering                         |
 | `0x5ac9f4!=-1`   | `FUN_00052bb0`  | Per-encounter firing-position debug                |

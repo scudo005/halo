@@ -434,7 +434,7 @@ void ai_debug_point3d_set(float *point, float x, float y, float z)
  * dword):
  *   +0x00  0x5acab8  uint8   armed flag        <- 1
  *   +0x01  0x5acab9  uint8   ray-test success  <- 0   (also written by
- *                                                     FUN_000494d0)
+ *                                                     ai_debug_set_raytest_success)
  *   +0x02           2 bytes padding
  *   +0x04  0x5acabc  float[3] endpoint A       <- vec_a[0..2]
  *   +0x10  0x5acac8  float[3] endpoint B       <- vec_b[0..2]
@@ -454,7 +454,7 @@ void ai_debug_point3d_set(float *point, float x, float y, float z)
  * pure MSVC scheduling, no semantic content.
  *
  * Inferred: the two flag bytes are stored inline rather than through
- * FUN_000494d0 (there is no CALL in this function at all). */
+ * ai_debug_set_raytest_success (there is no CALL in this function at all). */
 void ai_debug_get_last_path(float *vec_a, float *vec_b)
 {
   *(uint8_t *)0x5acab8 = 1;
@@ -535,24 +535,24 @@ void ai_debug_lineoffire_addpill(float *vec_a, float *vec_b, float radius,
   }
 }
 
-/* FUN_000494d0: set debug ray-test success flag.
+/* ai_debug_set_raytest_success: set debug ray-test success flag.
  *
  * No __FILE__ string. Called from ai_debug_get_last_path (ray setup) and
- * FUN_000494e0 (ray render). */
-void FUN_000494d0(char success)
+ * ai_debug_draw_los_ray (ray render). */
+void ai_debug_set_raytest_success(char success)
 {
   *(uint8_t *)0x5acab9 = success;
 }
 
-/* FUN_000494e0: render the stored debug line-of-sight ray.
+/* ai_debug_draw_los_ray: render the stored debug line-of-sight ray.
  *
- * No __FILE__ string; the name is left as FUN_000494e0.  Behaviour: draws the
+ * No __FILE__ string; the name is left as ai_debug_draw_los_ray.  Behaviour: draws the
  * stored debug ray as one line, then one sphere per recorded hit.  Does
  * nothing unless the ray block armed flag (0x5acab8) is set.
  *
- * Debug ray block (see ai_debug_set_last_ray and FUN_000494d0 above):
+ * Debug ray block (see ai_debug_set_last_ray and ai_debug_set_raytest_success above):
  *   0x5acab8  uint8    armed flag
- *   0x5acab9  uint8    ray-test success flag (written by FUN_000494d0)
+ *   0x5acab9  uint8    ray-test success flag (written by ai_debug_set_raytest_success)
  *   0x5acabc  float[3] ray start
  *   0x5acac8  float[3] ray delta (start + delta = ray end)
  *   0x5acad4  int32    hit count
@@ -593,7 +593,7 @@ void FUN_000494d0(char success)
  * The hit count at 0x5acad4 is re-read from memory on every iteration (two
  * relocations against it in the delinked reference), so it stays in the loop
  * condition rather than being cached in a local. */
-void FUN_000494e0(void)
+void ai_debug_draw_los_ray(void)
 {
   float endpoint[3];
   void *color;
@@ -629,7 +629,7 @@ void FUN_000494e0(void)
  *
  * Gated on the armed flag at 0x5f8cb4.  Draws a point marker at 0x5f8cb8, a
  * vector from 0x5f8cb8 along 0x5f8cc4, then a list of spheres and a polyline.
- * This is a distinct global block from the 0x5acab8 one used by FUN_000494e0:
+ * This is a distinct global block from the 0x5acab8 one used by ai_debug_draw_los_ray:
  *   0x5f8cb4  uint8    armed flag
  *   0x5f8cb5  uint8    secondary flag (selects the polyline colour polarity)
  *   0x5f8cb8  float[3] point A
@@ -941,7 +941,7 @@ void ai_debug_render_points_and_lines(void)
  *   [EBP+0x14] -- the function returns its own buf argument.
  *
  * Inferred: object type mask 3 for object_get_and_verify_type, matching the
- *   two verify calls in FUN_00049c70 in this same TU.
+ *   two verify calls in ai_debug_resolve_lookat in this same TU.
  * Inferred: the unit definition tag name is read from tag +0x2c, the standard
  *   tag-header name pointer used by the other tag_name_strip_path callers.
  *
@@ -1017,7 +1017,7 @@ char *ai_debug_describe_actor(int actor_handle, int object_handle,
   return buf;
 }
 
-/* FUN_00049c70: resolve the object the debug camera is currently looking at,
+/* ai_debug_resolve_lookat: resolve the object the debug camera is currently looking at,
  * returning a datum handle (or -1 when nothing usable is under the crosshair).
  *
  * Fires a 50.0-world-unit ray from the observer camera along the camera's own
@@ -1076,7 +1076,7 @@ char *ai_debug_describe_actor(int actor_handle, int object_handle,
  *   The binary emits CMP EAX,EBX / CMP ECX,EBX there because EBX is provably
  *   -1 at both points; that is a register-reuse optimisation over the same
  *   source-level "== -1" test. */
-int FUN_00049c70(void)
+int ai_debug_resolve_lookat(void)
 {
   char collision_result[0x50];
   float delta[3];
@@ -2656,7 +2656,7 @@ void ai_debug_teleport_to(int encounter_index)
  * boolean and 0x6323dc zeroed as a word).
  *
  * No __FILE__ string.  Called from ai_debug_select_encounter (0x49220),
- * FUN_0004b7a0, ai_debug_change_selected_actor, FUN_00054e20.
+ * FUN_0004b7a0, ai_debug_change_selected_actor, ai_debug_all.
  *
  * Call-site verification (only one CALL):
  *   0x4b1ca: PUSH EAX — EAX set from [EBP+0x8] at 0x4b1b3 = encounter_idx
@@ -2847,7 +2847,7 @@ void ai_debug_highlight_unit(int object_handle, void *color, char draw_flag)
 }
 
 /* FUN_0004b7a0: service the pending "select actor" debug-key request.  Asks
- * FUN_00049c70 for a candidate actor handle; when one exists, describes it into
+ * ai_debug_resolve_lookat for a candidate actor handle; when one exists, describes it into
  * the shared error/description buffer at 0x5ab100, echoes "selected %s" to the
  * console, and points the debug encounter/actor selection at that actor's
  * encounter (actor + 0x34) and handle.  When no actor is available the
@@ -2858,10 +2858,10 @@ void ai_debug_highlight_unit(int object_handle, void *color, char draw_flag)
  * No __FILE__ string.  38 instructions, two-branch, no FPU, no loops, no stack
  * locals (no `sub esp`): ESI holds the handle, EDI the datum_get result.
  *
- * FUN_00049c70's kb declaration was `void (void)`; the disassembly does
+ * ai_debug_resolve_lookat's kb declaration was `void (void)`; the disassembly does
  * MOV ESI,EAX immediately after the CALL, so it really returns an int handle
  * (-1 = none).  Ghidra models this as `extraout_EAX`.  The kb decl has been
- * corrected to `int FUN_00049c70(void);` (implicit-EAX return, not a register
+ * corrected to `int ai_debug_resolve_lookat(void);` (implicit-EAX return, not a register
  * argument).
  *
  * Branch: CMP ESI,-1 / JZ 0x4b7f8 — equality against -1, so the positive
@@ -2900,7 +2900,7 @@ void FUN_0004b7a0(void)
   int actor_handle;
   char *actor;
 
-  actor_handle = FUN_00049c70();
+  actor_handle = ai_debug_resolve_lookat();
   if (actor_handle != -1) {
     actor = (char *)datum_get(actor_data, actor_handle);
     ai_debug_describe_actor(actor_handle, -1, 1, (char *)0x5ab100, 0x100);
@@ -3249,7 +3249,7 @@ void FUN_000534d0(void)
   }
 
   if (*(uint8_t *)0x5aca69 != 0) {
-    FUN_000494e0();
+    ai_debug_draw_los_ray();
   }
   if (*(uint8_t *)0x5aca6a != 0) {
     ai_debug_render_points_and_lines();

@@ -297,7 +297,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_0003a800": {
+    "actor_type_is_swarm": {
       "statuses": [
         "*"
       ],
@@ -305,7 +305,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_0003a810": {
+    "actor_type_init_dispatch": {
       "statuses": [
         "*"
       ],
@@ -321,7 +321,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_0003a8a0": {
+    "actor_swarm_control_dispatch": {
       "statuses": [
         "*"
       ],
@@ -369,7 +369,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_0003be90": {
+    "actor_watchdog": {
       "statuses": [
         "*"
       ],
@@ -425,7 +425,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_0003d9f0": {
+    "actor_pre_activate_check": {
       "statuses": [
         "*"
       ],
@@ -433,7 +433,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_0003dc20": {
+    "actor_input_update": {
       "statuses": [
         "*"
       ],
@@ -449,7 +449,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_0003ec80": {
+    "actor_activate": {
       "statuses": [
         "*"
       ],
@@ -2017,7 +2017,7 @@
         "oracle-unmappable: reference crashes in zero-fill Unicorn harness (unmapped callee code page / missing reloc); needs --state-snapshot to run"
       ]
     },
-    "FUN_0002f5b0": {
+    "actor_perception_cmp_props": {
       "statuses": [
         "*"
       ],
@@ -2265,7 +2265,7 @@
         "non-terminating within instruction budget (assert->stub loop); needs live-state or higher budget"
       ]
     },
-    "FUN_000551e0": {
+    "ai_magically_see": {
       "statuses": [
         "*"
       ],

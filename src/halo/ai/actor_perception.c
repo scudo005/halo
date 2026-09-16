@@ -6,7 +6,7 @@
 
 #include "../../common.h"
 
-/* FUN_0002f1a0: set actor movement destination or refresh path.
+/* actor_perception_set_destination: set actor movement destination or refresh path.
  *
  * If the actor is moving-to-point (field_15e == 4) and has a pending
  * destination (field_504 != 0), delegates to actor_move_to_point with
@@ -17,7 +17,7 @@
  * actor_path_refresh(actor_handle, 1, NULL).
  *
  * No __FILE__ string. */
-void FUN_0002f1a0(int actor_handle)
+void actor_perception_set_destination(int actor_handle)
 {
   char *actor;
   int i;
@@ -43,7 +43,7 @@ void FUN_0002f1a0(int actor_handle)
   actor_path_refresh(actor_handle, 1, NULL);
 }
 
-/* FUN_0002f230 (0x2f230): refresh actor path or dispatch to move/firing
+/* actor_perception_refresh_path (0x2f230): refresh actor path or dispatch to move/firing
  * position.
  *
  * If actor is NOT in move-to-point mode (field_15e != 4):
@@ -51,8 +51,8 @@ void FUN_0002f1a0(int actor_handle)
  *   then calls actor_path_refresh(actor_handle, 1, NULL).
  * If in move-to-point mode and field_3b8 != -1:
  *   calls actor_move_to_firing_position.
- * Otherwise falls through to FUN_0002f1a0. */
-void FUN_0002f230(int actor_handle)
+ * Otherwise falls through to actor_perception_set_destination. */
+void actor_perception_refresh_path(int actor_handle)
 {
   char *actor;
 
@@ -60,7 +60,7 @@ void FUN_0002f230(int actor_handle)
 
   if (((actor_t *)actor)->field_15e == 4) {
     if (((actor_t *)actor)->firing_positions_current_position_index == -1) {
-      FUN_0002f1a0(actor_handle);
+      actor_perception_set_destination(actor_handle);
       return;
     }
     actor_move_to_firing_position(
@@ -114,15 +114,15 @@ void actor_perception_acknowledge(int actor_handle, int prop_handle,
   *(char *)(prop + 0xbb) = 0;
   *(char *)(prop + 0x64) = 1;
 
-  FUN_00036f20(actor_handle, prop_handle, param_3, param_4);
+  actor_surprise_handler(actor_handle, prop_handle, param_3, param_4);
 }
 
-/* FUN_0002f380 (0x2f380)
+/* actor_perception_get_engagement_to_prop (0x2f380)
  * Returns the engagement level (0-3) for a prop relative to actor.
  * 3 = actively targeting/seen; 2/3 = based on orphan state; 0/1/2 = based
  * on actor awareness level when no prop or no orphan.
  */
-uint16_t FUN_0002f380(int actor_handle, int prop_handle)
+uint16_t actor_perception_get_engagement_to_prop(int actor_handle, int prop_handle)
 {
   char *actor;
   char *prop;
@@ -156,11 +156,11 @@ uint16_t FUN_0002f380(int actor_handle, int prop_handle)
   return (uint16_t)(((actor_t *)actor)->field_06a >= 3);
 }
 
-/* FUN_0002f5b0 (0x2f5b0)
+/* actor_perception_cmp_props (0x2f5b0)
  * Compare two prop-like structs by their float[2] field (offset +8).
  * Returns -1, 0, or 1 (strcmp-style).
  */
-int FUN_0002f5b0(int param_1, int param_2)
+int actor_perception_cmp_props(int param_1, int param_2)
 {
   float f1;
   float f2;
@@ -1001,14 +1001,14 @@ void actor_perception_abandoned_search(int actor_handle, int prop_handle)
  * and — when the prop still has a parent prop (prop+0xc != NONE) — folds the
  * parent's target weight block (+0x50..+0x5c) and its acknowledgement
  * bookkeeping (+0x9c, +0xa0, +0xa4, +0xa6, +0xa8) into this prop, retires the
- * parent link through FUN_0003b410/prop_iterator_next, and clears prop+0xc.
+ * parent link through actor_replace_prop_reference/prop_iterator_next, and clears prop+0xc.
  *
  * Returns 1 when the promotion ran, 0 when the prop was already in state 2/3.
  * out_acknowledged (optional) receives the actor_expected_acknowledgement
  * result, or 0 on the skipped path.
  *
  * ADD ESP,0x1c at 0x33409 coalesces three cdecl cleanups: datum_get (8) +
- * FUN_0003b410 (12) + prop_iterator_next (8) = 28.  A cleanup=7 ARG_COUNT
+ * actor_replace_prop_reference (12) + prop_iterator_next (8) = 28.  A cleanup=7 ARG_COUNT
  * hazard on prop_iterator_next is that coalescing, not a real arg mismatch.
  *
  * No __FILE__ string. */
@@ -1039,7 +1039,7 @@ char actor_perception_become_acknowledged(int actor_handle, int prop_handle,
       *(prop + 0xa4) = *(parent_prop + 0xa4);
       *(short *)(prop + 0xa6) = *(short *)(parent_prop + 0xa6);
       *(short *)(prop + 0xa8) = *(short *)(parent_prop + 0xa8);
-      FUN_0003b410(actor_handle, *(int *)(prop + 0xc), prop_handle);
+      actor_replace_prop_reference(actor_handle, *(int *)(prop + 0xc), prop_handle);
       prop_iterator_next(actor_handle, *(int *)(prop + 0xc));
       *(int *)(prop + 0xc) = -1;
     }
@@ -1398,7 +1398,7 @@ iterate_props:
           error(2, "%s: stop becoming aware", debug_desc_d);
         }
       } else {
-        knowledge_type = FUN_0002f380(actor_handle, iter[0]);
+        knowledge_type = actor_perception_get_engagement_to_prop(actor_handle, iter[0]);
         if ((int16_t)knowledge_type < 0 || (int16_t)knowledge_type > 3) {
           display_assert("(knowledge_type >= 0) && (knowledge_type < "
                          "NUMBER_OF_ACTOR_KNOWLEDGE_TYPES)",
@@ -1521,7 +1521,7 @@ iterate_props:
                                                           iter[0]);
           new_prop_handle = prop_orphan_transition(actor_handle, iter[0]);
         }
-        FUN_0003b410(actor_handle, iter[0], new_prop_handle);
+        actor_replace_prop_reference(actor_handle, iter[0], new_prop_handle);
         new_state = 0;
       } else {
         new_state = 3;
@@ -1583,7 +1583,7 @@ iterate_props:
         system_exit(-1);
       }
       *(int *)(parent_prop + 0xc) = -1;
-      FUN_0003b410(actor_handle, iter[0], -1);
+      actor_replace_prop_reference(actor_handle, iter[0], -1);
       prop_iterator_next(actor_handle, iter[0]);
       goto tally_prop;
 
@@ -1605,7 +1605,7 @@ iterate_props:
              ((other_actor != NULL && (*(char *)(other_actor + 8) == 0 ||
                                        *(char *)(other_actor + 0x13) != 0)) ||
               *(float *)0x255fe0 < distance_squared))) {
-          FUN_0003b410(actor_handle, iter[0], -1);
+          actor_replace_prop_reference(actor_handle, iter[0], -1);
           new_state = 0;
         } else {
           new_state = 2;
@@ -1684,7 +1684,7 @@ iterate_props:
       }
     } else {
       if (*(char *)(prop + 0x129) != 0) {
-        FUN_00037630(actor_handle, iter[0]);
+        actor_surprise_update(actor_handle, iter[0]);
         *(char *)(prop + 0x129) = 0;
       }
       if (*(char *)(prop + 0x12a) != 0 ||
@@ -1738,7 +1738,7 @@ iterate_props:
         if (*(char *)(prop + 0x127) != 0) {
           if (*(char *)(prop + 0x60) != 0)
             goto notify_departed;
-          FUN_00036a90(actor_handle, iter[0]);
+          actor_seek_prop(actor_handle, iter[0]);
           goto after_notify;
         }
         if (*(char *)(prop + 0x60) != 0) {

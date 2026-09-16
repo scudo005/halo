@@ -205,7 +205,7 @@ waypoints: node k = (actor+0x4a8) + (step_idx+k+2)*0x10, x@+0 y@+4 z@+8
 0x5e090  path_state_new            ported=true faithful   init path-build state
 0x2a580  actor_test_destination    ported=true            fast-path "already navigating"
 0x18b90  FUN_00018b90              ported=true            obey/go_to atom validator
-0x2f1a0  FUN_0002f1a0              (go_to cleanup, called when leaving the atom)
+0x2f1a0  actor_perception_set_destination              (go_to cleanup, called when leaving the atom)
 ```
 Source: `src/halo/ai/actor_moving.c` (actor_path_refresh @ line 499, actor_destination_update
 @ line 902), `src/halo/ai/path.c`, `src/halo/ai/actor_looking.c` (FUN_000169a0 @ line 2276,

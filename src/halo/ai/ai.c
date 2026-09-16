@@ -15,11 +15,11 @@
  * encounter_iterator_next/actor_iterator_next. For each actor record:
  *   - if record+0xb is nonzero: calls actor_erase(actor_handle, 0)
  *     to delete/dispose the actor entry.
- *   - if record+0xb is zero and record+0x6a > 0: calls FUN_0003ec80(@esi)
+ *   - if record+0xb is zero and record+0x6a > 0: calls actor_activate(@esi)
  *     to activate the actor (full AI init sequence).
  * The datum handle comes from iter offset 0x14 (stored by actor_iterator_next).
  * Confirmed: void(void), called from ai_update at 0x41206 with no args.
- * Confirmed: FUN_0003ec80 takes @esi register arg (MOV ESI,[EBP-8]; CALL).
+ * Confirmed: actor_activate takes @esi register arg (MOV ESI,[EBP-8]; CALL).
  * Confirmed: actor_erase is cdecl with 2 stack args (PUSH 0; PUSH EAX; CALL;
  * ADD ESP,8). */
 void FUN_0003f5f0(void)
@@ -46,7 +46,7 @@ void FUN_0003f5f0(void)
     } else {
       if (*(int16_t *)(record + 0x6a) > 0) {
         /* actor ready for activation — full init via @esi */
-        FUN_0003ec80(*(int *)(iter + 0x14));
+        actor_activate(*(int *)(iter + 0x14));
       }
     }
     record = (char *)actor_iterator_next(iter);
@@ -603,7 +603,7 @@ bool ai_release_inactive_encounters(char *result_description,
  * game_allegiance_get_team_is_friendly, and returns true (1) when the
  * teams are NOT friendly (i.e. the unit is an enemy worth approaching).
  * If flag is non-zero and the check passes, sets the approach-active
- * flag at actor+0x2ed by calling FUN_00036e30.
+ * flag at actor+0x2ed by calling actor_mark_active_approach.
  * Confirmed: 3 args (PUSH count), no ADD ESP after final CALL, bool
  * return via AL; ADD ESP,8 after each of the two inner calls. */
 bool ai_handle_unit_approach(int ai_handle, int unit_handle, bool flag)
@@ -624,7 +624,7 @@ bool ai_handle_unit_approach(int ai_handle, int unit_handle, bool flag)
         result = 1;
         if (flag) {
           /* set the approach-active flag at actor+0x2ed */
-          FUN_00036e30(ai_handle);
+          actor_mark_active_approach(ai_handle);
         }
       }
     }
@@ -1835,7 +1835,7 @@ bool ai_test_line_of_fire(int actor_handle, int excluded_handle, float *origin,
       ai_firing_pos_entry_t *e = &buf[i];
       ai_debug_lineoffire_addpill(e->vec_a, e->vec_b, e->radius, e->occupied);
     }
-    FUN_000494d0((char)success);
+    ai_debug_set_raytest_success((char)success);
   }
 
   if (result_out) {

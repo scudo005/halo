@@ -3,9 +3,9 @@
 
 Typical usage:
   rtk python3 tools/equivalence/capture_snapshot_from_diff.py \
-      artifacts/equivalence/FUN_0002a360.json --dry-run
+      artifacts/equivalence/actor_is_in_swarm_or_veichle.json --dry-run
   rtk python3 tools/equivalence/capture_snapshot_from_diff.py \
-      artifacts/equivalence/FUN_0002a360.json
+      artifacts/equivalence/actor_is_in_swarm_or_veichle.json
 """
 
 from __future__ import annotations

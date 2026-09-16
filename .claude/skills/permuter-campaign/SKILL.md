@@ -124,7 +124,7 @@ rtk python3 tools/verify/vc71_verify.py <source_file> --no-cache 2>&1 | grep -E 
 
 Parse the output for lines like:
 ```
-  FUN_0003ac20 : 91.2% [93 insn LCS of 102] → match 91%
+  actor_check_unit_activation_logic : 91.2% [93 insn LCS of 102] → match 91%
 ```
 
 ### 1b. Filter and rank
@@ -133,12 +133,12 @@ Collect into a manifest at `artifacts/permuter_campaign/targets.json`:
 ```json
 [
   {
-    "name": "FUN_0003ac20",
+    "name": "actor_check_unit_activation_logic",
     "addr": "0x3ac20",
     "source_file": "src/halo/game_engine/game_engine.c",
     "delinked_ref": "delinked/game_engine.obj",
     "baseline_pct": 91.2,
-    "tu_functions": ["FUN_0003ac20", "other_func_in_same_file"]
+    "tu_functions": ["actor_check_unit_activation_logic", "other_func_in_same_file"]
   }
 ]
 ```
@@ -485,7 +485,7 @@ After all candidates are processed, produce a Markdown table at
 
 | Function | Source File | Before | After | Delta | Equiv (target) | Status |
 |----------|-------------|--------|-------|-------|----------------|--------|
-| FUN_0003ac20 | game_engine.c | 91.2% | 96.4% | +5.2pp | pass | COMMITTED |
+| actor_check_unit_activation_logic | game_engine.c | 91.2% | 96.4% | +5.2pp | pass | COMMITTED |
 | FUN_0014b220 | collision_features.c | 87.5% | 87.5% | +0.0pp | — | NO_IMPROVEMENT |
 | FUN_00138e30 | some_file.c | 93.1% | 94.8% | +1.7pp | fail | REVERTED (equiv fail) |
 | FUN_000abc10 | objects.c | 88.0% | 90.5% | +2.5pp | pass | REVERTED (neighbor regressed) |

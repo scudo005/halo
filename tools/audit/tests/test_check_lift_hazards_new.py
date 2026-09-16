@@ -20,10 +20,10 @@ _FAKE = '/fake/src/halo/test.c'
 
 
 def test_actor_move_avoidance_state_tail_scale_initializers():
-    """FUN_0002bd80 relies on MSVC stack locals overlapping avoidance_state."""
+    """actor_move_compute_avoidance relies on MSVC stack locals overlapping avoidance_state."""
     repo_root = Path(__file__).resolve().parents[3]
     src = (repo_root / 'src/halo/ai/actor_moving.c').read_text()
-    call_index = src.index('FUN_0002ade0((int)state);')
+    call_index = src.index('actor_move_build_obstacle_list((int)state);')
     before_call = src[:call_index]
 
     assert '((char *)state + 0x6040) = *(float *)0x2533c8' in before_call

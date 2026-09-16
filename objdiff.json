@@ -4240,25 +4240,25 @@
    }
   },
   {
-   "name": "halo/actor_moving_FUN_0002ade0",
+   "name": "halo/actor_moving_actor_move_build_obstacle_list",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actor_moving.c.obj",
-   "base_path": "delinked/actor_moving_FUN_0002ade0.obj",
+   "base_path": "delinked/actor_moving_actor_move_build_obstacle_list.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_moving.c"
    }
   },
   {
-   "name": "halo/actor_moving_FUN_0002b020",
+   "name": "halo/actor_moving_actor_move_avoidance_ray_cast",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actor_moving.c.obj",
-   "base_path": "delinked/actor_moving_FUN_0002b020.obj",
+   "base_path": "delinked/actor_moving_actor_move_avoidance_ray_cast.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_moving.c"
    }
   },
   {
-   "name": "halo/actor_moving_FUN_0002b310",
+   "name": "halo/actor_moving_actor_move_find_avoidance_sector",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actor_moving.c.obj",
-   "base_path": "delinked/actor_moving_FUN_0002b310.obj",
+   "base_path": "delinked/actor_moving_actor_move_find_avoidance_sector.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_moving.c"
    }
@@ -4288,25 +4288,25 @@
    }
   },
   {
-   "name": "halo/actor_moving_FUN_0002b830",
+   "name": "halo/actor_moving_actor_move_choose_facing_vector",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actor_moving.c.obj",
-   "base_path": "delinked/actor_moving_FUN_0002b830.obj",
+   "base_path": "delinked/actor_moving_actor_move_choose_facing_vector.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_moving.c"
    }
   },
   {
-   "name": "halo/actor_moving_FUN_0002bab0",
+   "name": "halo/actor_moving_actor_move_facing_to_movement_frame",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actor_moving.c.obj",
-   "base_path": "delinked/actor_moving_FUN_0002bab0.obj",
+   "base_path": "delinked/actor_moving_actor_move_facing_to_movement_frame.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_moving.c"
    }
   },
   {
-   "name": "halo/actor_moving_FUN_0002bd80",
+   "name": "halo/actor_moving_actor_move_compute_avoidance",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actor_moving.c.obj",
-   "base_path": "delinked/actor_moving_FUN_0002bd80.obj",
+   "base_path": "delinked/actor_moving_actor_move_compute_avoidance.obj",
    "metadata": {
     "source_path": "src/halo/ai/actor_moving.c"
    }
@@ -4376,9 +4376,9 @@
    }
   },
   {
-   "name": "halo/actors_FUN_00036e50",
+   "name": "halo/actors_actor_flight_countdown_handler",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actors.c.obj",
-   "base_path": "delinked/actors_FUN_00036e50.obj",
+   "base_path": "delinked/actors_actor_flight_countdown_handler.obj",
    "metadata": {
     "source_path": "src/halo/ai/actors.c"
    }
@@ -4392,25 +4392,25 @@
    }
   },
   {
-   "name": "halo/actors_FUN_00038000",
+   "name": "halo/actors_actor_ambush_update",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actors.c.obj",
-   "base_path": "delinked/actors_FUN_00038000.obj",
+   "base_path": "delinked/actors_actor_ambush_update.obj",
    "metadata": {
     "source_path": "src/halo/ai/actors.c"
    }
   },
   {
-   "name": "halo/actors_FUN_00038200",
+   "name": "halo/actors_actor_berserk_update",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actors.c.obj",
-   "base_path": "delinked/actors_FUN_00038200.obj",
+   "base_path": "delinked/actors_actor_berserk_update.obj",
    "metadata": {
     "source_path": "src/halo/ai/actors.c"
    }
   },
   {
-   "name": "halo/actors_FUN_00038b10",
+   "name": "halo/actors_actor_fight_retreat_update",
    "target_path": "build/CMakeFiles/halo.dir/src/halo/ai/actors.c.obj",
-   "base_path": "delinked/actors_FUN_00038b10.obj",
+   "base_path": "delinked/actors_actor_fight_retreat_update.obj",
    "metadata": {
     "source_path": "src/halo/ai/actors.c"
    }

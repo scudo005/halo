@@ -1078,7 +1078,7 @@ void FUN_00056bc0(int param_1, char param_2)
  *     (biped_approximate_surface_index returns -1).
  *   - Looks up the actor's squad starting location via tag_block_get_element
  *     chains, selects the first starting location via FUN_0005B790, then:
- *     vector3d_from_angle → object_set_position → object_reset → FUN_0002f1a0.
+ *     vector3d_from_angle → object_set_position → object_reset → actor_perception_set_destination.
  *
  * encounter_handle@<ecx>; local_28[16]=iterator, local_28+0x10=actor handle.
  *
@@ -1118,7 +1118,7 @@ void FUN_00056c60(int encounter_handle, char param_2)
           object_set_position(*(int *)((char *)iVar2 + 0x18), (float *)iVar3,
                               (float *)local_10, 0);
           object_reset(*(int *)((char *)iVar2 + 0x18));
-          FUN_0002f1a0(*(int *)(local_28 + 0x10));
+          actor_perception_set_destination(*(int *)(local_28 + 0x10));
         }
       }
     }
@@ -2569,7 +2569,7 @@ void FUN_000588d0(int param_1, char param_2)
  * Makes all actors in param_1 encounter "magically see" the units/vehicles
  * belonging to actors in param_2 encounter.  For each actor in encounter
  * param_2, grabs the actor's unit handle (offset 0x18); if that is NONE,
- * falls back to the vehicle handle (offset 0x24).  Calls FUN_00055110 to
+ * falls back to the vehicle handle (offset 0x24).  Calls ai_magically_see_unit to
  * register the sighting with encounter param_1.
  *
  * Confirmed:
@@ -2580,7 +2580,7 @@ void FUN_000588d0(int param_1, char param_2)
  * actor iterator init/next.
  *   - Iterator return value is pointer to actor datum.
  *   - actor+0x18 = unit_handle, actor+0x24 = vehicle unit list head handle.
- *   - FUN_00055110(encounter_handle, unit_handle) registers the sighting.
+ *   - ai_magically_see_unit(encounter_handle, unit_handle) registers the sighting.
  */
 void FUN_00058970(int param_1, int param_2)
 {
@@ -2605,7 +2605,7 @@ void FUN_00058970(int param_1, int param_2)
     while (iVar2 != 0) {
       iVar3 = *(int *)(iVar2 + 0x18);
       if (iVar3 != -1 || (iVar3 = *(int *)(iVar2 + 0x24), iVar3 != -1)) {
-        FUN_00055110(param_1, iVar3);
+        ai_magically_see_unit(param_1, iVar3);
       }
       iVar2 = ai_index_actor_iterator_next(local_1c);
     }
@@ -2626,7 +2626,7 @@ void FUN_00058970(int param_1, int param_2)
  *
  * Then, iff combined_handle != -1, walks the player data pool
  * (*(data_t**)0x5aa6d4) using data_iterator_new / data_iterator_next and
- * calls FUN_00055110(combined_handle, player+0x34) for each live player.
+ * calls ai_magically_see_unit(combined_handle, player+0x34) for each live player.
  *
  * Confirmed:
  *   - ESI = param_1 throughout (callee-saved, loaded at 0x58a51).
@@ -2641,7 +2641,7 @@ void FUN_00058970(int param_1, int param_2)
  *     tag name from hs_runtime_get_executing_thread_name, second %s = encounter
  * name in name_buf.
  *   - MOV EDX,[0x005aa6d4] dereferences player_data before data_iterator_new.
- *   - player+0x34 is the field passed as arg2 to FUN_00055110.
+ *   - player+0x34 is the field passed as arg2 to ai_magically_see_unit.
  */
 void FUN_00058a40(int combined_handle)
 {
@@ -2660,18 +2660,18 @@ void FUN_00058a40(int combined_handle)
     data_iterator_new((data_iter_t *)iter_buf, *(data_t **)0x5aa6d4);
     player = (char *)data_iterator_next((data_iter_t *)iter_buf);
     while (player != (char *)0) {
-      FUN_00055110(combined_handle, *(int *)(player + 0x34));
+      ai_magically_see_unit(combined_handle, *(int *)(player + 0x34));
       player = (char *)data_iterator_next((data_iter_t *)iter_buf);
     }
   }
 }
 
-/* FUN_00058ae0 (0x58ae0) — Tail-call wrapper for FUN_00055870 (ai_maneuver);
+/* FUN_00058ae0 (0x58ae0) — Tail-call wrapper for ai_maneuver (ai_maneuver);
  * forwards combined_index. Dormant (ported=false); the original runs at
- * runtime. Signature follows FUN_00055870 now that it is lifted as 1-arg. */
+ * runtime. Signature follows ai_maneuver now that it is lifted as 1-arg. */
 void FUN_00058ae0(unsigned int combined_index)
 {
-  FUN_00055870(combined_index);
+  ai_maneuver(combined_index);
 }
 
 /* One entry of the nearest-first candidate table built on the stack by
@@ -4523,7 +4523,7 @@ LAB_encounters:
  *            b. Follow the parent prop via datum_get(prop_data, prop+0xc).
  *            c. Assert parent_prop->orphan_prop_index == current prop_handle.
  *            d. Clear parent_prop->orphan_prop_index to NONE.
- *            e. Call FUN_0003b410(actor_handle, prop_handle, NONE).
+ *            e. Call actor_replace_prop_reference(actor_handle, prop_handle, NONE).
  *            f. Call prop_iterator_next(actor_handle, prop_handle).
  *
  * Confirmed:
@@ -4582,7 +4582,7 @@ void encounter_stand_down(int encounter_handle)
       break;
 
     /* Snapshot current actor_handle into cur_actor_handle (= EDI in
-     * binary). This is what gets passed to FUN_0003b410 and
+     * binary). This is what gets passed to actor_replace_prop_reference and
      * prop_iterator_next. */
     cur_actor_handle = actor_handle;
     actor = (char *)datum_get(*(data_t **)0x6325a4, cur_actor_handle);
@@ -4618,7 +4618,7 @@ void encounter_stand_down(int encounter_handle)
           system_exit(-1);
         }
         *(int *)(parent_prop + 0xc) = -1;
-        FUN_0003b410(cur_actor_handle, prop_iter[0], -1);
+        actor_replace_prop_reference(cur_actor_handle, prop_iter[0], -1);
         prop_iterator_next(cur_actor_handle, prop_iter[0]);
       }
       prop = (char *)FUN_00064570(prop_iter);

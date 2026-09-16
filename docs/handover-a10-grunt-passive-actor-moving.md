@@ -176,7 +176,7 @@ or the TU.
   facing-alignment at actor_combat.c:225, projectile_aim, planar-mag, line-of-fire) — FAITHFUL,
   and **not** the blocker: live, a6's facing was well-aligned (dot 0.90 > 0.866) yet it was stuck
   pre-promotion. a6 never *reaches* this gate.
-- **`FUN_0002f380`** (knowledge_type) — byte-faithful incl. the dead `!=0xffff` guard.
+- **`actor_perception_get_engagement_to_prop`** (knowledge_type) — byte-faithful incl. the dead `!=0xffff` guard.
 - **Stage-B rate table `DAT_00255f30`** — static const, no writer. **'actr'-tag rate floats** —
   static tag data, no runtime writer. **Stage B cannot be mis-lifted into a stall.**
 - **`actor_compute_prop_target_weight 0x2fd10`** (the OLD "prime suspect") current-target bonus
@@ -200,7 +200,7 @@ or the TU.
    POST-window state (a6 disengaged, `aw=0`, no prop) and produced a false "oscillation" theory.
 5. **An instrument can only re-find "outputs differ, inputs same"** — it cannot NAME the ai.obj
    culprit (prior field-diffs already showed this). The argument-diff / function-bisect names it.
-6. **Verify suspects against disasm before fixing.** `FUN_0002f380`, `0x2fd10`, and the trigger
+6. **Verify suspects against disasm before fixing.** `actor_perception_get_engagement_to_prop`, `0x2fd10`, and the trigger
    gate all "looked like the bug" (a visible constant, low score) and were all faithful. Smell ≠
    evidence — this repeats the los/`FUN_00053680` dead-ends.
 7. When toggle-bisecting ai.obj: keep `ai_update` (and any instrument) `ported=true`, toggle the
@@ -531,9 +531,9 @@ Since the prior revision, the following were ALSO verified faithful vs original 
   truth — so the defect is most likely a **clang miscompile or VC71-vs-clang x87 float divergence**
   that tips a borderline path-validity / A* cost / distance comparison in a function that is faithful
   at the source level. This is invisible to everything done so far. **This is the leading hypothesis.**
-- `FUN_0002a3a0` (0x2a3a0) — called by path_refresh at LAB_fail (2464) and hysteresis (2458);
+- `actor_move_reset_movement` (0x2a3a0) — called by path_refresh at LAB_fail (2464) and hysteresis (2458);
   listed ported, **never verified.** (Low priority: only on the path-fail branch.)
-- ~16 leaf functions behind the 0x504 gate / `compute_facing` (`FUN_0002b830`, try_evasion,
+- ~16 leaf functions behind the 0x504 gate / `compute_facing` (`actor_move_choose_facing_vector`, try_evasion,
   get_avoidance, aim math) — `gate_probe` proves 0x504 is NEVER set on broken ⇒ these **never
   execute** on the stuck-grunt path ⇒ excluded as the cause (confirmed by call-graph).
 

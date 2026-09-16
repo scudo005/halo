@@ -883,10 +883,10 @@ The full detector run is 5891 functions compared, 207 flagged (the earlier
 "397 compared, 29 flagged" figure was a partial run; use the 207). Ranked
 candidates that feed biped facing, worst first:
 
-    FUN_0002bd80            src/halo/ai/actor_moving.c   ours 4,  xbe 15  (-11)
+    actor_move_compute_avoidance            src/halo/ai/actor_moving.c   ours 4,  xbe 15  (-11)
     FUN_001a2f40            src/halo/units/bipeds.c      ours 14, xbe 21  (-7)
     actor_destination_update src/halo/ai/actor_moving.c  ours 0,  xbe 4   (-4)
-    FUN_0002b020            src/halo/ai/actor_moving.c   ours 0,  xbe 4   (-4)
+    actor_move_avoidance_ray_cast            src/halo/ai/actor_moving.c   ours 0,  xbe 4   (-4)
     FUN_001a2160            src/halo/units/bipeds.c      ours 1,  xbe 3   (-2)
     biped_collision_direction            src/halo/units/bipeds.c      ours 1,  xbe 3   (-2)
     actor_move_update       src/halo/ai/actor_moving.c   ours 3,  xbe 4   (-1)
@@ -911,7 +911,7 @@ drops one entry entirely.
 
 | function | delta | touches the fork's inputs? | verdict |
 |---|---|---|---|
-| `FUN_0002bd80` (`actor_moving.c`) | -11 | reads `obj+0x24`, and its callers at `actor_moving.c:3717` take its `slerp`/`weight` outputs into the desired-facing path | **top candidate** |
+| `actor_move_compute_avoidance` (`actor_moving.c`) | -11 | reads `obj+0x24`, and its callers at `actor_moving.c:3717` take its `slerp`/`weight` outputs into the desired-facing path | **top candidate** |
 | `FUN_001a2160` (`bipeds.c`) | -2 | it *is* the per-tick writer of current facing `+0x24` | second, but see below |
 | `FUN_001a2f40` (`bipeds.c`) | -7 | 956 lines, no access to `+0x1d4`, `+0x24`, `+0x28`, `+0x2c` or `+0x30` anywhere in its body | **drop — noise for this bug** |
 
@@ -1005,7 +1005,7 @@ it is now measured, not deduced from `setne dl; add dl,2`.
   and 6626 occur on **both** sides. Only 6627 and 6633 are ours alone.
 - One transient excursion in 6,800 ticks that self-corrects after six ticks is
   the knife-edge signature, not the gross-error one. The precision hypothesis
-  is back in first place, and `FUN_0002bd80` / `FUN_001a2160` are live again.
+  is back in first place, and `actor_move_compute_avoidance` / `FUN_001a2160` are live again.
 
 ### The fork has three gates, only one of which is float
 
@@ -1129,7 +1129,7 @@ the direct caller of `FUN_001a4c50`. It is ported, and in the same block it
 The x87-narrowing detector does **not** flag `biped_update_dispatcher`, nor `normalize3d`.
 Of the fork's upstream chain only two functions are flagged:
 
-    FUN_0002bd80  src/halo/ai/actor_moving.c   ours  4, xbe 15  (-11)
+    actor_move_compute_avoidance  src/halo/ai/actor_moving.c   ours  4, xbe 15  (-11)
     FUN_001a2160  src/halo/units/bipeds.c      ours  1, xbe  3   (-2)
 
 which is the ranking already recorded above, now with the caller ruled out.
@@ -1505,7 +1505,7 @@ by actor_moving.c in three places:
 
 Line 3686 is the default assignment at the top of the function: desired facing
 := input facing. Our measurement is exactly what that default produces if no
-later branch overwrites it. `FUN_0002bd80` (actor_moving) was already suspect
+later branch overwrites it. `actor_move_compute_avoidance` (actor_moving) was already suspect
 number 1 from the x87-narrowing ranking, reached independently.
 
 ### Open, and the next measurement

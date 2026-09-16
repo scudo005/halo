@@ -317,7 +317,7 @@ gap is shape, not logic:
 | `FUN_000b1760` | 50.2% | 77.1% | 139/136 | loadw, frame, anchor | game_engine.c |
 | `XapiFormatFATVolume` | 52.5% | 64.3% | 317/311 | loadw, frame | xcontent.c |
 | `sound_start` | 53.5% | 77.5% | 307/310 | fpu, loadw, frame, anchor | sound_manager.c |
-| `FUN_0002b830` | 53.7% | 67.0% | 226/210 | fpu, fcom, frame, anchor | actor_moving.c |
+| `actor_move_choose_facing_vector` | 53.7% | 67.0% | 226/210 | fpu, fcom, frame, anchor | actor_moving.c |
 | `FUN_00077ff0` | 55.5% | 85.1% | 374/376 | loadw, anchor_collapse | bitmap_utilities.c |
 | `FUN_0009dcf0` | 56.0% | 63.3% | 449/369 | fcom, frame | effects.c |
 

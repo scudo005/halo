@@ -84,7 +84,7 @@ char action_vehicle_setup(int actor_handle, int vehicle_handle, int16_t seat_ind
  * FUN_0001ada0 whether the approach is still viable, recomputes the seat
  * attach transform (action_vehicle_evaluate_seat), and either steers the actor toward the
  * entry point (action_vehicle_compute_entry_point -> actor_move_to_point), stops
- * (FUN_0002f1a0), or boards the vehicle (unit_board_vehicle).
+ * (actor_perception_set_destination), or boards the vehicle (unit_board_vehicle).
  *
  * Returns non-zero once the action has resolved — either "already seated /
  * abandoned" (actor+0xa5) or "give up" (actor+0xa6).
@@ -198,7 +198,7 @@ int action_vehicle_perform(int actor_handle)
                          *(unsigned short *)(actor + 0xa0));
       *(actor + 0xa4) = 1;
     } else {
-      FUN_0002f1a0(actor_handle);
+      actor_perception_set_destination(actor_handle);
     }
   } else {
     if (((actor_t *)actor)->field_04c != 0) {

@@ -1007,7 +1007,7 @@ co(ai_firing_pos_entry_t, radius,    0x24);
  *
  * Everything not cited stays `pad_XXX`. Unobserved is not the same as absent:
  * a pad byte means "never seen accessed", not "padding in the original".
- * Cross-reference: the prose block above FUN_0003dc20 in halo/ai/actors.c
+ * Cross-reference: the prose block above actor_input_update in halo/ai/actors.c
  * records further INFERRED offsets (0x158 vehicle_handle, 0x1b0
  * active_grenade_handle, ...) which are deliberately NOT promoted to fields
  * here — they lack assert-string evidence. It also notes actor+0x120 is
